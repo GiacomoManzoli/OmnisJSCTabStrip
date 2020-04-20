@@ -1,1 +1,982 @@
-!function(t,e){for(var r in e)t[r]=e[r]}(window,function(t){var e={};function r(n){if(e[n])return e[n].exports;var o=e[n]={i:n,l:!1,exports:{}};return t[n].call(o.exports,o,o.exports,r),o.l=!0,o.exports}return r.m=t,r.c=e,r.d=function(t,e,n){r.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:n})},r.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},r.t=function(t,e){if(1&e&&(t=r(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var n=Object.create(null);if(r.r(n),Object.defineProperty(n,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var o in t)r.d(n,o,function(e){return t[e]}.bind(null,o));return n},r.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return r.d(e,"a",e),e},r.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},r.p="",r(r.s=0)}([function(t,e,r){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),function(t){for(var r in t)e.hasOwnProperty(r)||(e[r]=t[r])}(r(1))},function(t,e,r){"use strict";var n,o=this&&this.__extends||(n=function(t,e){return(n=Object.setPrototypeOf||{__proto__:[]}instanceof Array&&function(t,e){t.__proto__=e}||function(t,e){for(var r in e)e.hasOwnProperty(r)&&(t[r]=e[r])})(t,e)},function(t,e){function r(){this.constructor=t}n(t,e),t.prototype=null===e?Object.create(e):(r.prototype=e.prototype,new r)});Object.defineProperty(e,"__esModule",{value:!0}),e.foo=function(){console.log("Foo")};var a=r(2),i={autoupdate:"$autoupdate",canclosetab:"$canclosetab",canaddtab:"$canaddtab",activecolor:"$activecolor",backgroundcolor:"$backgroundcolor",backgroundtabactivecoloractive:"$backgroundtabactivecoloractive",backgroundtabcolor:"$backgroundtabcolor",bordercolor:"$bordercolor",textcolor:"$textcolor",textactivecolor:"$textactivecolor"},c=1,s=2,l=3,u=function(t){function e(){var e=t.call(this)||this;return e.autoUpdate=!1,e.init_class_inst(),e}return o(e,t),e.prototype.init_ctrl_inst=function(e,r,n,o){var u=this;t.prototype.init_ctrl_inst.call(this,e,r,n,o);var d=this.getClientElem(),p=JSON.parse(d.getAttribute("data-props"));for(var b in this.tabStrip=new a.TabStrip(d),this.tabStrip.addEventListener("tabclick",(function(t,e,r,n){u.autoUpdate&&u.tabStrip.setActive(e),u.canSendEvent(l)&&(u.eventParamsAdd("pTabNum",r+1),u.sendEvent("evTabClick"))})),this.tabStrip.addEventListener("tabclose",(function(t,e,r,n){u.autoUpdate&&u.tabStrip.closeTab(e),u.canSendEvent(c)&&(u.eventParamsAdd("pTabNum",r+1),u.sendEvent("evTabClose"))})),this.tabStrip.addEventListener("tabadd",(function(t){u.autoUpdate,u.canSendEvent(s)&&u.sendEvent("evTabAdd")})),i){var f=p[b];this.setProperty(i[b],f)}return this.update(),!1},e.prototype.updateCtrl=function(t,e,r,n){var o=this.getClientElem();console.log("update",arguments),o.style.lineHeight=o.style.height,o.style.textAlign="center";var a=this.getData(),i=new omnis_list(a);if(this.mData=a,o.innerHTML="",a){var c=[],s=i.getCurrentRow(),l=s>0?s:1;console.log(s,l);for(var u=1;u<=i.getRowCount();u++)c.push({id:i.getData("id",u),title:i.getData("title",u),active:u==l});console.log(c),this.tabStrip.setTabs(c),this.tabStrip.render()}},e.prototype.handleEvent=function(e){if(!this.isEnabled())return!0;switch(e.type){case"click":return!0}t.prototype.handleEvent.call(this,e)},e.prototype.getCanAssign=function(e){return Object.values(i).includes(e.toString())||t.prototype.getCanAssign.call(this,e)},e.prototype.setProperty=function(e,r){if(!this.getCanAssign(e))return!1;if(e)switch(e){case i.activecolor:return this.tabStrip.setCssVar(a.CssVar.activeColor,r),!0;case i.backgroundcolor:return this.tabStrip.setCssVar(a.CssVar.backgroundColor,r),!0;case i.backgroundtabactivecoloractive:return this.tabStrip.setCssVar(a.CssVar.backgroundTabActiveColor,r),!0;case i.backgroundtabcolor:return this.tabStrip.setCssVar(a.CssVar.backgroundTabColor,r),!0;case i.textactivecolor:return this.tabStrip.setCssVar(a.CssVar.textActiveColor,r),!0;case i.textcolor:return this.tabStrip.setCssVar(a.CssVar.textColor,r),!0;case i.bordercolor:return this.tabStrip.setCssVar(a.CssVar.borderColor,r),!0;case i.canaddtab:return this.tabStrip.canAddTab=r,!0;case i.canclosetab:return this.tabStrip.canCloseTab=r,!0;case i.autoupdate:return this.autoUpdate=r,!0}return t.prototype.setProperty.call(this,e,r)},e.prototype.getProperty=function(e){switch(e){case i.activecolor:return this.tabStrip.getCssVar(a.CssVar.activeColor);case i.backgroundcolor:return this.tabStrip.getCssVar(a.CssVar.backgroundColor);case i.backgroundtabactivecoloractive:return this.tabStrip.getCssVar(a.CssVar.backgroundTabActiveColor);case i.backgroundtabcolor:return this.tabStrip.getCssVar(a.CssVar.backgroundTabColor);case i.textactivecolor:return this.tabStrip.getCssVar(a.CssVar.textActiveColor);case i.textcolor:return this.tabStrip.getCssVar(a.CssVar.textColor);case i.bordercolor:return this.tabStrip.getCssVar(a.CssVar.borderColor);case i.canaddtab:return this.tabStrip.canAddTab;case i.canclosetab:return this.tabStrip.canCloseTab;case i.autoupdate:return this.autoUpdate}return t.prototype.getProperty.call(this,e)},e}(ctrl_base);e.ctrl_com_888sp_tabstrip=u},function(t,e,r){"use strict";var n=this&&this.__spreadArrays||function(){for(var t=0,e=0,r=arguments.length;e<r;e++)t+=arguments[e].length;var n=Array(t),o=0;for(e=0;e<r;e++)for(var a=arguments[e],i=0,c=a.length;i<c;i++,o++)n[o]=a[i];return n};Object.defineProperty(e,"__esModule",{value:!0});var o,a=function(t){this.id=0,this.title="",this.active=!1,t.id&&(this.id=t.id),t.title&&(this.title=t.title)};e.Tab=a,r(3),function(t){t.activeColor="--my-active-color",t.backgroundColor="--my-bkg-color",t.backgroundTabActiveColor="--my-bkg-tab-active-color",t.backgroundTabColor="--my-bkg-tab-color",t.borderColor="--my-border-color",t.textColor="--my-text-color",t.textActiveColor="--my-text-active-color"}(o=e.CssVar||(e.CssVar={}));var i={id:-1,title:"",action:"add",active:!1},c=function(){function t(t){this.activeColor="#FF3333",this.canAddTab=!0,this.canCloseTab=!0,this.tabs=[],this.container=t,t.classList.add("my-tabstrip"),this.handlers=new Map}return t.prototype.setTabs=function(t){this.tabs=n(t),this.canAddTab&&this.tabs.push(i)},t.prototype.setCssVar=function(t,e){console.log(o.activeColor,e),this.container.style.setProperty(t,e)},t.prototype.getCssVar=function(t){return getComputedStyle(this.container).getPropertyValue(t)},t.prototype.addEventListener=function(t,e){this.handlers.set(t,e)},t.prototype.setActive=function(t){this.tabs.find((function(t){return t.active})).active=!1,this.tabs.find((function(e){return e.id==t})).active=!0,this.render()},t.prototype.closeTab=function(t){this.tabs=this.tabs.filter((function(e){return e.id!==t})),this.tabs.find((function(t){return t.active}))||(this.tabs[0].active=!0),this.render()},t.prototype.addTab=function(){var t=this.tabs.reduce((function(t,e){return Math.max(t,e.id)}),0)+1,e={id:t,title:"Nuovo tab",active:!1};return this.tabs=this.tabs.filter((function(t){return t.id>0})).concat([e,this.addTab?i:void 0]),this.setActive(t),this.render(),e},t.prototype.onTabClick=function(t,e,r,n){t.preventDefault(),t.stopPropagation();var o=this.handlers.get("tabclick");o&&o(t,e,r,n)},t.prototype.onTabCloseClick=function(t,e,r,n){t.preventDefault(),t.stopPropagation();var o=this.handlers.get("tabclose");o&&o(t,e,r,n)},t.prototype.onTabAddClick=function(t,e,r,n){t.preventDefault(),t.stopPropagation();var o=this.handlers.get("tabadd");o&&o(t,e,r,n)},t.prototype.render=function(){var t=this;console.log(this),this.container.innerHTML="";var e=document.createElement("ul");e.classList.add("my-tabstrip-ul"),this.tabs.map((function(e,r){return t.createItem(e,r)})).forEach((function(t){return e.appendChild(t)})),this.container.appendChild(e)},t.prototype.createItem=function(t,e){return"add"===t.action?this.createAddTab(t,e):this.createTab(t,e)},t.prototype.createAddTab=function(t,e){var r=this,n=document.createElement("li");n.classList.add("my-tabstrip-li"),n.classList.add("action-add");var o=document.createElement("a");return o.innerHTML="+",o.addEventListener("click",(function(){r.onTabAddClick(event,t.id,e,t)})),n.append(o),n},t.prototype.createTab=function(t,e){var r=this,n=document.createElement("li");n.classList.add("my-tabstrip-li"),t.active&&n.classList.add("active"),n.addEventListener("click",(function(){r.onTabClick(event,t.id,e,t)}));var o=document.createElement("a");return o.classList.add("my-tabstrip-li-a"),o.innerText=t.title,n.append(o),this.canCloseTab&&n.append(this.createCloseIcon(t,e)),n},t.prototype.createCloseIcon=function(t,e){var r=this,n=document.createElement("span");return n.classList.add("my-tabstrip-li-icon"),n.innerHTML="&#x2715;",t.active&&n.classList.add("active-icon"),n.addEventListener("click",(function(){r.onTabCloseClick(event,t.id,e,t)})),n},t}();e.TabStrip=c},function(t,e,r){var n=r(4),o=r(5);"string"==typeof(o=o.__esModule?o.default:o)&&(o=[[t.i,o,""]]);var a={insert:"head",singleton:!1},i=(n(o,a),o.locals?o.locals:{});t.exports=i},function(t,e,r){"use strict";var n,o=function(){return void 0===n&&(n=Boolean(window&&document&&document.all&&!window.atob)),n},a=function(){var t={};return function(e){if(void 0===t[e]){var r=document.querySelector(e);if(window.HTMLIFrameElement&&r instanceof window.HTMLIFrameElement)try{r=r.contentDocument.head}catch(n){r=null}t[e]=r}return t[e]}}(),i=[];function c(t){for(var e=-1,r=0;r<i.length;r++)if(i[r].identifier===t){e=r;break}return e}function s(t,e){for(var r={},n=[],o=0;o<t.length;o++){var a=t[o],s=e.base?a[0]+e.base:a[0],l=r[s]||0,u="".concat(s," ").concat(l);r[s]=l+1;var d=c(u),p={css:a[1],media:a[2],sourceMap:a[3]};-1!==d?(i[d].references++,i[d].updater(p)):i.push({identifier:u,updater:h(p,e),references:1}),n.push(u)}return n}function l(t){var e=document.createElement("style"),n=t.attributes||{};if(void 0===n.nonce){var o=r.nc;o&&(n.nonce=o)}if(Object.keys(n).forEach((function(t){e.setAttribute(t,n[t])})),"function"==typeof t.insert)t.insert(e);else{var i=a(t.insert||"head");if(!i)throw new Error("Couldn't find a style target. This probably means that the value for the 'insert' parameter is invalid.");i.appendChild(e)}return e}var u,d=(u=[],function(t,e){return u[t]=e,u.filter(Boolean).join("\n")});function p(t,e,r,n){var o=r?"":n.media?"@media ".concat(n.media," {").concat(n.css,"}"):n.css;if(t.styleSheet)t.styleSheet.cssText=d(e,o);else{var a=document.createTextNode(o),i=t.childNodes;i[e]&&t.removeChild(i[e]),i.length?t.insertBefore(a,i[e]):t.appendChild(a)}}function b(t,e,r){var n=r.css,o=r.media,a=r.sourceMap;if(o?t.setAttribute("media",o):t.removeAttribute("media"),a&&btoa&&(n+="\n/*# sourceMappingURL=data:application/json;base64,".concat(btoa(unescape(encodeURIComponent(JSON.stringify(a))))," */")),t.styleSheet)t.styleSheet.cssText=n;else{for(;t.firstChild;)t.removeChild(t.firstChild);t.appendChild(document.createTextNode(n))}}var f=null,v=0;function h(t,e){var r,n,o;if(e.singleton){var a=v++;r=f||(f=l(e)),n=p.bind(null,r,a,!1),o=p.bind(null,r,a,!0)}else r=l(e),n=b.bind(null,r,e),o=function(){!function(t){if(null===t.parentNode)return!1;t.parentNode.removeChild(t)}(r)};return n(t),function(e){if(e){if(e.css===t.css&&e.media===t.media&&e.sourceMap===t.sourceMap)return;n(t=e)}else o()}}t.exports=function(t,e){(e=e||{}).singleton||"boolean"==typeof e.singleton||(e.singleton=o());var r=s(t=t||[],e);return function(t){if(t=t||[],"[object Array]"===Object.prototype.toString.call(t)){for(var n=0;n<r.length;n++){var o=c(r[n]);i[o].references--}for(var a=s(t,e),l=0;l<r.length;l++){var u=c(r[l]);0===i[u].references&&(i[u].updater(),i.splice(u,1))}r=a}}}},function(t,e,r){(e=r(6)(!1)).push([t.i,".my-tabstrip-container {\n    --my-active-color: #ff8a00;\n    --my-bkg-color: #ffffff;\n    --my-bkg-tab-active-color: #fff;\n    --my-bkg-tab-color: #f0f0f0;\n    --my-border-color: #333333;\n    --my-text-color: inherit;\n    --my-text-active-color: inherit;\n}\n\n.my-tabstrip-ul {\n    padding: 0;\n    margin: 0;\n    list-style-type: none;\n    height: 100%;\n    display: flex;\n    color: var(--my-text-color);\n    flex-direction: row;\n    flex-wrap: nowrap;\n    align-items: stretch;\n    background-color: var(--my-bgk-color);\n    line-height: initial;\n    text-align: initial;\n}\n\n.my-tabstrip-li {\n    cursor: default;\n    font-size: 12px;\n    width: 160px;\n    padding: 8px;\n    border: 1px solid var(--my-border-color);\n    border-left: 0px;\n    display: flex;\n    align-items: center;\n    background-color: var(--my-bkg-tab-color);\n    margin-bottom: -1px;\n    display: flex;\n    min-width: 0; /* Serve per far andare overflow ellipsis */\n}\n\n.my-tabstrip-li:hover {\n    /* background-color: #fafafa; */\n    filter: brightness(1.05);\n}\n\n.my-tabstrip-li-a {\n    flex: 1;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n}\n.my-tabstrip-li-icon {\n    /* cursor: pointer; */\n    padding: 2px 4px;\n    background-color: var(--my-bkg-tab-color);\n}\n.my-tabstrip-li-icon:hover {\n    filter: brightness(1.05);\n    color: var(--my-active-color);\n}\n\n.my-tabstrip:first-child {\n    border-left: 1px solid var(--my-border-color) !important;\n}\n\n.active {\n    background-color: var(--my-bkg-tab-active-color) !important;\n    border-bottom-color: var(--my-bkg-tab-active-color);\n    box-shadow: inset 0px 3px var(--my-active-color);\n    border-top: var(--my-active-color) !important;\n    color: var(--my-text-active-color);\n}\n\n.active:hover {\n    filter: none !important;\n}\n\n.active-icon {\n    background-color: var(--my-bkg-tab-active-color) !important;\n}\n\n.action-add {\n    width: initial !important;\n    background-color: var(--my-bgk-color);\n    border: 0;\n    align-items: center;\n}\n.action-add a {\n    font-size: 20px;\n    height: 16px;\n    line-height: 16px;\n    padding: 2px;\n    border-radius: 4px;\n}\n.action-add a:hover {\n    color: var(--my-active-color);\n}\n",""]),t.exports=e},function(t,e,r){"use strict";t.exports=function(t){var e=[];return e.toString=function(){return this.map((function(e){var r=function(t,e){var r=t[1]||"",n=t[3];if(!n)return r;if(e&&"function"==typeof btoa){var o=(i=n,c=btoa(unescape(encodeURIComponent(JSON.stringify(i)))),s="sourceMappingURL=data:application/json;charset=utf-8;base64,".concat(c),"/*# ".concat(s," */")),a=n.sources.map((function(t){return"/*# sourceURL=".concat(n.sourceRoot||"").concat(t," */")}));return[r].concat(a).concat([o]).join("\n")}var i,c,s;return[r].join("\n")}(e,t);return e[2]?"@media ".concat(e[2]," {").concat(r,"}"):r})).join("")},e.i=function(t,r,n){"string"==typeof t&&(t=[[null,t,""]]);var o={};if(n)for(var a=0;a<this.length;a++){var i=this[a][0];null!=i&&(o[i]=!0)}for(var c=0;c<t.length;c++){var s=[].concat(t[c]);n&&o[s[0]]||(r&&(s[2]?s[2]="".concat(r," and ").concat(s[2]):s[2]=r),e.push(s))}},e}}]));
+(function(e, a) { for(var i in a) e[i] = a[i]; }(window, /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/index.ts");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./node_modules/css-loader/dist/cjs.js!./src/style.css":
+/*!*************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./src/style.css ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, ".my-tabstrip-container {\n    --my-active-color: #ff8a00;\n    --my-bkg-color: #ffffff;\n    --my-bkg-tab-active-color: #fff;\n    --my-bkg-tab-color: #f0f0f0;\n    --my-border-color: #333333;\n    --my-text-color: inherit;\n    --my-text-active-color: inherit;\n}\n\n.my-tabstrip-ul {\n    padding: 0;\n    margin: 0;\n    list-style-type: none;\n    height: 100%;\n    display: flex;\n    color: var(--my-text-color);\n    flex-direction: row;\n    flex-wrap: nowrap;\n    align-items: stretch;\n    background-color: var(--my-bgk-color);\n    line-height: initial;\n    text-align: initial;\n}\n\n.my-tabstrip-li {\n    cursor: default;\n    font-size: 12px;\n    width: 160px;\n    padding: 8px;\n    border: 1px solid var(--my-border-color);\n    border-left: 0px;\n    display: flex;\n    align-items: center;\n    background-color: var(--my-bkg-tab-color);\n    margin-bottom: -1px;\n    display: flex;\n    min-width: 0; /* Serve per far andare overflow ellipsis */\n}\n\n.my-tabstrip-li:hover {\n    /* background-color: #fafafa; */\n    filter: brightness(1.05);\n}\n\n.my-tabstrip-li-a {\n    flex: 1;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n}\n.my-tabstrip-li-icon {\n    /* cursor: pointer; */\n    padding: 2px 4px;\n    background-color: var(--my-bkg-tab-color);\n}\n.my-tabstrip-li-icon:hover {\n    filter: brightness(1.05);\n    color: var(--my-active-color);\n}\n\n.my-tabstrip:first-child {\n    border-left: 1px solid var(--my-border-color) !important;\n}\n\n.active {\n    background-color: var(--my-bkg-tab-active-color) !important;\n    border-bottom-color: var(--my-bkg-tab-active-color);\n    box-shadow: inset 0px 3px var(--my-active-color);\n    border-top: var(--my-active-color) !important;\n    color: var(--my-text-active-color);\n}\n\n.active:hover {\n    filter: none !important;\n}\n\n.active-icon {\n    background-color: var(--my-bkg-tab-active-color) !important;\n}\n\n.action-add {\n    width: initial !important;\n    background-color: var(--my-bgk-color);\n    border: 0;\n    align-items: center;\n}\n.action-add a {\n    font-size: 20px;\n    height: 16px;\n    line-height: 16px;\n    padding: 2px;\n    border-radius: 4px;\n}\n.action-add a:hover {\n    color: var(--my-active-color);\n}\n", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/runtime/api.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/css-loader/dist/runtime/api.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+// eslint-disable-next-line func-names
+module.exports = function (useSourceMap) {
+  var list = []; // return the list of modules as css string
+
+  list.toString = function toString() {
+    return this.map(function (item) {
+      var content = cssWithMappingToString(item, useSourceMap);
+
+      if (item[2]) {
+        return "@media ".concat(item[2], " {").concat(content, "}");
+      }
+
+      return content;
+    }).join('');
+  }; // import a list of modules into the list
+  // eslint-disable-next-line func-names
+
+
+  list.i = function (modules, mediaQuery, dedupe) {
+    if (typeof modules === 'string') {
+      // eslint-disable-next-line no-param-reassign
+      modules = [[null, modules, '']];
+    }
+
+    var alreadyImportedModules = {};
+
+    if (dedupe) {
+      for (var i = 0; i < this.length; i++) {
+        // eslint-disable-next-line prefer-destructuring
+        var id = this[i][0];
+
+        if (id != null) {
+          alreadyImportedModules[id] = true;
+        }
+      }
+    }
+
+    for (var _i = 0; _i < modules.length; _i++) {
+      var item = [].concat(modules[_i]);
+
+      if (dedupe && alreadyImportedModules[item[0]]) {
+        // eslint-disable-next-line no-continue
+        continue;
+      }
+
+      if (mediaQuery) {
+        if (!item[2]) {
+          item[2] = mediaQuery;
+        } else {
+          item[2] = "".concat(mediaQuery, " and ").concat(item[2]);
+        }
+      }
+
+      list.push(item);
+    }
+  };
+
+  return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+  var content = item[1] || ''; // eslint-disable-next-line prefer-destructuring
+
+  var cssMapping = item[3];
+
+  if (!cssMapping) {
+    return content;
+  }
+
+  if (useSourceMap && typeof btoa === 'function') {
+    var sourceMapping = toComment(cssMapping);
+    var sourceURLs = cssMapping.sources.map(function (source) {
+      return "/*# sourceURL=".concat(cssMapping.sourceRoot || '').concat(source, " */");
+    });
+    return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+  }
+
+  return [content].join('\n');
+} // Adapted from convert-source-map (MIT)
+
+
+function toComment(sourceMap) {
+  // eslint-disable-next-line no-undef
+  var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+  var data = "sourceMappingURL=data:application/json;charset=utf-8;base64,".concat(base64);
+  return "/*# ".concat(data, " */");
+}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js ***!
+  \****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var isOldIE = function isOldIE() {
+  var memo;
+  return function memorize() {
+    if (typeof memo === 'undefined') {
+      // Test for IE <= 9 as proposed by Browserhacks
+      // @see http://browserhacks.com/#hack-e71d8692f65334173fee715c222cb805
+      // Tests for existence of standard globals is to allow style-loader
+      // to operate correctly into non-standard environments
+      // @see https://github.com/webpack-contrib/style-loader/issues/177
+      memo = Boolean(window && document && document.all && !window.atob);
+    }
+
+    return memo;
+  };
+}();
+
+var getTarget = function getTarget() {
+  var memo = {};
+  return function memorize(target) {
+    if (typeof memo[target] === 'undefined') {
+      var styleTarget = document.querySelector(target); // Special case to return head of iframe instead of iframe itself
+
+      if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) {
+        try {
+          // This will throw an exception if access to iframe is blocked
+          // due to cross-origin restrictions
+          styleTarget = styleTarget.contentDocument.head;
+        } catch (e) {
+          // istanbul ignore next
+          styleTarget = null;
+        }
+      }
+
+      memo[target] = styleTarget;
+    }
+
+    return memo[target];
+  };
+}();
+
+var stylesInDom = [];
+
+function getIndexByIdentifier(identifier) {
+  var result = -1;
+
+  for (var i = 0; i < stylesInDom.length; i++) {
+    if (stylesInDom[i].identifier === identifier) {
+      result = i;
+      break;
+    }
+  }
+
+  return result;
+}
+
+function modulesToDom(list, options) {
+  var idCountMap = {};
+  var identifiers = [];
+
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i];
+    var id = options.base ? item[0] + options.base : item[0];
+    var count = idCountMap[id] || 0;
+    var identifier = "".concat(id, " ").concat(count);
+    idCountMap[id] = count + 1;
+    var index = getIndexByIdentifier(identifier);
+    var obj = {
+      css: item[1],
+      media: item[2],
+      sourceMap: item[3]
+    };
+
+    if (index !== -1) {
+      stylesInDom[index].references++;
+      stylesInDom[index].updater(obj);
+    } else {
+      stylesInDom.push({
+        identifier: identifier,
+        updater: addStyle(obj, options),
+        references: 1
+      });
+    }
+
+    identifiers.push(identifier);
+  }
+
+  return identifiers;
+}
+
+function insertStyleElement(options) {
+  var style = document.createElement('style');
+  var attributes = options.attributes || {};
+
+  if (typeof attributes.nonce === 'undefined') {
+    var nonce =  true ? __webpack_require__.nc : undefined;
+
+    if (nonce) {
+      attributes.nonce = nonce;
+    }
+  }
+
+  Object.keys(attributes).forEach(function (key) {
+    style.setAttribute(key, attributes[key]);
+  });
+
+  if (typeof options.insert === 'function') {
+    options.insert(style);
+  } else {
+    var target = getTarget(options.insert || 'head');
+
+    if (!target) {
+      throw new Error("Couldn't find a style target. This probably means that the value for the 'insert' parameter is invalid.");
+    }
+
+    target.appendChild(style);
+  }
+
+  return style;
+}
+
+function removeStyleElement(style) {
+  // istanbul ignore if
+  if (style.parentNode === null) {
+    return false;
+  }
+
+  style.parentNode.removeChild(style);
+}
+/* istanbul ignore next  */
+
+
+var replaceText = function replaceText() {
+  var textStore = [];
+  return function replace(index, replacement) {
+    textStore[index] = replacement;
+    return textStore.filter(Boolean).join('\n');
+  };
+}();
+
+function applyToSingletonTag(style, index, remove, obj) {
+  var css = remove ? '' : obj.media ? "@media ".concat(obj.media, " {").concat(obj.css, "}") : obj.css; // For old IE
+
+  /* istanbul ignore if  */
+
+  if (style.styleSheet) {
+    style.styleSheet.cssText = replaceText(index, css);
+  } else {
+    var cssNode = document.createTextNode(css);
+    var childNodes = style.childNodes;
+
+    if (childNodes[index]) {
+      style.removeChild(childNodes[index]);
+    }
+
+    if (childNodes.length) {
+      style.insertBefore(cssNode, childNodes[index]);
+    } else {
+      style.appendChild(cssNode);
+    }
+  }
+}
+
+function applyToTag(style, options, obj) {
+  var css = obj.css;
+  var media = obj.media;
+  var sourceMap = obj.sourceMap;
+
+  if (media) {
+    style.setAttribute('media', media);
+  } else {
+    style.removeAttribute('media');
+  }
+
+  if (sourceMap && btoa) {
+    css += "\n/*# sourceMappingURL=data:application/json;base64,".concat(btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))), " */");
+  } // For old IE
+
+  /* istanbul ignore if  */
+
+
+  if (style.styleSheet) {
+    style.styleSheet.cssText = css;
+  } else {
+    while (style.firstChild) {
+      style.removeChild(style.firstChild);
+    }
+
+    style.appendChild(document.createTextNode(css));
+  }
+}
+
+var singleton = null;
+var singletonCounter = 0;
+
+function addStyle(obj, options) {
+  var style;
+  var update;
+  var remove;
+
+  if (options.singleton) {
+    var styleIndex = singletonCounter++;
+    style = singleton || (singleton = insertStyleElement(options));
+    update = applyToSingletonTag.bind(null, style, styleIndex, false);
+    remove = applyToSingletonTag.bind(null, style, styleIndex, true);
+  } else {
+    style = insertStyleElement(options);
+    update = applyToTag.bind(null, style, options);
+
+    remove = function remove() {
+      removeStyleElement(style);
+    };
+  }
+
+  update(obj);
+  return function updateStyle(newObj) {
+    if (newObj) {
+      if (newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap) {
+        return;
+      }
+
+      update(obj = newObj);
+    } else {
+      remove();
+    }
+  };
+}
+
+module.exports = function (list, options) {
+  options = options || {}; // Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+  // tags it will allow on a page
+
+  if (!options.singleton && typeof options.singleton !== 'boolean') {
+    options.singleton = isOldIE();
+  }
+
+  list = list || [];
+  var lastIdentifiers = modulesToDom(list, options);
+  return function update(newList) {
+    newList = newList || [];
+
+    if (Object.prototype.toString.call(newList) !== '[object Array]') {
+      return;
+    }
+
+    for (var i = 0; i < lastIdentifiers.length; i++) {
+      var identifier = lastIdentifiers[i];
+      var index = getIndexByIdentifier(identifier);
+      stylesInDom[index].references--;
+    }
+
+    var newLastIdentifiers = modulesToDom(newList, options);
+
+    for (var _i = 0; _i < lastIdentifiers.length; _i++) {
+      var _identifier = lastIdentifiers[_i];
+
+      var _index = getIndexByIdentifier(_identifier);
+
+      if (stylesInDom[_index].references === 0) {
+        stylesInDom[_index].updater();
+
+        stylesInDom.splice(_index, 1);
+      }
+    }
+
+    lastIdentifiers = newLastIdentifiers;
+  };
+};
+
+/***/ }),
+
+/***/ "./src/TabStrip.ts":
+/*!*************************!*\
+  !*** ./src/TabStrip.ts ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __spreadArrays = (this && this.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var Tab = /** @class */ (function () {
+    function Tab(data) {
+        this.id = 0;
+        this.title = "";
+        this.active = false;
+        if (data.id) {
+            this.id = data.id;
+        }
+        if (data.title) {
+            this.title = data.title;
+        }
+    }
+    return Tab;
+}());
+exports.Tab = Tab;
+__webpack_require__(/*! ./style.css */ "./src/style.css");
+var CssVar;
+(function (CssVar) {
+    CssVar["activeColor"] = "--my-active-color";
+    CssVar["backgroundColor"] = "--my-bkg-color";
+    CssVar["backgroundTabActiveColor"] = "--my-bkg-tab-active-color";
+    CssVar["backgroundTabColor"] = "--my-bkg-tab-color";
+    CssVar["borderColor"] = "--my-border-color";
+    CssVar["textColor"] = "--my-text-color";
+    CssVar["textActiveColor"] = "--my-text-active-color";
+})(CssVar = exports.CssVar || (exports.CssVar = {}));
+var ADD_TAB = {
+    id: -1,
+    title: "",
+    action: "add",
+    active: false,
+};
+var TabStrip = /** @class */ (function () {
+    function TabStrip(container) {
+        this.activeColor = "#FF3333";
+        this.canAddTab = true;
+        this.canCloseTab = true;
+        this.tabs = [];
+        this.container = container;
+        container.classList.add("my-tabstrip");
+        this.handlers = new Map();
+    }
+    TabStrip.prototype.setTabs = function (tabs) {
+        this.tabs = __spreadArrays(tabs);
+        if (this.canAddTab) {
+            this.tabs.push(ADD_TAB);
+        }
+    };
+    TabStrip.prototype.setCssVar = function (cssVar, value) {
+        console.log(CssVar.activeColor, value);
+        this.container.style.setProperty(cssVar, value);
+    };
+    TabStrip.prototype.getCssVar = function (cssVar) {
+        return getComputedStyle(this.container).getPropertyValue(cssVar);
+    };
+    TabStrip.prototype.addEventListener = function (evName, callback) {
+        this.handlers.set(evName, callback);
+    };
+    TabStrip.prototype.setActive = function (id) {
+        var activeTab = this.tabs.find(function (tab) { return tab.active; });
+        activeTab.active = false;
+        var newActiveTab = this.tabs.find(function (tab) { return tab.id == id; });
+        newActiveTab.active = true;
+        this.render();
+    };
+    TabStrip.prototype.closeTab = function (id) {
+        this.tabs = this.tabs.filter(function (tab) { return tab.id !== id; });
+        var activeTab = this.tabs.find(function (tab) { return tab.active; });
+        if (!activeTab) {
+            this.tabs[0].active = true;
+        }
+        this.render();
+    };
+    TabStrip.prototype.addTab = function () {
+        var id = this.tabs.reduce(function (a, b) { return Math.max(a, b.id); }, 0) + 1;
+        var newTab = {
+            id: id,
+            title: "Nuovo tab",
+            active: false,
+        };
+        this.tabs = this.tabs.filter(function (tab) { return tab.id > 0; }).concat([newTab, this.addTab ? ADD_TAB : undefined]);
+        this.setActive(id);
+        this.render();
+        return newTab;
+    };
+    TabStrip.prototype.onTabClick = function (event, tabId, index, tab) {
+        event.preventDefault();
+        event.stopPropagation();
+        var handler = this.handlers.get("tabclick");
+        if (handler) {
+            handler(event, tabId, index, tab);
+        }
+    };
+    TabStrip.prototype.onTabCloseClick = function (event, tabId, index, tab) {
+        event.preventDefault();
+        event.stopPropagation();
+        var handler = this.handlers.get("tabclose");
+        if (handler) {
+            handler(event, tabId, index, tab);
+        }
+    };
+    TabStrip.prototype.onTabAddClick = function (event, tabId, index, tab) {
+        event.preventDefault();
+        event.stopPropagation();
+        var handler = this.handlers.get("tabadd");
+        if (handler) {
+            handler(event, tabId, index, tab);
+        }
+    };
+    TabStrip.prototype.render = function () {
+        var _this = this;
+        console.log(this);
+        this.container.innerHTML = "";
+        var ul = document.createElement("ul");
+        ul.classList.add("my-tabstrip-ul");
+        this.tabs.map(function (tab, index) { return _this.createItem(tab, index); }).forEach(function (li) { return ul.appendChild(li); });
+        this.container.appendChild(ul);
+    };
+    TabStrip.prototype.createItem = function (tab, index) {
+        var li;
+        if (tab.action === "add") {
+            li = this.createAddTab(tab, index);
+        }
+        else {
+            li = this.createTab(tab, index);
+        }
+        return li;
+    };
+    TabStrip.prototype.createAddTab = function (tab, index) {
+        var _this = this;
+        var li = document.createElement("li");
+        li.classList.add("my-tabstrip-li");
+        li.classList.add("action-add");
+        var a = document.createElement("a");
+        a.innerHTML = "+"; //+ "&#10006;" + "&#x2715;"
+        a.addEventListener("click", function () {
+            _this.onTabAddClick(event, tab.id, index, tab);
+        });
+        li.append(a);
+        return li;
+    };
+    TabStrip.prototype.createTab = function (tab, index) {
+        var _this = this;
+        var li = document.createElement("li");
+        li.classList.add("my-tabstrip-li");
+        if (tab.active) {
+            li.classList.add("active");
+        }
+        li.addEventListener("click", function () {
+            _this.onTabClick(event, tab.id, index, tab);
+        });
+        var a = document.createElement("a");
+        a.classList.add("my-tabstrip-li-a");
+        a.innerText = tab.title; //+ "&times;" + "&#10006;" + "&#x2715;"
+        li.append(a);
+        if (this.canCloseTab) {
+            li.append(this.createCloseIcon(tab, index));
+        }
+        return li;
+    };
+    TabStrip.prototype.createCloseIcon = function (tab, index) {
+        var _this = this;
+        var closeIcon = document.createElement("span");
+        closeIcon.classList.add("my-tabstrip-li-icon");
+        closeIcon.innerHTML = "&#x2715;";
+        if (tab.active) {
+            closeIcon.classList.add("active-icon");
+        }
+        closeIcon.addEventListener("click", function () {
+            _this.onTabCloseClick(event, tab.id, index, tab);
+        });
+        return closeIcon;
+    };
+    return TabStrip;
+}());
+exports.TabStrip = TabStrip;
+
+
+/***/ }),
+
+/***/ "./src/ctl_com_888sp_tabstrip.ts":
+/*!***************************************!*\
+  !*** ./src/ctl_com_888sp_tabstrip.ts ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+function foo() {
+    console.log("Foo");
+}
+exports.foo = foo;
+var TabStrip_1 = __webpack_require__(/*! ./TabStrip */ "./src/TabStrip.ts");
+// import "./style.css"
+/****** CONSTANTS ******/
+var PROPERTIES = {
+    autoupdate: "$autoupdate",
+    canclosetab: "$canclosetab",
+    canaddtab: "$canaddtab",
+    activecolor: "$activecolor",
+    backgroundcolor: "$backgroundcolor",
+    backgroundtabactivecoloractive: "$backgroundtabactivecoloractive",
+    backgroundtabcolor: "$backgroundtabcolor",
+    bordercolor: "$bordercolor",
+    textcolor: "$textcolor",
+    textactivecolor: "$textactivecolor",
+};
+var EVENTS = {
+    evTabClose: 1,
+    evTabAdd: 2,
+    evTabClick: 3,
+};
+var ctrl_com_888sp_tabstrip = /** @class */ (function (_super) {
+    __extends(ctrl_com_888sp_tabstrip, _super);
+    function ctrl_com_888sp_tabstrip() {
+        var _this = _super.call(this) || this;
+        _this.autoUpdate = false;
+        _this.init_class_inst(); // initialize our class
+        return _this;
+    }
+    ctrl_com_888sp_tabstrip.prototype.init_ctrl_inst = function (form, elem, rowCtrl, rowNumber) {
+        var _this = this;
+        _super.prototype.init_ctrl_inst.call(this, form, elem, rowCtrl, rowNumber);
+        //Control-specific initialization:
+        var client_elem = this.getClientElem();
+        var datapropsobj = JSON.parse(client_elem.getAttribute("data-props"));
+        this.tabStrip = new TabStrip_1.TabStrip(client_elem);
+        this.tabStrip.addEventListener("tabclick", function (event, id, index, tab) {
+            if (_this.autoUpdate) {
+                _this.tabStrip.setActive(id);
+            }
+            if (_this.canSendEvent(EVENTS.evTabClick)) {
+                _this.eventParamsAdd("pTabNum", index + 1);
+                _this.sendEvent("evTabClick");
+            }
+        });
+        this.tabStrip.addEventListener("tabclose", function (event, id, index, tab) {
+            if (_this.autoUpdate) {
+                _this.tabStrip.closeTab(id);
+            }
+            if (_this.canSendEvent(EVENTS.evTabClose)) {
+                _this.eventParamsAdd("pTabNum", index + 1);
+                _this.sendEvent("evTabClose");
+            }
+        });
+        this.tabStrip.addEventListener("tabadd", function (event) {
+            if (_this.autoUpdate) {
+                // const tab = this.tabStrip.addTab()
+                // const datanameList = new omnis_list(this.mData)
+                // const rowIndex = datanameList.addRow(0, datanameList.getColumnCount())
+                // datanameList.setData("id", rowIndex, tab.id)
+                // datanameList.setData("title", rowIndex, tab.title)
+                // datanameList.setCurrentRow(rowIndex)
+            }
+            if (_this.canSendEvent(EVENTS.evTabAdd)) {
+                _this.sendEvent("evTabAdd");
+            }
+        });
+        for (var propName in PROPERTIES) {
+            var propValue = datapropsobj[propName]; // L'oggetto è indicizzato per il nome senza $
+            this.setProperty(PROPERTIES[propName], propValue);
+        }
+        this.update();
+        return false;
+    };
+    ctrl_com_888sp_tabstrip.prototype.updateCtrl = function (what, row, col, mustUpdate) {
+        var elem = this.getClientElem();
+        console.log("update", arguments);
+        // center the text vertically:
+        elem.style.lineHeight = elem.style.height;
+        elem.style.textAlign = "center";
+        // read $dataname value and display in control
+        var dataname = this.getData();
+        var datanameList = new omnis_list(dataname);
+        this.mData = dataname;
+        elem.innerHTML = "";
+        if (dataname) {
+            var tabs = [];
+            var currentLine = datanameList.getCurrentRow();
+            var activeLine = currentLine > 0 ? currentLine : 1;
+            console.log(currentLine, activeLine);
+            for (var index = 1; index <= datanameList.getRowCount(); index++) {
+                tabs.push({
+                    id: datanameList.getData("id", index),
+                    title: datanameList.getData("title", index),
+                    active: index == activeLine,
+                });
+            }
+            console.log(tabs);
+            this.tabStrip.setTabs(tabs);
+            this.tabStrip.render();
+        }
+    };
+    /**
+     * This is called when an event registered using this.mEventFunction() is triggered.
+     *
+     * @param event The event object
+     */
+    ctrl_com_888sp_tabstrip.prototype.handleEvent = function (event) {
+        if (!this.isEnabled())
+            return true; // If the control is disabled, don't process the event.
+        switch (event.type) {
+            case "click":
+                return true;
+            // case "touchstart":
+            //     this.lastTouch = new Date().getTime() // Note the time of the touch start.
+            //     this.touchStartPos = {
+            //         x: event.changedTouches0.clientX,
+            //         y: event.changedTouches0.clientY,
+            //     } // Note the starting position of the touch.
+            //     break
+            // case "touchend":
+            //     var time = new Date().getTime()
+            //     if (time - this.lastTouch < 500) {
+            //         //Treat as a click if less than 500ms have elapsed since touchstart
+            //         if (touchWithinRange(this.touchStartPos, event.changedTouches0, 20)) {
+            //             //Only treat as a click if less than 20 pixels have been scrolled.
+            //             return this.handleClick(event.changedTouches0.offsetX, event.changedTouches0.offsetY)
+            //         }
+            //     }
+            //     break
+        }
+        _super.prototype.handleEvent.call(this, event);
+    };
+    ctrl_com_888sp_tabstrip.prototype.getCanAssign = function (propNumber) {
+        return Object.values(PROPERTIES).includes(propNumber.toString()) || _super.prototype.getCanAssign.call(this, propNumber);
+    };
+    ctrl_com_888sp_tabstrip.prototype.setProperty = function (propNumber, propValue) {
+        if (!this.getCanAssign(propNumber)) {
+            return false;
+        }
+        if (propNumber) {
+            switch (propNumber) {
+                case PROPERTIES.activecolor:
+                    this.tabStrip.setCssVar(TabStrip_1.CssVar.activeColor, propValue);
+                    return true;
+                case PROPERTIES.backgroundcolor:
+                    this.tabStrip.setCssVar(TabStrip_1.CssVar.backgroundColor, propValue);
+                    return true;
+                case PROPERTIES.backgroundtabactivecoloractive:
+                    this.tabStrip.setCssVar(TabStrip_1.CssVar.backgroundTabActiveColor, propValue);
+                    return true;
+                case PROPERTIES.backgroundtabcolor:
+                    this.tabStrip.setCssVar(TabStrip_1.CssVar.backgroundTabColor, propValue);
+                    return true;
+                case PROPERTIES.textactivecolor:
+                    this.tabStrip.setCssVar(TabStrip_1.CssVar.textActiveColor, propValue);
+                    return true;
+                case PROPERTIES.textcolor:
+                    this.tabStrip.setCssVar(TabStrip_1.CssVar.textColor, propValue);
+                    return true;
+                case PROPERTIES.bordercolor:
+                    this.tabStrip.setCssVar(TabStrip_1.CssVar.borderColor, propValue);
+                    return true;
+                case PROPERTIES.canaddtab:
+                    this.tabStrip.canAddTab = propValue;
+                    return true;
+                case PROPERTIES.canclosetab:
+                    this.tabStrip.canCloseTab = propValue;
+                    return true;
+                case PROPERTIES.autoupdate:
+                    this.autoUpdate = propValue;
+                    return true;
+            }
+        }
+        return _super.prototype.setProperty.call(this, propNumber, propValue);
+    };
+    ctrl_com_888sp_tabstrip.prototype.getProperty = function (propNumber) {
+        switch (propNumber) {
+            // stile
+            case PROPERTIES.activecolor:
+                return this.tabStrip.getCssVar(TabStrip_1.CssVar.activeColor);
+            case PROPERTIES.backgroundcolor:
+                return this.tabStrip.getCssVar(TabStrip_1.CssVar.backgroundColor);
+            case PROPERTIES.backgroundtabactivecoloractive:
+                return this.tabStrip.getCssVar(TabStrip_1.CssVar.backgroundTabActiveColor);
+            case PROPERTIES.backgroundtabcolor:
+                return this.tabStrip.getCssVar(TabStrip_1.CssVar.backgroundTabColor);
+            case PROPERTIES.textactivecolor:
+                return this.tabStrip.getCssVar(TabStrip_1.CssVar.textActiveColor);
+            case PROPERTIES.textcolor:
+                return this.tabStrip.getCssVar(TabStrip_1.CssVar.textColor);
+            case PROPERTIES.bordercolor:
+                return this.tabStrip.getCssVar(TabStrip_1.CssVar.borderColor);
+            // props comportamentali
+            case PROPERTIES.canaddtab:
+                return this.tabStrip.canAddTab;
+            case PROPERTIES.canclosetab:
+                return this.tabStrip.canCloseTab;
+            // props di questo oggetto
+            case PROPERTIES.autoupdate:
+                return this.autoUpdate;
+        }
+        return _super.prototype.getProperty.call(this, propNumber);
+    };
+    return ctrl_com_888sp_tabstrip;
+}(ctrl_base));
+exports.ctrl_com_888sp_tabstrip = ctrl_com_888sp_tabstrip;
+//  // send event to Omnis
+//  if (this.canSendEvent(eBaseEvent.evClick)) {
+//     this.eventParamsAdd("pXPos", pX)
+//     this.eventParamsAdd("pYPos", pY)
+//     this.sendEvent(eBaseEvent.evClick)
+// }
+
+
+/***/ }),
+
+/***/ "./src/index.ts":
+/*!**********************!*\
+  !*** ./src/index.ts ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+function __export(m) {
+    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+}
+Object.defineProperty(exports, "__esModule", { value: true });
+__export(__webpack_require__(/*! ./ctl_com_888sp_tabstrip */ "./src/ctl_com_888sp_tabstrip.ts"));
+
+
+/***/ }),
+
+/***/ "./src/style.css":
+/*!***********************!*\
+  !*** ./src/style.css ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var api = __webpack_require__(/*! ../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+            var content = __webpack_require__(/*! !../node_modules/css-loader/dist/cjs.js!./style.css */ "./node_modules/css-loader/dist/cjs.js!./src/style.css");
+
+            content = content.__esModule ? content.default : content;
+
+            if (typeof content === 'string') {
+              content = [[module.i, content, '']];
+            }
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = api(content, options);
+
+var exported = content.locals ? content.locals : {};
+
+
+
+module.exports = exported;
+
+/***/ })
+
+/******/ })));
+//# sourceMappingURL=ctl_com_888sp_tabstrip.bundle.js.map
