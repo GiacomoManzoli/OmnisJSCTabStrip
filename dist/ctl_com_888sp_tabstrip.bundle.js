@@ -511,6 +511,7 @@ var Tab = /** @class */ (function () {
         this.id = 0;
         this.title = "";
         this.active = false;
+        this.canClose = true;
         if (data.id) {
             this.id = data.id;
         }
@@ -653,6 +654,9 @@ var TabStrip = /** @class */ (function () {
         li.classList.add("my-tabstrip-li");
         if (tab.active) {
             li.classList.add("active");
+            if (tab.activeColor && (tab === null || tab === void 0 ? void 0 : tab.activeColor) != "") {
+                li.style.setProperty(CssVar.activeColor, tab.activeColor);
+            }
         }
         li.addEventListener("click", function () {
             _this.onTabClick(event, tab.id, index, tab);
@@ -661,7 +665,7 @@ var TabStrip = /** @class */ (function () {
         a.classList.add("my-tabstrip-li-a");
         a.innerText = tab.title; //+ "&times;" + "&#10006;" + "&#x2715;"
         li.append(a);
-        if (this.canCloseTab) {
+        if (this.canCloseTab && tab.canClose) {
             li.append(this.createCloseIcon(tab, index));
         }
         return li;
@@ -807,9 +811,11 @@ var ctrl_com_888sp_tabstrip = /** @class */ (function (_super) {
                     id: datanameList.getData("id", index),
                     title: datanameList.getData("title", index),
                     active: index == activeLine,
+                    activeColor: datanameList.getData("activeColor", index),
+                    canClose: datanameList.getData("canClose", index),
                 });
             }
-            console.log(tabs);
+            console.table(tabs);
             this.tabStrip.setTabs(tabs);
             this.tabStrip.render();
         }

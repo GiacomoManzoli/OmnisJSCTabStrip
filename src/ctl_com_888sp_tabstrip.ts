@@ -2,7 +2,7 @@ export function foo() {
     console.log("Foo")
 }
 
-import { TabStrip, CssVar } from "./TabStrip"
+import { TabStrip, CssVar, Tab } from "./TabStrip"
 
 // import "./style.css"
 
@@ -102,19 +102,21 @@ export class ctrl_com_888sp_tabstrip extends ctrl_base {
         this.mData = dataname
         elem.innerHTML = ""
         if (dataname) {
-            let tabs = []
+            let tabs: Tab[] = []
             const currentLine = datanameList.getCurrentRow()
             const activeLine = currentLine > 0 ? currentLine : 1
             console.log(currentLine, activeLine)
+
             for (let index = 1; index <= datanameList.getRowCount(); index++) {
                 tabs.push({
                     id: datanameList.getData("id", index),
                     title: datanameList.getData("title", index),
                     active: index == activeLine,
+                    activeColor: datanameList.getData("activeColor", index),
+                    canClose: datanameList.getData("canClose", index),
                 })
             }
-            console.log(tabs)
-
+            console.table(tabs)
             this.tabStrip.setTabs(tabs)
             this.tabStrip.render()
         }

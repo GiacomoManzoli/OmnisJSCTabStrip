@@ -3,6 +3,9 @@ export class Tab {
     title: string = ""
     action?: "add"
     active: boolean = false
+    canClose?: boolean = true
+    activeColor?: string
+
     constructor(data: { id?: number; title?: string }) {
         if (data.id) {
             this.id = data.id
@@ -137,8 +140,8 @@ export class TabStrip {
         this.container.appendChild(ul)
     }
 
-    private createItem(tab, index) {
-        let li
+    private createItem(tab: Tab, index: number) {
+        let li: HTMLLIElement
         if (tab.action === "add") {
             li = this.createAddTab(tab, index)
         } else {
@@ -147,7 +150,7 @@ export class TabStrip {
 
         return li
     }
-    private createAddTab(tab, index) {
+    private createAddTab(tab: Tab, index: number) {
         const li = document.createElement("li")
         li.classList.add("my-tabstrip-li")
         li.classList.add("action-add")
@@ -161,11 +164,14 @@ export class TabStrip {
         return li
     }
 
-    private createTab(tab, index) {
+    private createTab(tab: Tab, index: number) {
         const li = document.createElement("li")
         li.classList.add("my-tabstrip-li")
         if (tab.active) {
             li.classList.add("active")
+            if (tab.activeColor && tab?.activeColor != "") {
+                li.style.setProperty(CssVar.activeColor, tab.activeColor)
+            }
         }
         li.addEventListener("click", () => {
             this.onTabClick(event, tab.id, index, tab)
@@ -175,14 +181,14 @@ export class TabStrip {
         a.classList.add("my-tabstrip-li-a")
         a.innerText = tab.title //+ "&times;" + "&#10006;" + "&#x2715;"
         li.append(a)
-        if (this.canCloseTab) {
+        if (this.canCloseTab && tab.canClose) {
             li.append(this.createCloseIcon(tab, index))
         }
 
         return li
     }
 
-    private createCloseIcon(tab, index) {
+    private createCloseIcon(tab: Tab, index: number) {
         const closeIcon = document.createElement("span")
         closeIcon.classList.add("my-tabstrip-li-icon")
         closeIcon.innerHTML = "&#x2715;"
