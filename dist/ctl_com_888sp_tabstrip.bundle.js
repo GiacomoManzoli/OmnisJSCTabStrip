@@ -97,7 +97,7 @@
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ".my-tabstrip-container {\n    --my-active-color: #ff8a00;\n    --my-bkg-color: #ffffff;\n    --my-bkg-tab-active-color: #fff;\n    --my-bkg-tab-color: #f0f0f0;\n    --my-border-color: #333333;\n    --my-text-color: inherit;\n    --my-text-active-color: inherit;\n}\n\n.my-tabstrip-ul {\n    padding: 0;\n    margin: 0;\n    list-style-type: none;\n    height: 100%;\n    display: flex;\n    color: var(--my-text-color);\n    flex-direction: row;\n    flex-wrap: nowrap;\n    align-items: stretch;\n    background-color: var(--my-bgk-color);\n    line-height: initial;\n    text-align: initial;\n}\n\n.my-tabstrip-li {\n    cursor: default;\n    font-size: 12px;\n    width: 160px;\n    padding: 8px;\n    border: 1px solid var(--my-border-color);\n    border-left: 0px;\n    display: flex;\n    align-items: center;\n    background-color: var(--my-bkg-tab-color);\n    margin-bottom: -1px;\n    display: flex;\n    min-width: 0; /* Serve per far andare overflow ellipsis */\n}\n\n.my-tabstrip-li:hover {\n    /* background-color: #fafafa; */\n    filter: brightness(1.05);\n}\n\n.my-tabstrip-li-a {\n    flex: 1;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n}\n.my-tabstrip-li-icon {\n    /* cursor: pointer; */\n    padding: 2px 4px;\n    background-color: var(--my-bkg-tab-color);\n}\n.my-tabstrip-li-icon:hover {\n    filter: brightness(1.05);\n    color: var(--my-active-color);\n}\n\n.my-tabstrip:first-child {\n    border-left: 1px solid var(--my-border-color) !important;\n}\n\n.active {\n    background-color: var(--my-bkg-tab-active-color) !important;\n    border-bottom-color: var(--my-bkg-tab-active-color);\n    box-shadow: inset 0px 3px var(--my-active-color);\n    border-top: var(--my-active-color) !important;\n    color: var(--my-text-active-color);\n}\n\n.active:hover {\n    filter: none !important;\n}\n\n.active-icon {\n    background-color: var(--my-bkg-tab-active-color) !important;\n}\n\n.action-add {\n    width: initial !important;\n    background-color: var(--my-bgk-color);\n    border: 0;\n    align-items: center;\n}\n.action-add a {\n    font-size: 20px;\n    height: 16px;\n    line-height: 16px;\n    padding: 2px;\n    border-radius: 4px;\n}\n.action-add a:hover {\n    color: var(--my-active-color);\n}\n", ""]);
+exports.push([module.i, ".my-tabstrip-container {\n    --my-active-color: #ff8a00;\n    --my-bkg-color: #ffffff;\n    --my-bkg-tab-active-color: #fff;\n    --my-bkg-tab-color: #f0f0f0;\n    --my-border-color: #333333;\n    --my-text-color: inherit;\n    --my-text-active-color: inherit;\n}\n\n.my-tabstrip-ul {\n    padding: 0;\n    margin: 0;\n    list-style-type: none;\n    height: 100%;\n    display: flex;\n    color: var(--my-text-color);\n    flex-direction: row;\n    flex-wrap: nowrap;\n    align-items: stretch;\n    background-color: var(--my-bgk-color);\n    line-height: initial;\n    text-align: initial;\n}\n\n.my-tabstrip-li {\n    cursor: default;\n    font-size: 12px;\n    width: 160px;\n    padding: 8px;\n    border: 1px solid var(--my-border-color);\n    border-left: 0px;\n    display: flex;\n    align-items: center;\n    background-color: var(--my-bkg-tab-color);\n    /* margin-bottom: -1px; */\n    display: flex;\n    min-width: 0; /* Serve per far andare overflow ellipsis */\n}\n\n.my-tabstrip-li:hover {\n    /* background-color: #fafafa; */\n    filter: brightness(1.05);\n}\n\n.my-tabstrip-li-a {\n    flex: 1;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n}\n.my-tabstrip-li-icon {\n    /* cursor: pointer; */\n    padding: 2px 4px;\n    background-color: var(--my-bkg-tab-color);\n}\n.my-tabstrip-li-icon:hover {\n    filter: brightness(1.05);\n    color: var(--my-active-color);\n}\n\n.my-tabstrip:first-child {\n    border-left: 1px solid var(--my-border-color) !important;\n}\n\n.active {\n    background-color: var(--my-bkg-tab-active-color) !important;\n    border-bottom-color: var(--my-bkg-tab-active-color) !important;\n    box-shadow: inset 0px 3px var(--my-active-color);\n    border-top: var(--my-active-color) !important;\n    color: var(--my-text-active-color);\n}\n\n.active:hover {\n    filter: none !important;\n}\n\n.active-icon {\n    background-color: var(--my-bkg-tab-active-color) !important;\n}\n\n.action-add {\n    width: initial !important;\n    background-color: var(--my-bgk-color);\n    border: 0;\n    align-items: center;\n}\n.action-add a {\n    font-size: 20px;\n    height: 16px;\n    line-height: 16px;\n    padding: 2px;\n    border-radius: 4px;\n}\n.action-add a:hover {\n    color: var(--my-active-color);\n}\n\n.my-border-filler {\n    border-bottom: 1px solid var(--my-border-color);\n    background-color: var(--my-bkg-color);\n    filter: none !important;\n    flex: 1;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -539,6 +539,12 @@ var ADD_TAB = {
     action: "add",
     active: false,
 };
+var FILLER_TAB = {
+    id: -2,
+    title: "",
+    action: "none",
+    active: false,
+};
 var TabStrip = /** @class */ (function () {
     function TabStrip(container) {
         this.activeColor = "#FF3333";
@@ -553,6 +559,9 @@ var TabStrip = /** @class */ (function () {
         this.tabs = __spreadArrays(tabs);
         if (this.canAddTab) {
             this.tabs.push(ADD_TAB);
+        }
+        else {
+            this.tabs.push(FILLER_TAB);
         }
     };
     TabStrip.prototype.setCssVar = function (cssVar, value) {
@@ -630,6 +639,9 @@ var TabStrip = /** @class */ (function () {
         if (tab.action === "add") {
             li = this.createAddTab(tab, index);
         }
+        else if (tab.action == "none") {
+            li = this.createFillerTab();
+        }
         else {
             li = this.createTab(tab, index);
         }
@@ -640,11 +652,21 @@ var TabStrip = /** @class */ (function () {
         var li = document.createElement("li");
         li.classList.add("my-tabstrip-li");
         li.classList.add("action-add");
+        li.classList.add("my-border-filler");
         var a = document.createElement("a");
         a.innerHTML = "+"; //+ "&#10006;" + "&#x2715;"
         a.addEventListener("click", function () {
             _this.onTabAddClick(event, tab.id, index, tab);
         });
+        li.append(a);
+        return li;
+    };
+    TabStrip.prototype.createFillerTab = function () {
+        var li = document.createElement("li");
+        li.classList.add("my-tabstrip-li");
+        li.classList.add("my-border-filler");
+        var a = document.createElement("a");
+        a.innerHTML = "&nbsp;"; //+ "&#10006;" + "&#x2715;"
         li.append(a);
         return li;
     };
@@ -726,7 +748,7 @@ var PROPERTIES = {
     canaddtab: "$canaddtab",
     activecolor: "$activecolor",
     backgroundcolor: "$backgroundcolor",
-    backgroundtabactivecoloractive: "$backgroundtabactivecoloractive",
+    backgroundtabactivecolor: "$backgroundtabactivecolor",
     backgroundtabcolor: "$backgroundtabcolor",
     bordercolor: "$bordercolor",
     textcolor: "$textcolor",
@@ -866,7 +888,7 @@ var ctrl_com_888sp_tabstrip = /** @class */ (function (_super) {
                 case PROPERTIES.backgroundcolor:
                     this.tabStrip.setCssVar(TabStrip_1.CssVar.backgroundColor, propValue);
                     return true;
-                case PROPERTIES.backgroundtabactivecoloractive:
+                case PROPERTIES.backgroundtabactivecolor:
                     this.tabStrip.setCssVar(TabStrip_1.CssVar.backgroundTabActiveColor, propValue);
                     return true;
                 case PROPERTIES.backgroundtabcolor:
@@ -901,7 +923,7 @@ var ctrl_com_888sp_tabstrip = /** @class */ (function (_super) {
                 return this.tabStrip.getCssVar(TabStrip_1.CssVar.activeColor);
             case PROPERTIES.backgroundcolor:
                 return this.tabStrip.getCssVar(TabStrip_1.CssVar.backgroundColor);
-            case PROPERTIES.backgroundtabactivecoloractive:
+            case PROPERTIES.backgroundtabactivecolor:
                 return this.tabStrip.getCssVar(TabStrip_1.CssVar.backgroundTabActiveColor);
             case PROPERTIES.backgroundtabcolor:
                 return this.tabStrip.getCssVar(TabStrip_1.CssVar.backgroundTabColor);

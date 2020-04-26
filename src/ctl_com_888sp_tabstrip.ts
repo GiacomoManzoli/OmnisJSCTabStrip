@@ -13,7 +13,7 @@ var PROPERTIES = {
     canaddtab: "$canaddtab",
     activecolor: "$activecolor",
     backgroundcolor: "$backgroundcolor",
-    backgroundtabactivecoloractive: "$backgroundtabactivecoloractive",
+    backgroundtabactivecolor: "$backgroundtabactivecolor",
     backgroundtabcolor: "$backgroundtabcolor",
     bordercolor: "$bordercolor",
     textcolor: "$textcolor",
@@ -172,7 +172,7 @@ export class ctrl_com_888sp_tabstrip extends ctrl_base {
                 case PROPERTIES.backgroundcolor:
                     this.tabStrip.setCssVar(CssVar.backgroundColor, propValue)
                     return true
-                case PROPERTIES.backgroundtabactivecoloractive:
+                case PROPERTIES.backgroundtabactivecolor:
                     this.tabStrip.setCssVar(CssVar.backgroundTabActiveColor, propValue)
                     return true
                 case PROPERTIES.backgroundtabcolor:
@@ -209,7 +209,7 @@ export class ctrl_com_888sp_tabstrip extends ctrl_base {
                 return this.tabStrip.getCssVar(CssVar.activeColor)
             case PROPERTIES.backgroundcolor:
                 return this.tabStrip.getCssVar(CssVar.backgroundColor)
-            case PROPERTIES.backgroundtabactivecoloractive:
+            case PROPERTIES.backgroundtabactivecolor:
                 return this.tabStrip.getCssVar(CssVar.backgroundTabActiveColor)
             case PROPERTIES.backgroundtabcolor:
                 return this.tabStrip.getCssVar(CssVar.backgroundTabColor)

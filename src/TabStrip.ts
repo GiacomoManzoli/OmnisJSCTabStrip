@@ -1,7 +1,7 @@
 export class Tab {
     id: number = 0
     title: string = ""
-    action?: "add"
+    action?: "add" | "none"
     active: boolean = false
     canClose?: boolean = true
     activeColor?: string
@@ -38,6 +38,13 @@ const ADD_TAB: Tab = {
     active: false,
 }
 
+const FILLER_TAB: Tab = {
+    id: -2,
+    title: "",
+    action: "none",
+    active: false,
+}
+
 export class TabStrip {
     tabs: Tab[]
     container: HTMLElement
@@ -58,6 +65,8 @@ export class TabStrip {
         this.tabs = [...tabs]
         if (this.canAddTab) {
             this.tabs.push(ADD_TAB)
+        } else {
+            this.tabs.push(FILLER_TAB)
         }
     }
 
@@ -144,6 +153,8 @@ export class TabStrip {
         let li: HTMLLIElement
         if (tab.action === "add") {
             li = this.createAddTab(tab, index)
+        } else if (tab.action == "none") {
+            li = this.createFillerTab()
         } else {
             li = this.createTab(tab, index)
         }
@@ -154,11 +165,23 @@ export class TabStrip {
         const li = document.createElement("li")
         li.classList.add("my-tabstrip-li")
         li.classList.add("action-add")
+        li.classList.add("my-border-filler")
         const a = document.createElement("a")
         a.innerHTML = "+" //+ "&#10006;" + "&#x2715;"
         a.addEventListener("click", () => {
             this.onTabAddClick(event, tab.id, index, tab)
         })
+        li.append(a)
+
+        return li
+    }
+
+    private createFillerTab() {
+        const li = document.createElement("li")
+        li.classList.add("my-tabstrip-li")
+        li.classList.add("my-border-filler")
+        const a = document.createElement("a")
+        a.innerHTML = "&nbsp;" //+ "&#10006;" + "&#x2715;"
         li.append(a)
 
         return li
