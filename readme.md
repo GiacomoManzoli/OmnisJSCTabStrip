@@ -1,29 +1,30 @@
-## Installazione
+## Set up
 
-1. Copiare il la cartella `controls/com.888sp.tabstrip` dentro la cartella `html` di Omnis
-2. Copiare il bundle dentro la cartella `html/script` di Omnis
-3. Includere il bundle nella pagina template di Omnis
+1. Copy the content of `controls/com.888sp.tabstrip` into Omnis `html` folder
+2. Copy `ctl_com_888sp_tabstrip.bundle.js` into Omnis `html/script` folder
+3. Add the `<script>` to `jsctempl.htm` to load  `ctl_com_888sp_tabstrip.bundle.js`
 
-## Utilizzo
+## Usage
 
-Definire il dataname del componente come una lista:
+Set the dataname of the element to a list defined has:
 
--   `id` identificativo del tab
--   `titolo` label visualizzata
--   `activeColor` opzionale, codice esadecimale (con `#`) da utilizzare quando il tab è attivo. Se non viene specificato viene usato quello generico
--   `canClose` opzionale, specifica se visualizzare o meno il pulsante per chiudere il tab. Per funzionare la tabstrip deve avere la proprietà `$canclose` a `kTrue`
+-   `id` tab id
+-   `titolo` tab display text
+-   `activeColor` optional, HEX RGB color (starting with `#`) to highlight the active tab.
+-   `canClose` optional, shows the close button for this tab. Works only if `$canclose=kTrue`
 
-Esempio di definizione del dataname:
+Sample list:
 
 ```
-Do ilTabs.$define()
-Do ilTabs.$cols.$add('id';kInteger;k32bitint)
-Do ilTabs.$cols.$add('title';kCharacter;kSimplechar)
-Do ilTabs.$cols.$add('activeColor';kCharacter;kSimplechar)
-Do ilTabs.$cols.$add('canClose';kBoolean)
-Do ilTabs.$add(1;'A1 - Navigataor';'#99CCCC';kFalse)
-Do ilTabs.$add(2;'A2 - Dashboard';'#33CC33';kFalse)
-Do ilTabs.$add(3;'A3 - Scheda 1';;kTrue)
-Do ilTabs.$add(4;'A4 - Scheda 2';;kTrue)
-Calculate ilTabs.$line as 3
+Do iTabList.$define()
+Do iTabList.$cols.$add('id',kInteger,k32bitint)
+Do iTabList.$cols.$add('title',kCharacter,kSimplechar)
+Do iTabList.$cols.$add('activeColor',kCharacter,kSimplechar)
+Do iTabList.$cols.$add('canClose',kBoolean)
+
+Do iTabList.$add(1,'A1 - Navigator','#99CCCC',kFalse)
+Do iTabList.$add(2,'A2 - Dashboard','#33CC33',kFalse)
+Do iTabList.$add(3,'A3 - Tab 1',,kTrue)
+Do iTabList.$add(4,'A4 - Tab 2',,kTrue)
+Calculate iTabList.$line as 3 ## Sets the active tab
 ```

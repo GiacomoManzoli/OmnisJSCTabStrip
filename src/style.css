@@ -1,12 +1,3 @@
-.my-tabstrip-container {
-    --my-active-color: #ff8a00;
-    --my-bkg-color: #ffffff;
-    --my-bkg-tab-active-color: #fff;
-    --my-bkg-tab-color: #f0f0f0;
-    --my-border-color: #333333;
-    --my-text-color: inherit;
-    --my-text-active-color: inherit;
-}
 
 .my-tabstrip-ul {
     padding: 0;
@@ -14,32 +5,21 @@
     list-style-type: none;
     height: 100%;
     display: flex;
-    color: var(--my-text-color);
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: stretch;
-    background-color: var(--my-bgk-color);
     line-height: initial;
     text-align: initial;
 }
 
 .my-tabstrip-li {
-    cursor: default;
-    font-size: 12px;
-    width: 160px;
-    padding: 8px;
-    border: 1px solid var(--my-border-color);
-    border-left: 0px;
+    cursor: pointer;
     display: flex;
     align-items: center;
-    background-color: var(--my-bkg-tab-color);
-    /* margin-bottom: -1px; */
-    display: flex;
     min-width: 0; /* Serve per far andare overflow ellipsis */
 }
 
 .my-tabstrip-li:hover {
-    /* background-color: #fafafa; */
     filter: brightness(1.05);
 }
 
@@ -50,55 +30,28 @@
     text-overflow: ellipsis;
 }
 .my-tabstrip-li-icon {
-    /* cursor: pointer; */
     padding: 2px 4px;
-    background-color: var(--my-bkg-tab-color);
+    margin-left: 8px;
+    margin-right: -8px;
 }
 .my-tabstrip-li-icon:hover {
     filter: brightness(1.05);
-    color: var(--my-active-color);
-}
-
-.my-tabstrip:first-child {
-    border-left: 1px solid var(--my-border-color) !important;
-}
-
-.active {
-    background-color: var(--my-bkg-tab-active-color) !important;
-    border-bottom-color: var(--my-bkg-tab-active-color) !important;
-    box-shadow: inset 0px 3px var(--my-active-color);
-    border-top: var(--my-active-color) !important;
-    color: var(--my-text-active-color);
 }
 
 .active:hover {
     filter: none !important;
 }
 
-.active-icon {
-    background-color: var(--my-bkg-tab-active-color) !important;
-}
-
 .action-add {
     width: initial !important;
-    background-color: var(--my-bgk-color);
     border: 0;
     align-items: center;
 }
+
 .action-add a {
     font-size: 20px;
     height: 16px;
     line-height: 16px;
     padding: 2px;
     border-radius: 4px;
-}
-.action-add a:hover {
-    color: var(--my-active-color);
-}
-
-.my-border-filler {
-    border-bottom: 1px solid var(--my-border-color);
-    background-color: var(--my-bkg-color);
-    filter: none !important;
-    flex: 1;
 }

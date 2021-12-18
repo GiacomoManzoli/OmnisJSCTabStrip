@@ -21,15 +21,7 @@ declare type TabStripEventHandler = (event: Event, tabId: number, index: number,
 
 import "./style.css"
 
-export enum CssVar {
-    activeColor = "--my-active-color",
-    backgroundColor = "--my-bkg-color",
-    backgroundTabActiveColor = "--my-bkg-tab-active-color",
-    backgroundTabColor = "--my-bkg-tab-color",
-    borderColor = "--my-border-color",
-    textColor = "--my-text-color",
-    textActiveColor = "--my-text-active-color",
-}
+
 
 const ADD_TAB: Tab = {
     id: -1,
@@ -38,12 +30,12 @@ const ADD_TAB: Tab = {
     active: false,
 }
 
-const FILLER_TAB: Tab = {
-    id: -2,
-    title: "",
-    action: "none",
-    active: false,
-}
+// const FILLER_TAB: Tab = {
+//     id: -2,
+//     title: "",
+//     action: "none",
+//     active: false,
+// }
 
 export class TabStrip {
     tabs: Tab[]
@@ -53,6 +45,25 @@ export class TabStrip {
     activeColor: string = "#FF3333"
     canAddTab: boolean = true
     canCloseTab: boolean = true
+
+    backgroundColor: string
+
+    tabBorderRadius = 8
+    tabSpacing = 8
+    tabWidth: number = 160
+    tabMinWidth: number = 0
+    tabMaxWidth: number = 0
+    tabPaddingHorz: number = 8
+    tabPaddingVert: number = 8
+
+    tabBackgroundColor: string
+    tabBorderColor: string = "rgb(0,0,0)"
+    tabBorderSize: number = 0
+
+    activeTabBackgroundColor: string
+    activeTabTextColor: string
+    textColor: string
+
 
     constructor(container: HTMLElement) {
         this.tabs = []
@@ -65,18 +76,10 @@ export class TabStrip {
         this.tabs = [...tabs]
         if (this.canAddTab) {
             this.tabs.push(ADD_TAB)
-        } else {
-            this.tabs.push(FILLER_TAB)
         }
-    }
-
-    setCssVar(cssVar: CssVar, value: string) {
-        console.log(CssVar.activeColor, value)
-        this.container.style.setProperty(cssVar, value)
-    }
-
-    getCssVar(cssVar: string): string {
-        return getComputedStyle(this.container).getPropertyValue(cssVar)
+        // else {
+        //     this.tabs.push(FILLER_TAB)
+        // }
     }
 
     addEventListener(evName: TabStripEvent, callback: TabStripEventHandler) {
@@ -145,6 +148,10 @@ export class TabStrip {
         this.container.innerHTML = ""
         const ul = document.createElement("ul")
         ul.classList.add("my-tabstrip-ul")
+
+        ul.style.backgroundColor = this.backgroundColor
+        ul.style.color = this.textColor
+
         this.tabs.map((tab, index) => this.createItem(tab, index)).forEach((li) => ul.appendChild(li))
         this.container.appendChild(ul)
     }
@@ -153,8 +160,8 @@ export class TabStrip {
         let li: HTMLLIElement
         if (tab.action === "add") {
             li = this.createAddTab(tab, index)
-        } else if (tab.action == "none") {
-            li = this.createFillerTab()
+            // } else if (tab.action == "none") {
+            //     li = this.createFillerTab()
         } else {
             li = this.createTab(tab, index)
         }
@@ -165,10 +172,14 @@ export class TabStrip {
         const li = document.createElement("li")
         li.classList.add("my-tabstrip-li")
         li.classList.add("action-add")
-        li.classList.add("my-border-filler")
+
+        li.style.backgroundColor = this.backgroundColor
+        li.style.color = this.tabBackgroundColor
+        li.style.marginLeft = `${this.tabSpacing}px`
+
         const a = document.createElement("a")
         a.innerHTML = "+" //+ "&#10006;" + "&#x2715;"
-        a.addEventListener("click", () => {
+        a.addEventListener("click", (event) => {
             this.onTabAddClick(event, tab.id, index, tab)
         })
         li.append(a)
@@ -176,27 +187,55 @@ export class TabStrip {
         return li
     }
 
-    private createFillerTab() {
-        const li = document.createElement("li")
-        li.classList.add("my-tabstrip-li")
-        li.classList.add("my-border-filler")
-        const a = document.createElement("a")
-        a.innerHTML = "&nbsp;" //+ "&#10006;" + "&#x2715;"
-        li.append(a)
-
-        return li
-    }
+    // private createFillerTab() {
+    //     const li = document.createElement("li")
+    //     li.classList.add("my-tabstrip-li")
+    //     li.classList.add("my-border-filler")
+    //     const a = document.createElement("a")
+    //     a.innerHTML = "&nbsp;" //+ "&#10006;" + "&#x2715;"
+    //     li.append(a)
+    //     return li
+    // }
 
     private createTab(tab: Tab, index: number) {
         const li = document.createElement("li")
         li.classList.add("my-tabstrip-li")
+
+        // Tab size
+        li.style.padding = `${this.tabPaddingVert}px ${this.tabPaddingHorz}px`
+
+        if (this.tabWidth > 0) {
+            li.style.width = `${this.tabWidth}px`
+        } else {
+            li.style.minWidth = `${this.tabMinWidth}px`
+            li.style.maxWidth = `${this.tabMaxWidth}px`
+        }
+
+        li.style.backgroundColor = this.tabBackgroundColor
+
+        // Tab border
+        li.style.borderRadius = `${this.tabBorderRadius}px`
+        li.style.borderWidth = `${this.tabBorderSize}px`
+        if (this.tabBorderSize > 0) {
+            li.style.borderStyle = "solid"
+            li.style.borderColor = this.tabBorderColor
+        }
+
+        // Spacing between tabs
+        if (index > 0) {
+            li.style.marginLeft = `${this.tabSpacing}px`
+        }
+
         if (tab.active) {
             li.classList.add("active")
-            if (tab.activeColor && tab?.activeColor != "") {
-                li.style.setProperty(CssVar.activeColor, tab.activeColor)
+            li.style.backgroundColor = this.activeTabBackgroundColor
+            li.style.color = this.activeTabTextColor
+            if (tab.activeColor && tab.activeColor != "") {
+                li.style.boxShadow = `inset 0px 3px ${tab.activeColor}`
             }
         }
-        li.addEventListener("click", () => {
+
+        li.addEventListener("click", (event) => {
             this.onTabClick(event, tab.id, index, tab)
         })
 
@@ -214,13 +253,22 @@ export class TabStrip {
     private createCloseIcon(tab: Tab, index: number) {
         const closeIcon = document.createElement("span")
         closeIcon.classList.add("my-tabstrip-li-icon")
+        closeIcon.classList.add("active-icon")
+
+        closeIcon.style.backgroundColor = this.tabBackgroundColor
+        closeIcon.style.color = this.tabBackgroundColor // somehow hidden
+
         closeIcon.innerHTML = "&#x2715;"
         if (tab.active) {
-            closeIcon.classList.add("active-icon")
+            closeIcon.style.color = this.activeTabTextColor
+            closeIcon.style.backgroundColor = this.activeTabBackgroundColor
+            closeIcon.addEventListener("click", (event) => {
+                this.onTabCloseClick(event, tab.id, index, tab)
+            })
         }
-        closeIcon.addEventListener("click", () => {
-            this.onTabCloseClick(event, tab.id, index, tab)
-        })
+
+
+
         return closeIcon
     }
 }

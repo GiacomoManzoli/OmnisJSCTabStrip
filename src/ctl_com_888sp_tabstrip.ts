@@ -2,23 +2,31 @@ export function foo() {
     console.log("Foo")
 }
 
-import { TabStrip, CssVar, Tab } from "./TabStrip"
+import { TabStrip, Tab } from "./TabStrip"
 
 // import "./style.css"
-
 /****** CONSTANTS ******/
 var PROPERTIES = {
+    // <OmnisUpdateMarker_PropertyConstants_Begin>
     autoupdate: "$autoupdate",
     canclosetab: "$canclosetab",
     canaddtab: "$canaddtab",
-    activecolor: "$activecolor",
     backgroundcolor: "$backgroundcolor",
-    backgroundtabactivecolor: "$backgroundtabactivecolor",
-    backgroundtabcolor: "$backgroundtabcolor",
-    bordercolor: "$bordercolor",
-    textcolor: "$textcolor",
-    textactivecolor: "$textactivecolor",
-}
+    activetabbackgroundcolor: "$activetabbackgroundcolor",
+    tabbackgroundcolor: "$tabbackgroundcolor",
+    tabbordercolor: "$tabbordercolor",
+    tabtextcolor: "$tabtextcolor",
+    activetabtextcolor: "$activetabtextcolor",
+    tabborderradius: "$tabborderradius",
+    tabspacing: "$tabspacing",
+    tabbordersize: "$tabbordersize",
+    tabminwidth: "$tabminwidth",
+    tabmaxwidth: "$tabmaxwidth",
+    tabwidth: "$tabwidth",
+    tabpaddinghorz: "$tabpaddinghorz",
+    tabpaddingvert: "$tabpaddingvert"
+    // <OmnisUpdateMarker_PropertyConstants_End>
+};
 
 var EVENTS = {
     evTabClose: 1,
@@ -38,45 +46,16 @@ export class ctrl_com_888sp_tabstrip extends ctrl_base {
     init_ctrl_inst(form, elem, rowCtrl, rowNumber) {
         super.init_ctrl_inst(form, elem, rowCtrl, rowNumber)
 
-        //Control-specific initialization:
         var client_elem = this.getClientElem()
+
+
+
         var datapropsobj = JSON.parse(client_elem.getAttribute("data-props"))
 
-        this.tabStrip = new TabStrip(client_elem)
+        this.initTabStrip(client_elem);
 
-        this.tabStrip.addEventListener("tabclick", (event, id, index, tab) => {
-            if (this.autoUpdate) {
-                this.tabStrip.setActive(id)
-            }
-            if (this.canSendEvent(EVENTS.evTabClick)) {
-                this.eventParamsAdd("pTabNum", index + 1)
-                this.sendEvent("evTabClick")
-            }
-        })
 
-        this.tabStrip.addEventListener("tabclose", (event, id, index, tab) => {
-            if (this.autoUpdate) {
-                this.tabStrip.closeTab(id)
-            }
-            if (this.canSendEvent(EVENTS.evTabClose)) {
-                this.eventParamsAdd("pTabNum", index + 1)
-                this.sendEvent("evTabClose")
-            }
-        })
-
-        this.tabStrip.addEventListener("tabadd", (event) => {
-            if (this.autoUpdate) {
-                // const tab = this.tabStrip.addTab()
-                // const datanameList = new omnis_list(this.mData)
-                // const rowIndex = datanameList.addRow(0, datanameList.getColumnCount())
-                // datanameList.setData("id", rowIndex, tab.id)
-                // datanameList.setData("title", rowIndex, tab.title)
-                // datanameList.setCurrentRow(rowIndex)
-            }
-            if (this.canSendEvent(EVENTS.evTabAdd)) {
-                this.sendEvent("evTabAdd")
-            }
-        })
+        console.log(datapropsobj)
 
         for (let propName in PROPERTIES) {
             const propValue = datapropsobj[propName] // L'oggetto è indicizzato per il nome senza $
@@ -166,27 +145,52 @@ export class ctrl_com_888sp_tabstrip extends ctrl_base {
 
         if (propNumber) {
             switch (propNumber) {
-                case PROPERTIES.activecolor:
-                    this.tabStrip.setCssVar(CssVar.activeColor, propValue)
-                    return true
+                // Main control
                 case PROPERTIES.backgroundcolor:
-                    this.tabStrip.setCssVar(CssVar.backgroundColor, propValue)
+                    this.tabStrip.backgroundColor = propValue as string
                     return true
-                case PROPERTIES.backgroundtabactivecolor:
-                    this.tabStrip.setCssVar(CssVar.backgroundTabActiveColor, propValue)
+                // Active TAB
+                case PROPERTIES.activetabbackgroundcolor:
+                    this.tabStrip.activeTabBackgroundColor = propValue as string
                     return true
-                case PROPERTIES.backgroundtabcolor:
-                    this.tabStrip.setCssVar(CssVar.backgroundTabColor, propValue)
+                case PROPERTIES.activetabtextcolor:
+                    this.tabStrip.activeTabTextColor = propValue as string
                     return true
-                case PROPERTIES.textactivecolor:
-                    this.tabStrip.setCssVar(CssVar.textActiveColor, propValue)
+                // TAB
+                case PROPERTIES.tabbackgroundcolor:
+                    this.tabStrip.tabBackgroundColor = propValue as string
                     return true
-                case PROPERTIES.textcolor:
-                    this.tabStrip.setCssVar(CssVar.textColor, propValue)
+                case PROPERTIES.tabtextcolor:
+                    this.tabStrip.textColor = propValue as string
                     return true
-                case PROPERTIES.bordercolor:
-                    this.tabStrip.setCssVar(CssVar.borderColor, propValue)
+                case PROPERTIES.tabbordercolor:
+                    this.tabStrip.tabBorderColor = propValue as string
                     return true
+                case PROPERTIES.tabbordersize:
+                    this.tabStrip.tabBorderSize = propValue as number
+                    return true
+                case PROPERTIES.tabborderradius:
+                    this.tabStrip.tabBorderRadius = propValue as number
+                    return true
+                case PROPERTIES.tabspacing:
+                    this.tabStrip.tabSpacing = propValue as number
+                    return true
+                case PROPERTIES.tabwidth:
+                    this.tabStrip.tabWidth = propValue as number
+                    return true
+                case PROPERTIES.tabmaxwidth:
+                    this.tabStrip.tabMaxWidth = propValue as number
+                    return true
+                case PROPERTIES.tabminwidth:
+                    this.tabStrip.tabMinWidth = propValue as number
+                    return true
+                case PROPERTIES.tabpaddinghorz:
+                    this.tabStrip.tabPaddingHorz = propValue as number
+                    return true
+                case PROPERTIES.tabpaddingvert:
+                    this.tabStrip.tabPaddingVert = propValue as number
+                    return true
+                // BEHAVIOR
                 case PROPERTIES.canaddtab:
                     this.tabStrip.canAddTab = propValue as boolean
                     return true
@@ -204,34 +208,90 @@ export class ctrl_com_888sp_tabstrip extends ctrl_base {
 
     getProperty(propNumber: string | number) {
         switch (propNumber) {
-            // stile
-            case PROPERTIES.activecolor:
-                return this.tabStrip.getCssVar(CssVar.activeColor)
+            // Main control
             case PROPERTIES.backgroundcolor:
-                return this.tabStrip.getCssVar(CssVar.backgroundColor)
-            case PROPERTIES.backgroundtabactivecolor:
-                return this.tabStrip.getCssVar(CssVar.backgroundTabActiveColor)
-            case PROPERTIES.backgroundtabcolor:
-                return this.tabStrip.getCssVar(CssVar.backgroundTabColor)
-            case PROPERTIES.textactivecolor:
-                return this.tabStrip.getCssVar(CssVar.textActiveColor)
-            case PROPERTIES.textcolor:
-                return this.tabStrip.getCssVar(CssVar.textColor)
-            case PROPERTIES.bordercolor:
-                return this.tabStrip.getCssVar(CssVar.borderColor)
-            // props comportamentali
+                return this.tabStrip.backgroundColor
+            // Active TAB
+            case PROPERTIES.activetabbackgroundcolor:
+                return this.tabStrip.activeTabBackgroundColor
+            case PROPERTIES.activetabtextcolor:
+                return this.tabStrip.activeTabTextColor
+            // TAB
+            case PROPERTIES.tabbackgroundcolor:
+                return this.tabStrip.tabBackgroundColor
+            case PROPERTIES.tabtextcolor:
+                return this.tabStrip.textColor
+            case PROPERTIES.tabbordercolor:
+                return this.tabStrip.tabBorderColor
+            case PROPERTIES.tabbordersize:
+                return this.tabStrip.tabBorderSize
+            case PROPERTIES.tabborderradius:
+                return this.tabStrip.tabBorderRadius
+            case PROPERTIES.tabspacing:
+                return this.tabStrip.tabSpacing
+            case PROPERTIES.tabwidth:
+                return this.tabStrip.tabWidth
+            case PROPERTIES.tabmaxwidth:
+                return this.tabStrip.tabMaxWidth
+            case PROPERTIES.tabminwidth:
+                return this.tabStrip.tabMinWidth
+            case PROPERTIES.tabpaddinghorz:
+                return this.tabStrip.tabPaddingHorz
+            case PROPERTIES.tabpaddingvert:
+                return this.tabStrip.tabPaddingVert
+            // BEHAVIOR
             case PROPERTIES.canaddtab:
                 return this.tabStrip.canAddTab
             case PROPERTIES.canclosetab:
                 return this.tabStrip.canCloseTab
-            // props di questo oggetto
-
             case PROPERTIES.autoupdate:
                 return this.autoUpdate
         }
 
+
         return super.getProperty(propNumber)
     }
+
+
+    private initTabStrip(client_elem) {
+        this.tabStrip = new TabStrip(client_elem)
+
+        this.tabStrip.addEventListener("tabclick", (event, id, index, tab) => {
+            if (this.autoUpdate) {
+                this.tabStrip.setActive(id)
+            }
+            if (this.canSendEvent(EVENTS.evTabClick)) {
+                this.eventParamsAdd("pTabNum", index + 1)
+                this.sendEvent("evTabClick")
+            }
+        })
+
+        this.tabStrip.addEventListener("tabclose", (event, id, index, tab) => {
+            if (this.autoUpdate) {
+                this.tabStrip.closeTab(id)
+            }
+            if (this.canSendEvent(EVENTS.evTabClose)) {
+                this.eventParamsAdd("pTabNum", index + 1)
+                this.sendEvent("evTabClose")
+            }
+        })
+
+        this.tabStrip.addEventListener("tabadd", (event) => {
+            if (this.autoUpdate) {
+                // const tab = this.tabStrip.addTab()
+                // const datanameList = new omnis_list(this.mData)
+                // const rowIndex = datanameList.addRow(0, datanameList.getColumnCount())
+                // datanameList.setData("id", rowIndex, tab.id)
+                // datanameList.setData("title", rowIndex, tab.title)
+                // datanameList.setCurrentRow(rowIndex)
+            }
+            if (this.canSendEvent(EVENTS.evTabAdd)) {
+                this.sendEvent("evTabAdd")
+            }
+        })
+    }
+
+
 
     // /**
     //  * Assigns the specified property's value to the control.

@@ -97,7 +97,7 @@
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ".my-tabstrip-container {\n    --my-active-color: #ff8a00;\n    --my-bkg-color: #ffffff;\n    --my-bkg-tab-active-color: #fff;\n    --my-bkg-tab-color: #f0f0f0;\n    --my-border-color: #333333;\n    --my-text-color: inherit;\n    --my-text-active-color: inherit;\n}\n\n.my-tabstrip-ul {\n    padding: 0;\n    margin: 0;\n    list-style-type: none;\n    height: 100%;\n    display: flex;\n    color: var(--my-text-color);\n    flex-direction: row;\n    flex-wrap: nowrap;\n    align-items: stretch;\n    background-color: var(--my-bgk-color);\n    line-height: initial;\n    text-align: initial;\n}\n\n.my-tabstrip-li {\n    cursor: default;\n    font-size: 12px;\n    width: 160px;\n    padding: 8px;\n    border: 1px solid var(--my-border-color);\n    border-left: 0px;\n    display: flex;\n    align-items: center;\n    background-color: var(--my-bkg-tab-color);\n    /* margin-bottom: -1px; */\n    display: flex;\n    min-width: 0; /* Serve per far andare overflow ellipsis */\n}\n\n.my-tabstrip-li:hover {\n    /* background-color: #fafafa; */\n    filter: brightness(1.05);\n}\n\n.my-tabstrip-li-a {\n    flex: 1;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n}\n.my-tabstrip-li-icon {\n    /* cursor: pointer; */\n    padding: 2px 4px;\n    background-color: var(--my-bkg-tab-color);\n}\n.my-tabstrip-li-icon:hover {\n    filter: brightness(1.05);\n    color: var(--my-active-color);\n}\n\n.my-tabstrip:first-child {\n    border-left: 1px solid var(--my-border-color) !important;\n}\n\n.active {\n    background-color: var(--my-bkg-tab-active-color) !important;\n    border-bottom-color: var(--my-bkg-tab-active-color) !important;\n    box-shadow: inset 0px 3px var(--my-active-color);\n    border-top: var(--my-active-color) !important;\n    color: var(--my-text-active-color);\n}\n\n.active:hover {\n    filter: none !important;\n}\n\n.active-icon {\n    background-color: var(--my-bkg-tab-active-color) !important;\n}\n\n.action-add {\n    width: initial !important;\n    background-color: var(--my-bgk-color);\n    border: 0;\n    align-items: center;\n}\n.action-add a {\n    font-size: 20px;\n    height: 16px;\n    line-height: 16px;\n    padding: 2px;\n    border-radius: 4px;\n}\n.action-add a:hover {\n    color: var(--my-active-color);\n}\n\n.my-border-filler {\n    border-bottom: 1px solid var(--my-border-color);\n    background-color: var(--my-bkg-color);\n    filter: none !important;\n    flex: 1;\n}\n", ""]);
+exports.push([module.i, "\r\n.my-tabstrip-ul {\r\n    padding: 0;\r\n    margin: 0;\r\n    list-style-type: none;\r\n    height: 100%;\r\n    display: flex;\r\n    flex-direction: row;\r\n    flex-wrap: nowrap;\r\n    align-items: stretch;\r\n    line-height: initial;\r\n    text-align: initial;\r\n}\r\n\r\n.my-tabstrip-li {\r\n    cursor: pointer;\r\n    display: flex;\r\n    align-items: center;\r\n    min-width: 0; /* Serve per far andare overflow ellipsis */\r\n}\r\n\r\n.my-tabstrip-li:hover {\r\n    filter: brightness(1.05);\r\n}\r\n\r\n.my-tabstrip-li-a {\r\n    flex: 1;\r\n    white-space: nowrap;\r\n    overflow: hidden;\r\n    text-overflow: ellipsis;\r\n}\r\n.my-tabstrip-li-icon {\r\n    padding: 2px 4px;\r\n    margin-left: 8px;\r\n    margin-right: -8px;\r\n}\r\n.my-tabstrip-li-icon:hover {\r\n    filter: brightness(1.05);\r\n}\r\n\r\n.active:hover {\r\n    filter: none !important;\r\n}\r\n\r\n.action-add {\r\n    width: initial !important;\r\n    border: 0;\r\n    align-items: center;\r\n}\r\n\r\n.action-add a {\r\n    font-size: 20px;\r\n    height: 16px;\r\n    line-height: 16px;\r\n    padding: 2px;\r\n    border-radius: 4px;\r\n}\r\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -392,7 +392,7 @@ function applyToTag(style, options, obj) {
     style.removeAttribute('media');
   }
 
-  if (sourceMap && btoa) {
+  if (sourceMap && typeof btoa !== 'undefined') {
     css += "\n/*# sourceMappingURL=data:application/json;base64,".concat(btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))), " */");
   } // For old IE
 
@@ -506,6 +506,7 @@ var __spreadArrays = (this && this.__spreadArrays) || function () {
     return r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TabStrip = exports.Tab = void 0;
 var Tab = /** @class */ (function () {
     function Tab(data) {
         this.id = 0;
@@ -523,33 +524,32 @@ var Tab = /** @class */ (function () {
 }());
 exports.Tab = Tab;
 __webpack_require__(/*! ./style.css */ "./src/style.css");
-var CssVar;
-(function (CssVar) {
-    CssVar["activeColor"] = "--my-active-color";
-    CssVar["backgroundColor"] = "--my-bkg-color";
-    CssVar["backgroundTabActiveColor"] = "--my-bkg-tab-active-color";
-    CssVar["backgroundTabColor"] = "--my-bkg-tab-color";
-    CssVar["borderColor"] = "--my-border-color";
-    CssVar["textColor"] = "--my-text-color";
-    CssVar["textActiveColor"] = "--my-text-active-color";
-})(CssVar = exports.CssVar || (exports.CssVar = {}));
 var ADD_TAB = {
     id: -1,
     title: "",
     action: "add",
     active: false,
 };
-var FILLER_TAB = {
-    id: -2,
-    title: "",
-    action: "none",
-    active: false,
-};
+// const FILLER_TAB: Tab = {
+//     id: -2,
+//     title: "",
+//     action: "none",
+//     active: false,
+// }
 var TabStrip = /** @class */ (function () {
     function TabStrip(container) {
         this.activeColor = "#FF3333";
         this.canAddTab = true;
         this.canCloseTab = true;
+        this.tabBorderRadius = 8;
+        this.tabSpacing = 8;
+        this.tabWidth = 160;
+        this.tabMinWidth = 0;
+        this.tabMaxWidth = 0;
+        this.tabPaddingHorz = 8;
+        this.tabPaddingVert = 8;
+        this.tabBorderColor = "rgb(0,0,0)";
+        this.tabBorderSize = 0;
         this.tabs = [];
         this.container = container;
         container.classList.add("my-tabstrip");
@@ -560,16 +560,9 @@ var TabStrip = /** @class */ (function () {
         if (this.canAddTab) {
             this.tabs.push(ADD_TAB);
         }
-        else {
-            this.tabs.push(FILLER_TAB);
-        }
-    };
-    TabStrip.prototype.setCssVar = function (cssVar, value) {
-        console.log(CssVar.activeColor, value);
-        this.container.style.setProperty(cssVar, value);
-    };
-    TabStrip.prototype.getCssVar = function (cssVar) {
-        return getComputedStyle(this.container).getPropertyValue(cssVar);
+        // else {
+        //     this.tabs.push(FILLER_TAB)
+        // }
     };
     TabStrip.prototype.addEventListener = function (evName, callback) {
         this.handlers.set(evName, callback);
@@ -631,6 +624,8 @@ var TabStrip = /** @class */ (function () {
         this.container.innerHTML = "";
         var ul = document.createElement("ul");
         ul.classList.add("my-tabstrip-ul");
+        ul.style.backgroundColor = this.backgroundColor;
+        ul.style.color = this.textColor;
         this.tabs.map(function (tab, index) { return _this.createItem(tab, index); }).forEach(function (li) { return ul.appendChild(li); });
         this.container.appendChild(ul);
     };
@@ -638,9 +633,8 @@ var TabStrip = /** @class */ (function () {
         var li;
         if (tab.action === "add") {
             li = this.createAddTab(tab, index);
-        }
-        else if (tab.action == "none") {
-            li = this.createFillerTab();
+            // } else if (tab.action == "none") {
+            //     li = this.createFillerTab()
         }
         else {
             li = this.createTab(tab, index);
@@ -652,35 +646,60 @@ var TabStrip = /** @class */ (function () {
         var li = document.createElement("li");
         li.classList.add("my-tabstrip-li");
         li.classList.add("action-add");
-        li.classList.add("my-border-filler");
+        li.style.backgroundColor = this.backgroundColor;
+        li.style.color = this.tabBackgroundColor;
+        li.style.marginLeft = this.tabSpacing + "px";
         var a = document.createElement("a");
         a.innerHTML = "+"; //+ "&#10006;" + "&#x2715;"
-        a.addEventListener("click", function () {
+        a.addEventListener("click", function (event) {
             _this.onTabAddClick(event, tab.id, index, tab);
         });
         li.append(a);
         return li;
     };
-    TabStrip.prototype.createFillerTab = function () {
-        var li = document.createElement("li");
-        li.classList.add("my-tabstrip-li");
-        li.classList.add("my-border-filler");
-        var a = document.createElement("a");
-        a.innerHTML = "&nbsp;"; //+ "&#10006;" + "&#x2715;"
-        li.append(a);
-        return li;
-    };
+    // private createFillerTab() {
+    //     const li = document.createElement("li")
+    //     li.classList.add("my-tabstrip-li")
+    //     li.classList.add("my-border-filler")
+    //     const a = document.createElement("a")
+    //     a.innerHTML = "&nbsp;" //+ "&#10006;" + "&#x2715;"
+    //     li.append(a)
+    //     return li
+    // }
     TabStrip.prototype.createTab = function (tab, index) {
         var _this = this;
         var li = document.createElement("li");
         li.classList.add("my-tabstrip-li");
+        // Tab size
+        li.style.padding = this.tabPaddingVert + "px " + this.tabPaddingHorz + "px";
+        if (this.tabWidth > 0) {
+            li.style.width = this.tabWidth + "px";
+        }
+        else {
+            li.style.minWidth = this.tabMinWidth + "px";
+            li.style.maxWidth = this.tabMaxWidth + "px";
+        }
+        li.style.backgroundColor = this.tabBackgroundColor;
+        // Tab border
+        li.style.borderRadius = this.tabBorderRadius + "px";
+        li.style.borderWidth = this.tabBorderSize + "px";
+        if (this.tabBorderSize > 0) {
+            li.style.borderStyle = "solid";
+            li.style.borderColor = this.tabBorderColor;
+        }
+        // Spacing between tabs
+        if (index > 0) {
+            li.style.marginLeft = this.tabSpacing + "px";
+        }
         if (tab.active) {
             li.classList.add("active");
-            if (tab.activeColor && (tab === null || tab === void 0 ? void 0 : tab.activeColor) != "") {
-                li.style.setProperty(CssVar.activeColor, tab.activeColor);
+            li.style.backgroundColor = this.activeTabBackgroundColor;
+            li.style.color = this.activeTabTextColor;
+            if (tab.activeColor && tab.activeColor != "") {
+                li.style.boxShadow = "inset 0px 3px " + tab.activeColor;
             }
         }
-        li.addEventListener("click", function () {
+        li.addEventListener("click", function (event) {
             _this.onTabClick(event, tab.id, index, tab);
         });
         var a = document.createElement("a");
@@ -696,13 +715,17 @@ var TabStrip = /** @class */ (function () {
         var _this = this;
         var closeIcon = document.createElement("span");
         closeIcon.classList.add("my-tabstrip-li-icon");
+        closeIcon.classList.add("active-icon");
+        closeIcon.style.backgroundColor = this.tabBackgroundColor;
+        closeIcon.style.color = this.tabBackgroundColor; // somehow hidden
         closeIcon.innerHTML = "&#x2715;";
         if (tab.active) {
-            closeIcon.classList.add("active-icon");
+            closeIcon.style.color = this.activeTabTextColor;
+            closeIcon.style.backgroundColor = this.activeTabBackgroundColor;
+            closeIcon.addEventListener("click", function (event) {
+                _this.onTabCloseClick(event, tab.id, index, tab);
+            });
         }
-        closeIcon.addEventListener("click", function () {
-            _this.onTabCloseClick(event, tab.id, index, tab);
-        });
         return closeIcon;
     };
     return TabStrip;
@@ -735,6 +758,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ctrl_com_888sp_tabstrip = exports.foo = void 0;
 function foo() {
     console.log("Foo");
 }
@@ -743,16 +767,25 @@ var TabStrip_1 = __webpack_require__(/*! ./TabStrip */ "./src/TabStrip.ts");
 // import "./style.css"
 /****** CONSTANTS ******/
 var PROPERTIES = {
+    // <OmnisUpdateMarker_PropertyConstants_Begin>
     autoupdate: "$autoupdate",
     canclosetab: "$canclosetab",
     canaddtab: "$canaddtab",
-    activecolor: "$activecolor",
     backgroundcolor: "$backgroundcolor",
-    backgroundtabactivecolor: "$backgroundtabactivecolor",
-    backgroundtabcolor: "$backgroundtabcolor",
-    bordercolor: "$bordercolor",
-    textcolor: "$textcolor",
-    textactivecolor: "$textactivecolor",
+    activetabbackgroundcolor: "$activetabbackgroundcolor",
+    tabbackgroundcolor: "$tabbackgroundcolor",
+    tabbordercolor: "$tabbordercolor",
+    tabtextcolor: "$tabtextcolor",
+    activetabtextcolor: "$activetabtextcolor",
+    tabborderradius: "$tabborderradius",
+    tabspacing: "$tabspacing",
+    tabbordersize: "$tabbordersize",
+    tabminwidth: "$tabminwidth",
+    tabmaxwidth: "$tabmaxwidth",
+    tabwidth: "$tabwidth",
+    tabpaddinghorz: "$tabpaddinghorz",
+    tabpaddingvert: "$tabpaddingvert"
+    // <OmnisUpdateMarker_PropertyConstants_End>
 };
 var EVENTS = {
     evTabClose: 1,
@@ -768,43 +801,11 @@ var ctrl_com_888sp_tabstrip = /** @class */ (function (_super) {
         return _this;
     }
     ctrl_com_888sp_tabstrip.prototype.init_ctrl_inst = function (form, elem, rowCtrl, rowNumber) {
-        var _this = this;
         _super.prototype.init_ctrl_inst.call(this, form, elem, rowCtrl, rowNumber);
-        //Control-specific initialization:
         var client_elem = this.getClientElem();
         var datapropsobj = JSON.parse(client_elem.getAttribute("data-props"));
-        this.tabStrip = new TabStrip_1.TabStrip(client_elem);
-        this.tabStrip.addEventListener("tabclick", function (event, id, index, tab) {
-            if (_this.autoUpdate) {
-                _this.tabStrip.setActive(id);
-            }
-            if (_this.canSendEvent(EVENTS.evTabClick)) {
-                _this.eventParamsAdd("pTabNum", index + 1);
-                _this.sendEvent("evTabClick");
-            }
-        });
-        this.tabStrip.addEventListener("tabclose", function (event, id, index, tab) {
-            if (_this.autoUpdate) {
-                _this.tabStrip.closeTab(id);
-            }
-            if (_this.canSendEvent(EVENTS.evTabClose)) {
-                _this.eventParamsAdd("pTabNum", index + 1);
-                _this.sendEvent("evTabClose");
-            }
-        });
-        this.tabStrip.addEventListener("tabadd", function (event) {
-            if (_this.autoUpdate) {
-                // const tab = this.tabStrip.addTab()
-                // const datanameList = new omnis_list(this.mData)
-                // const rowIndex = datanameList.addRow(0, datanameList.getColumnCount())
-                // datanameList.setData("id", rowIndex, tab.id)
-                // datanameList.setData("title", rowIndex, tab.title)
-                // datanameList.setCurrentRow(rowIndex)
-            }
-            if (_this.canSendEvent(EVENTS.evTabAdd)) {
-                _this.sendEvent("evTabAdd");
-            }
-        });
+        this.initTabStrip(client_elem);
+        console.log(datapropsobj);
         for (var propName in PROPERTIES) {
             var propValue = datapropsobj[propName]; // L'oggetto è indicizzato per il nome senza $
             this.setProperty(PROPERTIES[propName], propValue);
@@ -882,27 +883,52 @@ var ctrl_com_888sp_tabstrip = /** @class */ (function (_super) {
         }
         if (propNumber) {
             switch (propNumber) {
-                case PROPERTIES.activecolor:
-                    this.tabStrip.setCssVar(TabStrip_1.CssVar.activeColor, propValue);
-                    return true;
+                // Main control
                 case PROPERTIES.backgroundcolor:
-                    this.tabStrip.setCssVar(TabStrip_1.CssVar.backgroundColor, propValue);
+                    this.tabStrip.backgroundColor = propValue;
                     return true;
-                case PROPERTIES.backgroundtabactivecolor:
-                    this.tabStrip.setCssVar(TabStrip_1.CssVar.backgroundTabActiveColor, propValue);
+                // Active TAB
+                case PROPERTIES.activetabbackgroundcolor:
+                    this.tabStrip.activeTabBackgroundColor = propValue;
                     return true;
-                case PROPERTIES.backgroundtabcolor:
-                    this.tabStrip.setCssVar(TabStrip_1.CssVar.backgroundTabColor, propValue);
+                case PROPERTIES.activetabtextcolor:
+                    this.tabStrip.activeTabTextColor = propValue;
                     return true;
-                case PROPERTIES.textactivecolor:
-                    this.tabStrip.setCssVar(TabStrip_1.CssVar.textActiveColor, propValue);
+                // TAB
+                case PROPERTIES.tabbackgroundcolor:
+                    this.tabStrip.tabBackgroundColor = propValue;
                     return true;
-                case PROPERTIES.textcolor:
-                    this.tabStrip.setCssVar(TabStrip_1.CssVar.textColor, propValue);
+                case PROPERTIES.tabtextcolor:
+                    this.tabStrip.textColor = propValue;
                     return true;
-                case PROPERTIES.bordercolor:
-                    this.tabStrip.setCssVar(TabStrip_1.CssVar.borderColor, propValue);
+                case PROPERTIES.tabbordercolor:
+                    this.tabStrip.tabBorderColor = propValue;
                     return true;
+                case PROPERTIES.tabbordersize:
+                    this.tabStrip.tabBorderSize = propValue;
+                    return true;
+                case PROPERTIES.tabborderradius:
+                    this.tabStrip.tabBorderRadius = propValue;
+                    return true;
+                case PROPERTIES.tabspacing:
+                    this.tabStrip.tabSpacing = propValue;
+                    return true;
+                case PROPERTIES.tabwidth:
+                    this.tabStrip.tabWidth = propValue;
+                    return true;
+                case PROPERTIES.tabmaxwidth:
+                    this.tabStrip.tabMaxWidth = propValue;
+                    return true;
+                case PROPERTIES.tabminwidth:
+                    this.tabStrip.tabMinWidth = propValue;
+                    return true;
+                case PROPERTIES.tabpaddinghorz:
+                    this.tabStrip.tabPaddingHorz = propValue;
+                    return true;
+                case PROPERTIES.tabpaddingvert:
+                    this.tabStrip.tabPaddingVert = propValue;
+                    return true;
+                // BEHAVIOR
                 case PROPERTIES.canaddtab:
                     this.tabStrip.canAddTab = propValue;
                     return true;
@@ -918,31 +944,81 @@ var ctrl_com_888sp_tabstrip = /** @class */ (function (_super) {
     };
     ctrl_com_888sp_tabstrip.prototype.getProperty = function (propNumber) {
         switch (propNumber) {
-            // stile
-            case PROPERTIES.activecolor:
-                return this.tabStrip.getCssVar(TabStrip_1.CssVar.activeColor);
+            // Main control
             case PROPERTIES.backgroundcolor:
-                return this.tabStrip.getCssVar(TabStrip_1.CssVar.backgroundColor);
-            case PROPERTIES.backgroundtabactivecolor:
-                return this.tabStrip.getCssVar(TabStrip_1.CssVar.backgroundTabActiveColor);
-            case PROPERTIES.backgroundtabcolor:
-                return this.tabStrip.getCssVar(TabStrip_1.CssVar.backgroundTabColor);
-            case PROPERTIES.textactivecolor:
-                return this.tabStrip.getCssVar(TabStrip_1.CssVar.textActiveColor);
-            case PROPERTIES.textcolor:
-                return this.tabStrip.getCssVar(TabStrip_1.CssVar.textColor);
-            case PROPERTIES.bordercolor:
-                return this.tabStrip.getCssVar(TabStrip_1.CssVar.borderColor);
-            // props comportamentali
+                return this.tabStrip.backgroundColor;
+            // Active TAB
+            case PROPERTIES.activetabbackgroundcolor:
+                return this.tabStrip.activeTabBackgroundColor;
+            case PROPERTIES.activetabtextcolor:
+                return this.tabStrip.activeTabTextColor;
+            // TAB
+            case PROPERTIES.tabbackgroundcolor:
+                return this.tabStrip.tabBackgroundColor;
+            case PROPERTIES.tabtextcolor:
+                return this.tabStrip.textColor;
+            case PROPERTIES.tabbordercolor:
+                return this.tabStrip.tabBorderColor;
+            case PROPERTIES.tabbordersize:
+                return this.tabStrip.tabBorderSize;
+            case PROPERTIES.tabborderradius:
+                return this.tabStrip.tabBorderRadius;
+            case PROPERTIES.tabspacing:
+                return this.tabStrip.tabSpacing;
+            case PROPERTIES.tabwidth:
+                return this.tabStrip.tabWidth;
+            case PROPERTIES.tabmaxwidth:
+                return this.tabStrip.tabMaxWidth;
+            case PROPERTIES.tabminwidth:
+                return this.tabStrip.tabMinWidth;
+            case PROPERTIES.tabpaddinghorz:
+                return this.tabStrip.tabPaddingHorz;
+            case PROPERTIES.tabpaddingvert:
+                return this.tabStrip.tabPaddingVert;
+            // BEHAVIOR
             case PROPERTIES.canaddtab:
                 return this.tabStrip.canAddTab;
             case PROPERTIES.canclosetab:
                 return this.tabStrip.canCloseTab;
-            // props di questo oggetto
             case PROPERTIES.autoupdate:
                 return this.autoUpdate;
         }
         return _super.prototype.getProperty.call(this, propNumber);
+    };
+    ctrl_com_888sp_tabstrip.prototype.initTabStrip = function (client_elem) {
+        var _this = this;
+        this.tabStrip = new TabStrip_1.TabStrip(client_elem);
+        this.tabStrip.addEventListener("tabclick", function (event, id, index, tab) {
+            if (_this.autoUpdate) {
+                _this.tabStrip.setActive(id);
+            }
+            if (_this.canSendEvent(EVENTS.evTabClick)) {
+                _this.eventParamsAdd("pTabNum", index + 1);
+                _this.sendEvent("evTabClick");
+            }
+        });
+        this.tabStrip.addEventListener("tabclose", function (event, id, index, tab) {
+            if (_this.autoUpdate) {
+                _this.tabStrip.closeTab(id);
+            }
+            if (_this.canSendEvent(EVENTS.evTabClose)) {
+                _this.eventParamsAdd("pTabNum", index + 1);
+                _this.sendEvent("evTabClose");
+            }
+        });
+        this.tabStrip.addEventListener("tabadd", function (event) {
+            if (_this.autoUpdate) {
+                // const tab = this.tabStrip.addTab()
+                // const datanameList = new omnis_list(this.mData)
+                // const rowIndex = datanameList.addRow(0, datanameList.getColumnCount())
+                // datanameList.setData("id", rowIndex, tab.id)
+                // datanameList.setData("title", rowIndex, tab.title)
+                // datanameList.setCurrentRow(rowIndex)
+            }
+            if (_this.canSendEvent(EVENTS.evTabAdd)) {
+                _this.sendEvent("evTabAdd");
+            }
+        });
     };
     return ctrl_com_888sp_tabstrip;
 }(ctrl_base));
@@ -966,11 +1042,18 @@ exports.ctrl_com_888sp_tabstrip = ctrl_com_888sp_tabstrip;
 
 "use strict";
 
-function __export(m) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-}
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) __createBinding(exports, m, p);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-__export(__webpack_require__(/*! ./ctl_com_888sp_tabstrip */ "./src/ctl_com_888sp_tabstrip.ts"));
+__exportStar(__webpack_require__(/*! ./ctl_com_888sp_tabstrip */ "./src/ctl_com_888sp_tabstrip.ts"), exports);
 
 
 /***/ }),
@@ -998,11 +1081,9 @@ options.singleton = false;
 
 var update = api(content, options);
 
-var exported = content.locals ? content.locals : {};
 
 
-
-module.exports = exported;
+module.exports = content.locals || {};
 
 /***/ })
 
