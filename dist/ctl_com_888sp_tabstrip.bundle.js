@@ -538,6 +538,8 @@ var ADD_TAB = {
 // }
 var TabStrip = /** @class */ (function () {
     function TabStrip(container) {
+        // jOmnisEffects?: any
+        // omnisTheme?: any
         this.activeColor = "#FF3333";
         this.canAddTab = true;
         this.canCloseTab = true;
@@ -555,6 +557,12 @@ var TabStrip = /** @class */ (function () {
         container.classList.add("my-tabstrip");
         this.handlers = new Map();
     }
+    // setJOmnisEffects(jOmnisEffects) {
+    //     this.jOmnisEffects = jOmnisEffects
+    // }
+    // setOmnisTheme(omnisTheme: any) {
+    //     this.omnisTheme = omnisTheme
+    // }
     TabStrip.prototype.setTabs = function (tabs) {
         this.tabs = __spreadArrays(tabs);
         if (this.canAddTab) {
@@ -639,6 +647,11 @@ var TabStrip = /** @class */ (function () {
         else {
             li = this.createTab(tab, index);
         }
+        // if (this.jOmnisEffects && this.omnisTheme) {
+        //     //addRippleToElem(elem, theme, hasContainer, elemColor, keys, keyElement, directColor)
+        //     console.log(this.jOmnisEffects, this.omnisTheme)
+        //     this.jOmnisEffects.addRippleToElem(li, this.omnisTheme, true, 16711680, ["Enter", " "], null, 0x0000ff)
+        // }
         return li;
     };
     TabStrip.prototype.createAddTab = function (tab, index) {
@@ -838,7 +851,7 @@ var ctrl_com_888sp_tabstrip = /** @class */ (function (_super) {
                     canClose: datanameList.getData("canClose", index),
                 });
             }
-            console.table(tabs);
+            // console.table(tabs)
             this.tabStrip.setTabs(tabs);
             this.tabStrip.render();
         }
@@ -988,6 +1001,8 @@ var ctrl_com_888sp_tabstrip = /** @class */ (function (_super) {
     ctrl_com_888sp_tabstrip.prototype.initTabStrip = function (client_elem) {
         var _this = this;
         this.tabStrip = new TabStrip_1.TabStrip(client_elem);
+        // this.tabStrip.setJOmnisEffects(jOmnisEffects)
+        // this.tabStrip.setOmnisTheme(this.getTheme())
         this.tabStrip.addEventListener("tabclick", function (event, id, index, tab) {
             if (_this.autoUpdate) {
                 _this.tabStrip.setActive(id);

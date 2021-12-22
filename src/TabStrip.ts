@@ -42,6 +42,9 @@ export class TabStrip {
     container: HTMLElement
     handlers: Map<TabStripEvent, TabStripEventHandler>
 
+    // jOmnisEffects?: any
+    // omnisTheme?: any
+
     activeColor: string = "#FF3333"
     canAddTab: boolean = true
     canCloseTab: boolean = true
@@ -71,6 +74,14 @@ export class TabStrip {
         container.classList.add("my-tabstrip")
         this.handlers = new Map()
     }
+
+    // setJOmnisEffects(jOmnisEffects) {
+    //     this.jOmnisEffects = jOmnisEffects
+    // }
+
+    // setOmnisTheme(omnisTheme: any) {
+    //     this.omnisTheme = omnisTheme
+    // }
 
     setTabs(tabs: Tab[]) {
         this.tabs = [...tabs]
@@ -166,6 +177,12 @@ export class TabStrip {
             li = this.createTab(tab, index)
         }
 
+        // if (this.jOmnisEffects && this.omnisTheme) {
+        //     //addRippleToElem(elem, theme, hasContainer, elemColor, keys, keyElement, directColor)
+        //     console.log(this.jOmnisEffects, this.omnisTheme)
+        //     this.jOmnisEffects.addRippleToElem(li, this.omnisTheme, true, 16711680, ["Enter", " "], null, 0x0000ff)
+        // }
+
         return li
     }
     private createAddTab(tab: Tab, index: number) {
@@ -200,7 +217,6 @@ export class TabStrip {
     private createTab(tab: Tab, index: number) {
         const li = document.createElement("li")
         li.classList.add("my-tabstrip-li")
-
         // Tab size
         li.style.padding = `${this.tabPaddingVert}px ${this.tabPaddingHorz}px`
 

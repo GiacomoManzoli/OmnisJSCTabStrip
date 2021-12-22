@@ -135,6 +135,8 @@ declare class ctrl_base {
     eventParamsAdd: (name: string, value: any) => void
     sendEvent: (event: any) => void
     getData(): any
+
+    getTheme(): any
 }
 
 /**
@@ -267,7 +269,7 @@ declare class omnis_list {
     getListData(): omnis_raw_list
 }
 
-declare class omnis_raw_list {}
+declare class omnis_raw_list { }
 
 declare type OmnisEventName = string | number // numero per le proprietà interne di Omnis, stringa per quelle user-defined
 
@@ -277,3 +279,5 @@ declare var eBaseProperties: any
 declare var eBaseEvent: any
 
 declare var touchWithinRange: any
+
+declare var jOmnisEffects: any

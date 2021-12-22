@@ -95,7 +95,7 @@ export class ctrl_com_888sp_tabstrip extends ctrl_base {
                     canClose: datanameList.getData("canClose", index),
                 })
             }
-            console.table(tabs)
+            // console.table(tabs)
             this.tabStrip.setTabs(tabs)
             this.tabStrip.render()
         }
@@ -255,6 +255,10 @@ export class ctrl_com_888sp_tabstrip extends ctrl_base {
 
     private initTabStrip(client_elem) {
         this.tabStrip = new TabStrip(client_elem)
+
+        // this.tabStrip.setJOmnisEffects(jOmnisEffects)
+        // this.tabStrip.setOmnisTheme(this.getTheme())
+
 
         this.tabStrip.addEventListener("tabclick", (event, id, index, tab) => {
             if (this.autoUpdate) {
