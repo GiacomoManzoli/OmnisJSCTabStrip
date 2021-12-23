@@ -269,7 +269,7 @@ declare class omnis_list {
     getListData(): omnis_raw_list
 }
 
-declare class omnis_raw_list { }
+declare class omnis_raw_list {}
 
 declare type OmnisEventName = string | number // numero per le proprietà interne di Omnis, stringa per quelle user-defined
 
@@ -280,4 +280,37 @@ declare var eBaseEvent: any
 
 declare var touchWithinRange: any
 
-declare var jOmnisEffects: any
+type OmnisRGBInt = number
+
+declare class JOmnisEffects {
+    /**
+     * Adds a ripple effect to the passed element.
+     * Only add once - once added, the ripple effect will be triggered whenever the element is clicked (or optional keys are pressed while it has focus).
+     * @param elem The HTML element to apply the ripple to.
+     * @param theme The theme instance to use to resolve themed colors.
+     * @param hasContainer If true, the ripple is applied to the container element. If false, it is applied to elem.
+     * @param elemColor The color of the element to which the ripple will be applied. A tinted color will be generated from this for the ripple (unless directColor is provided).
+     * @param keys An array of keyboard key names, which should fire the ripple when pressed. E.g. ["Enter", " "]
+     * @param keyElement The element which receives keyboard events. Defaults to elem.
+     * @param directColor If specified, a color to apply directly to the ripple, rather than calculated from the 'elemColor'.
+     */
+    addRippleToElem(
+        elem: HTMLElement,
+        theme: any,
+        hasContainer: boolean,
+        elemColor: OmnisRGBInt,
+        keys: string[],
+        keyElement: HTMLElement,
+        directColor: OmnisRGBInt
+    ): JOmnisEffects
+
+    /**
+     * Updates the color of a previously created ripple element.
+     * @param elem The HTML element which already has a ripple applied.
+     * @param theme The theme instance to use to resolve themed colors.
+     * @param elemColor The color of the element to which the ripple will be applied. A tinted color will be generated from this for the ripple (unless directColor is provided).
+     * @param directColor If specified, a color to apply directly to the ripple, rather than calculated from the 'elemColor'.
+     */
+    setRippleColor(elem: HTMLElement, theme: any, elemColor: OmnisRGBInt, directColor: OmnisRGBInt): void
+}
+declare var jOmnisEffects: JOmnisEffects
