@@ -112,6 +112,7 @@ export class TabStrip {
     }
 
     addTab() {
+        debugger
         const id = this.tabs.reduce((a, b) => Math.max(a, b.id), 0) + 1
         const newTab = {
             id,
@@ -126,19 +127,19 @@ export class TabStrip {
     }
 
     private onTabClick(event: MouseEvent, tabId: number, index: number, tab: Tab) {
-        // const button = event.currentTarget as HTMLElement
-        // const circle = document.createElement("span")
-        // const diameter = Math.max(button.clientWidth, button.clientHeight)
-        // const radius = diameter / 2
-        // circle.style.width = circle.style.height = `${diameter}px`
-        // circle.style.left = `${event.clientX - (button.offsetLeft + radius)}px`
-        // circle.style.top = `${event.clientY - (button.offsetTop + radius)}px`
-        // circle.classList.add("tab-ripple")
-        // const ripple = button.getElementsByClassName("tab-ripple")[0]
-        // if (ripple) {
-        //     ripple.remove()
-        // }
-        // button.appendChild(circle)
+        const button = event.currentTarget as HTMLElement
+        const circle = document.createElement("span")
+        const diameter = Math.max(button.clientWidth, button.clientHeight)
+        const radius = diameter / 2
+        circle.style.width = circle.style.height = `${diameter}px`
+        circle.style.left = `${event.clientX - (button.offsetLeft + radius)}px`
+        circle.style.top = `${event.clientY - (button.offsetTop + radius)}px`
+        circle.classList.add("tab-ripple")
+        const ripple = button.getElementsByClassName("tab-ripple")[0]
+        if (ripple) {
+            ripple.remove()
+        }
+        button.appendChild(circle)
 
         event.preventDefault()
         event.stopPropagation()
@@ -164,18 +165,57 @@ export class TabStrip {
         }
     }
 
+    renderedTabs: Map<number, { tab: Tab, li: HTMLLIElement }> = new Map()
+
     render(): void {
-        console.log(this)
+        let ul: HTMLElement
+        if (this.container.innerHTML == "") {
+            ul = document.createElement("ul")
+            ul.classList.add("my-tabstrip-ul")
+            ul.style.backgroundColor = this.backgroundColor
+            ul.style.color = this.textColor
+            this.container.appendChild(ul)
+        } else {
+            ul = this.container.querySelector("ul")
+        }
 
-        this.container.innerHTML = ""
-        const ul = document.createElement("ul")
-        ul.classList.add("my-tabstrip-ul")
+        // Inserts/updates
+        for (let index = this.tabs.length - 1; index >= 0; index--) {
+            let currTab = this.tabs[index]
+            if (this.renderedTabs.has(currTab.id)) {
+                let { tab, li } = this.renderedTabs.get(currTab.id)
 
-        ul.style.backgroundColor = this.backgroundColor
-        ul.style.color = this.textColor
+                if (tab.id != ADD_TAB.id) {
+                    this.updateItem(li, currTab, index)
+                    this.renderedTabs.set(currTab.id, { tab: currTab, li })
+                }
+            } else {
+                let li = this.createItem(currTab, index)
+                this.renderedTabs.set(currTab.id, { tab: currTab, li })
 
-        this.tabs.map((tab, index) => this.createItem(tab, index)).forEach((li) => ul.appendChild(li))
-        this.container.appendChild(ul)
+                if (index == 0) { // First item
+                    ul.insertBefore(li, ul.firstChild)
+                } else if (index == this.tabs.length - 1) { // Last item
+                    ul.appendChild(li)
+                } else {
+                    let nextTabId = this.tabs[index + 1].id
+                    let nextTabLi = this.renderedTabs.get(nextTabId).li
+                    ul.insertBefore(li, nextTabLi)
+                }
+            }
+        }
+
+        // Deletes
+        let realTabsId = new Set(this.tabs.map(t => t.id))
+        this.renderedTabs.forEach(v => {
+            if (!realTabsId.has(v.tab.id)) {
+                ul.removeChild(v.li)
+                this.renderedTabs.delete(v.tab.id)
+            }
+        })
+
+        // this.tabs.map((tab, index) => this.createItem(tab, index)).forEach((li) => ul.appendChild(li))
+
     }
 
     private createItem(tab: Tab, index: number) {
@@ -188,11 +228,6 @@ export class TabStrip {
             li = this.createTab(tab, index)
         }
 
-        // if (this.jOmnisEffects && this.omnisTheme) {
-        //     //addRippleToElem(elem, theme, hasContainer, elemColor, keys, keyElement, directColor)
-        //     console.log(this.jOmnisEffects, this.omnisTheme)
-        //     this.jOmnisEffects.addRippleToElem(li, this.omnisTheme, true, 16711680, ["Enter", " "], null, 0x0000ff)
-        // }
 
         return li
     }
@@ -228,9 +263,13 @@ export class TabStrip {
     private createTab(tab: Tab, index: number) {
         const li = document.createElement("li")
         li.classList.add("my-tabstrip-li")
+
+        // CSS ripple
+        li.style.position = "relative"
+        li.style.overflow = "hidden"
+
         // Tab size
         li.style.padding = `${this.tabPaddingVert}px ${this.tabPaddingHorz}px`
-
         if (this.tabWidth > 0) {
             li.style.width = `${this.tabWidth}px`
         } else {
@@ -248,10 +287,22 @@ export class TabStrip {
             li.style.borderColor = this.tabBorderColor
         }
 
+        const a = document.createElement("a")
+        a.classList.add("my-tabstrip-li-a")
+        a.innerText = tab.title //+ "&times;" + "&#10006;" + "&#x2715;"
+        li.append(a)
+
+
+        this.updateItem(li, tab, index)
+        return li
+    }
+
+    private updateItem(li: HTMLLIElement, tab: Tab, index: number) {
         // Spacing between tabs
         if (index > 0) {
             li.style.marginLeft = `${this.tabSpacing}px`
         }
+
 
         if (tab.active) {
             li.classList.add("active")
@@ -260,26 +311,32 @@ export class TabStrip {
             if (tab.activeColor && tab.activeColor != "") {
                 li.style.boxShadow = `inset 0px 3px ${tab.activeColor}`
             }
+        } else {
+            li.classList.remove("active")
+            li.style.backgroundColor = this.tabBackgroundColor
+            li.style.color = this.textColor
+            li.style.boxShadow = ""
         }
 
-        li.addEventListener("click", (event) => {
+        li.onclick = (event) => {
             this.onTabClick(event, tab.id, index, tab)
-        })
+        }
 
-        const a = document.createElement("a")
-        a.classList.add("my-tabstrip-li-a")
-        a.innerText = tab.title //+ "&times;" + "&#10006;" + "&#x2715;"
-        li.append(a)
+
+        const closeIcon = li.getElementsByClassName("my-tabstrip-li-close-icon")[0]
+        if (closeIcon) {
+            li.removeChild(closeIcon)
+        }
         if (this.canCloseTab && tab.canClose) {
             li.append(this.createCloseIcon(tab, index))
         }
 
-        return li
     }
 
     private createCloseIcon(tab: Tab, index: number) {
         const closeIcon = document.createElement("span")
         closeIcon.classList.add("my-tabstrip-li-icon")
+        closeIcon.classList.add("my-tabstrip-li-close-icon")
         closeIcon.classList.add("active-icon")
 
         closeIcon.style.backgroundColor = this.tabBackgroundColor

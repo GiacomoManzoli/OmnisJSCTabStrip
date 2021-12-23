@@ -1,7 +1,3 @@
-export function foo() {
-    console.log("Foo")
-}
-
 import { TabStrip, Tab } from "./TabStrip"
 
 // import "./style.css"
@@ -52,7 +48,6 @@ export class ctrl_com_888sp_tabstrip extends ctrl_base {
 
         this.initTabStrip(client_elem)
 
-        console.log(datapropsobj)
 
         for (let propName in PROPERTIES) {
             const propValue = datapropsobj[propName] // L'oggetto è indicizzato per il nome senza $
@@ -66,7 +61,6 @@ export class ctrl_com_888sp_tabstrip extends ctrl_base {
 
     updateCtrl(what, row, col, mustUpdate) {
         var elem = this.getClientElem()
-        console.log("update", arguments)
         // center the text vertically:
         elem.style.lineHeight = elem.style.height
         elem.style.textAlign = "center"
@@ -76,12 +70,11 @@ export class ctrl_com_888sp_tabstrip extends ctrl_base {
         const datanameList = new omnis_list(dataname)
 
         this.mData = dataname
-        elem.innerHTML = ""
+
         if (dataname) {
             let tabs: Tab[] = []
             const currentLine = datanameList.getCurrentRow()
             const activeLine = currentLine > 0 ? currentLine : 1
-            console.log(currentLine, activeLine)
 
             for (let index = 1; index <= datanameList.getRowCount(); index++) {
                 tabs.push({
@@ -92,9 +85,10 @@ export class ctrl_com_888sp_tabstrip extends ctrl_base {
                     canClose: datanameList.getData("canClose", index),
                 })
             }
-            // console.table(tabs)
             this.tabStrip.setTabs(tabs)
             this.tabStrip.render()
+        } else {
+            elem.innerHTML = "TABSTRIP"
         }
     }
 
@@ -276,12 +270,12 @@ export class ctrl_com_888sp_tabstrip extends ctrl_base {
 
         this.tabStrip.addEventListener("tabadd", (event) => {
             if (this.autoUpdate) {
-                // const tab = this.tabStrip.addTab()
-                // const datanameList = new omnis_list(this.mData)
-                // const rowIndex = datanameList.addRow(0, datanameList.getColumnCount())
-                // datanameList.setData("id", rowIndex, tab.id)
-                // datanameList.setData("title", rowIndex, tab.title)
-                // datanameList.setCurrentRow(rowIndex)
+                const tab = this.tabStrip.addTab()
+                const datanameList = new omnis_list(this.mData)
+                const rowIndex = datanameList.addRow(0, datanameList.getColumnCount())
+                datanameList.setData("id", rowIndex, tab.id)
+                datanameList.setData("title", rowIndex, tab.title)
+                datanameList.setCurrentRow(rowIndex)
             }
             if (this.canSendEvent(EVENTS.evTabAdd)) {
                 this.sendEvent("evTabAdd")

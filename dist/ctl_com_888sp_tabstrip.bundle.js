@@ -97,7 +97,7 @@
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "@keyframes tab-ripple {\n    to {\n        transform: scale(4);\n        opacity: 0;\n    }\n}\n\nspan.tab-ripple {\n    position: absolute; /* The absolute position we mentioned earlier */\n    border-radius: 50%;\n    transform: scale(0);\n    animation: tab-ripple 600ms linear;\n    background-color: rgba(255, 255, 255, 0.7);\n}\n\n.my-tabstrip-ul {\n    padding: 0;\n    margin: 0;\n    list-style-type: none;\n    height: 100%;\n    display: flex;\n    flex-direction: row;\n    flex-wrap: nowrap;\n    align-items: stretch;\n    line-height: initial;\n    text-align: initial;\n}\n\n.my-tabstrip-li {\n    cursor: pointer;\n    display: flex;\n    align-items: center;\n    min-width: 0; /* Serve per far andare overflow ellipsis */\n}\n\n.my-tabstrip-li:hover {\n    filter: brightness(1.05);\n}\n\n.my-tabstrip-li-a {\n    flex: 1;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n}\n.my-tabstrip-li-icon {\n    padding: 2px 4px;\n    margin-left: 8px;\n    margin-right: -8px;\n}\n.my-tabstrip-li-icon:hover {\n    filter: brightness(1.05);\n}\n\n.active:hover {\n    filter: none !important;\n}\n\n.action-add {\n    width: initial !important;\n    border: 0;\n    align-items: center;\n}\n\n.action-add a {\n    font-size: 20px;\n    height: 16px;\n    line-height: 16px;\n    padding: 2px;\n    border-radius: 4px;\n}\n", ""]);
+exports.push([module.i, "@keyframes tab-ripple {\r\n    to {\r\n        transform: scale(4);\r\n        opacity: 0;\r\n    }\r\n}\r\n\r\nspan.tab-ripple {\r\n    position: absolute; /* The absolute position we mentioned earlier */\r\n    border-radius: 50%;\r\n    transform: scale(0);\r\n    animation: tab-ripple 400ms linear;\r\n    background-color: rgba(255, 255, 255, 0.5);\r\n}\r\n\r\n.my-tabstrip-ul {\r\n    padding: 0;\r\n    margin: 0;\r\n    list-style-type: none;\r\n    height: 100%;\r\n    display: flex;\r\n    flex-direction: row;\r\n    flex-wrap: nowrap;\r\n    align-items: stretch;\r\n    line-height: initial;\r\n    text-align: initial;\r\n}\r\n\r\n.my-tabstrip-li {\r\n    cursor: pointer;\r\n    display: flex;\r\n    align-items: center;\r\n    min-width: 0; /* Serve per far andare overflow ellipsis */\r\n}\r\n\r\n.my-tabstrip-li:hover {\r\n    filter: brightness(1.05);\r\n}\r\n\r\n.my-tabstrip-li-a {\r\n    flex: 1;\r\n    white-space: nowrap;\r\n    overflow: hidden;\r\n    text-overflow: ellipsis;\r\n}\r\n.my-tabstrip-li-icon {\r\n    padding: 2px 4px;\r\n    margin-left: 8px;\r\n    margin-right: -8px;\r\n}\r\n.my-tabstrip-li-icon:hover {\r\n    filter: brightness(1.05);\r\n}\r\n\r\n.active:hover {\r\n    filter: none !important;\r\n}\r\n\r\n.action-add {\r\n    width: initial !important;\r\n    border: 0;\r\n    align-items: center;\r\n}\r\n\r\n.action-add a {\r\n    font-size: 20px;\r\n    height: 16px;\r\n    line-height: 16px;\r\n    padding: 2px;\r\n    border-radius: 4px;\r\n}\r\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -552,6 +552,7 @@ var TabStrip = /** @class */ (function () {
         this.tabPaddingVert = 8;
         this.tabBorderColor = "rgb(0,0,0)";
         this.tabBorderSize = 0;
+        this.renderedTabs = new Map();
         this.tabs = [];
         this.container = container;
         container.classList.add("my-tabstrip");
@@ -591,6 +592,7 @@ var TabStrip = /** @class */ (function () {
         this.render();
     };
     TabStrip.prototype.addTab = function () {
+        debugger;
         var id = this.tabs.reduce(function (a, b) { return Math.max(a, b.id); }, 0) + 1;
         var newTab = {
             id: id,
@@ -603,19 +605,19 @@ var TabStrip = /** @class */ (function () {
         return newTab;
     };
     TabStrip.prototype.onTabClick = function (event, tabId, index, tab) {
-        // const button = event.currentTarget as HTMLElement
-        // const circle = document.createElement("span")
-        // const diameter = Math.max(button.clientWidth, button.clientHeight)
-        // const radius = diameter / 2
-        // circle.style.width = circle.style.height = `${diameter}px`
-        // circle.style.left = `${event.clientX - (button.offsetLeft + radius)}px`
-        // circle.style.top = `${event.clientY - (button.offsetTop + radius)}px`
-        // circle.classList.add("tab-ripple")
-        // const ripple = button.getElementsByClassName("tab-ripple")[0]
-        // if (ripple) {
-        //     ripple.remove()
-        // }
-        // button.appendChild(circle)
+        var button = event.currentTarget;
+        var circle = document.createElement("span");
+        var diameter = Math.max(button.clientWidth, button.clientHeight);
+        var radius = diameter / 2;
+        circle.style.width = circle.style.height = diameter + "px";
+        circle.style.left = event.clientX - (button.offsetLeft + radius) + "px";
+        circle.style.top = event.clientY - (button.offsetTop + radius) + "px";
+        circle.classList.add("tab-ripple");
+        var ripple = button.getElementsByClassName("tab-ripple")[0];
+        if (ripple) {
+            ripple.remove();
+        }
+        button.appendChild(circle);
         event.preventDefault();
         event.stopPropagation();
         var handler = this.handlers.get("tabclick");
@@ -641,14 +643,52 @@ var TabStrip = /** @class */ (function () {
     };
     TabStrip.prototype.render = function () {
         var _this = this;
-        console.log(this);
-        this.container.innerHTML = "";
-        var ul = document.createElement("ul");
-        ul.classList.add("my-tabstrip-ul");
-        ul.style.backgroundColor = this.backgroundColor;
-        ul.style.color = this.textColor;
-        this.tabs.map(function (tab, index) { return _this.createItem(tab, index); }).forEach(function (li) { return ul.appendChild(li); });
-        this.container.appendChild(ul);
+        var ul;
+        if (this.container.innerHTML == "") {
+            ul = document.createElement("ul");
+            ul.classList.add("my-tabstrip-ul");
+            ul.style.backgroundColor = this.backgroundColor;
+            ul.style.color = this.textColor;
+            this.container.appendChild(ul);
+        }
+        else {
+            ul = this.container.querySelector("ul");
+        }
+        // Inserts/updates
+        for (var index = this.tabs.length - 1; index >= 0; index--) {
+            var currTab = this.tabs[index];
+            if (this.renderedTabs.has(currTab.id)) {
+                var _a = this.renderedTabs.get(currTab.id), tab = _a.tab, li = _a.li;
+                if (tab.id != ADD_TAB.id) {
+                    this.updateItem(li, currTab, index);
+                    this.renderedTabs.set(currTab.id, { tab: currTab, li: li });
+                }
+            }
+            else {
+                var li = this.createItem(currTab, index);
+                this.renderedTabs.set(currTab.id, { tab: currTab, li: li });
+                if (index == 0) { // First item
+                    ul.insertBefore(li, ul.firstChild);
+                }
+                else if (index == this.tabs.length - 1) { // Last item
+                    ul.appendChild(li);
+                }
+                else {
+                    var nextTabId = this.tabs[index + 1].id;
+                    var nextTabLi = this.renderedTabs.get(nextTabId).li;
+                    ul.insertBefore(li, nextTabLi);
+                }
+            }
+        }
+        // Deletes
+        var realTabsId = new Set(this.tabs.map(function (t) { return t.id; }));
+        this.renderedTabs.forEach(function (v) {
+            if (!realTabsId.has(v.tab.id)) {
+                ul.removeChild(v.li);
+                _this.renderedTabs.delete(v.tab.id);
+            }
+        });
+        // this.tabs.map((tab, index) => this.createItem(tab, index)).forEach((li) => ul.appendChild(li))
     };
     TabStrip.prototype.createItem = function (tab, index) {
         var li;
@@ -660,11 +700,6 @@ var TabStrip = /** @class */ (function () {
         else {
             li = this.createTab(tab, index);
         }
-        // if (this.jOmnisEffects && this.omnisTheme) {
-        //     //addRippleToElem(elem, theme, hasContainer, elemColor, keys, keyElement, directColor)
-        //     console.log(this.jOmnisEffects, this.omnisTheme)
-        //     this.jOmnisEffects.addRippleToElem(li, this.omnisTheme, true, 16711680, ["Enter", " "], null, 0x0000ff)
-        // }
         return li;
     };
     TabStrip.prototype.createAddTab = function (tab, index) {
@@ -693,9 +728,11 @@ var TabStrip = /** @class */ (function () {
     //     return li
     // }
     TabStrip.prototype.createTab = function (tab, index) {
-        var _this = this;
         var li = document.createElement("li");
         li.classList.add("my-tabstrip-li");
+        // CSS ripple
+        li.style.position = "relative";
+        li.style.overflow = "hidden";
         // Tab size
         li.style.padding = this.tabPaddingVert + "px " + this.tabPaddingHorz + "px";
         if (this.tabWidth > 0) {
@@ -713,6 +750,15 @@ var TabStrip = /** @class */ (function () {
             li.style.borderStyle = "solid";
             li.style.borderColor = this.tabBorderColor;
         }
+        var a = document.createElement("a");
+        a.classList.add("my-tabstrip-li-a");
+        a.innerText = tab.title; //+ "&times;" + "&#10006;" + "&#x2715;"
+        li.append(a);
+        this.updateItem(li, tab, index);
+        return li;
+    };
+    TabStrip.prototype.updateItem = function (li, tab, index) {
+        var _this = this;
         // Spacing between tabs
         if (index > 0) {
             li.style.marginLeft = this.tabSpacing + "px";
@@ -725,22 +771,28 @@ var TabStrip = /** @class */ (function () {
                 li.style.boxShadow = "inset 0px 3px " + tab.activeColor;
             }
         }
-        li.addEventListener("click", function (event) {
+        else {
+            li.classList.remove("active");
+            li.style.backgroundColor = this.tabBackgroundColor;
+            li.style.color = this.textColor;
+            li.style.boxShadow = "";
+        }
+        li.onclick = function (event) {
             _this.onTabClick(event, tab.id, index, tab);
-        });
-        var a = document.createElement("a");
-        a.classList.add("my-tabstrip-li-a");
-        a.innerText = tab.title; //+ "&times;" + "&#10006;" + "&#x2715;"
-        li.append(a);
+        };
+        var closeIcon = li.getElementsByClassName("my-tabstrip-li-close-icon")[0];
+        if (closeIcon) {
+            li.removeChild(closeIcon);
+        }
         if (this.canCloseTab && tab.canClose) {
             li.append(this.createCloseIcon(tab, index));
         }
-        return li;
     };
     TabStrip.prototype.createCloseIcon = function (tab, index) {
         var _this = this;
         var closeIcon = document.createElement("span");
         closeIcon.classList.add("my-tabstrip-li-icon");
+        closeIcon.classList.add("my-tabstrip-li-close-icon");
         closeIcon.classList.add("active-icon");
         closeIcon.style.backgroundColor = this.tabBackgroundColor;
         closeIcon.style.color = this.tabBackgroundColor; // somehow hidden
@@ -784,11 +836,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ctrl_com_888sp_tabstrip = exports.foo = void 0;
-function foo() {
-    console.log("Foo");
-}
-exports.foo = foo;
+exports.ctrl_com_888sp_tabstrip = void 0;
 var TabStrip_1 = __webpack_require__(/*! ./TabStrip */ "./src/TabStrip.ts");
 // import "./style.css"
 /****** CONSTANTS ******/
@@ -830,7 +878,6 @@ var ctrl_com_888sp_tabstrip = /** @class */ (function (_super) {
         var client_elem = this.getClientElem();
         var datapropsobj = JSON.parse(client_elem.getAttribute("data-props"));
         this.initTabStrip(client_elem);
-        console.log(datapropsobj);
         for (var propName in PROPERTIES) {
             var propValue = datapropsobj[propName]; // L'oggetto è indicizzato per il nome senza $
             this.setProperty(PROPERTIES[propName], propValue);
@@ -840,7 +887,6 @@ var ctrl_com_888sp_tabstrip = /** @class */ (function (_super) {
     };
     ctrl_com_888sp_tabstrip.prototype.updateCtrl = function (what, row, col, mustUpdate) {
         var elem = this.getClientElem();
-        console.log("update", arguments);
         // center the text vertically:
         elem.style.lineHeight = elem.style.height;
         elem.style.textAlign = "center";
@@ -848,12 +894,10 @@ var ctrl_com_888sp_tabstrip = /** @class */ (function (_super) {
         var dataname = this.getData();
         var datanameList = new omnis_list(dataname);
         this.mData = dataname;
-        elem.innerHTML = "";
         if (dataname) {
             var tabs = [];
             var currentLine = datanameList.getCurrentRow();
             var activeLine = currentLine > 0 ? currentLine : 1;
-            console.log(currentLine, activeLine);
             for (var index = 1; index <= datanameList.getRowCount(); index++) {
                 tabs.push({
                     id: datanameList.getData("id", index),
@@ -863,9 +907,11 @@ var ctrl_com_888sp_tabstrip = /** @class */ (function (_super) {
                     canClose: datanameList.getData("canClose", index),
                 });
             }
-            // console.table(tabs)
             this.tabStrip.setTabs(tabs);
             this.tabStrip.render();
+        }
+        else {
+            elem.innerHTML = "TABSTRIP";
         }
     };
     /**
@@ -1035,12 +1081,12 @@ var ctrl_com_888sp_tabstrip = /** @class */ (function (_super) {
         });
         this.tabStrip.addEventListener("tabadd", function (event) {
             if (_this.autoUpdate) {
-                // const tab = this.tabStrip.addTab()
-                // const datanameList = new omnis_list(this.mData)
-                // const rowIndex = datanameList.addRow(0, datanameList.getColumnCount())
-                // datanameList.setData("id", rowIndex, tab.id)
-                // datanameList.setData("title", rowIndex, tab.title)
-                // datanameList.setCurrentRow(rowIndex)
+                var tab = _this.tabStrip.addTab();
+                var datanameList = new omnis_list(_this.mData);
+                var rowIndex = datanameList.addRow(0, datanameList.getColumnCount());
+                datanameList.setData("id", rowIndex, tab.id);
+                datanameList.setData("title", rowIndex, tab.title);
+                datanameList.setCurrentRow(rowIndex);
             }
             if (_this.canSendEvent(EVENTS.evTabAdd)) {
                 _this.sendEvent("evTabAdd");

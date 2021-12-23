@@ -9,8 +9,8 @@ span.tab-ripple {
     position: absolute; /* The absolute position we mentioned earlier */
     border-radius: 50%;
     transform: scale(0);
-    animation: tab-ripple 600ms linear;
-    background-color: rgba(255, 255, 255, 0.7);
+    animation: tab-ripple 400ms linear;
+    background-color: rgba(255, 255, 255, 0.5);
 }
 
 .my-tabstrip-ul {
