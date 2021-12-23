@@ -1,0 +1,12 @@
+On evTabAdd
+	Do iTabList2.$add(iTabList2.$cols.id.$maximum()+1,"New tab","",kTrue)
+	Calculate iTabList2.$line as iTabList2.$linecount
+	
+On evTabClick
+	Send to trace log evtabclick [pTabNum]
+	Calculate iTabList2.$line as pTabNum
+	
+	
+On evTabClose
+	Calculate iTabList2.$line as 1
+	Do iTabList2.$remove(pTabNum)

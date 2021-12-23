@@ -1,9 +1,9 @@
 {
 	"classtype": "kRemoteForm",
 	"omnisversion": "10.2",
-	"internalversion": 35,
+	"internalversion": 57,
 	"designtaskname": "NewRemoteTask",
-	"nextident": 1003,
+	"nextident": 1004,
 	"lastgroupident": 0,
 	"cvardefs": [
 
@@ -12,6 +12,20 @@
 		{
 			"name": "iTabList",
 			"order": 1,
+			"type": "kList",
+			"subtype": "",
+			"sublen": 0
+		},
+		{
+			"name": "iTabList2",
+			"order": 2,
+			"type": "kList",
+			"subtype": "",
+			"sublen": 0
+		},
+		{
+			"name": "iTabList3",
+			"order": 3,
 			"type": "kList",
 			"subtype": "",
 			"sublen": 0
@@ -50,7 +64,7 @@
 		"layouttype": "kLayoutTypeResponsive",
 		"left": 606,
 		"menulineheight": 44,
-		"moddate": "2021-12-18 11:06:22",
+		"moddate": "2021-12-24 00:23:31",
 		"okkeyobject": "",
 		"serverlessclient": false,
 		"showascheckedout": false,
