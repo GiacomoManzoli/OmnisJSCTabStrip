@@ -21,8 +21,6 @@ declare type TabStripEventHandler = (event: Event, tabId: number, index: number,
 
 import "./style.css"
 
-
-
 const ADD_TAB: Tab = {
     id: -1,
     title: "",
@@ -66,7 +64,6 @@ export class TabStrip {
     activeTabBackgroundColor: string
     activeTabTextColor: string
     textColor: string
-
 
     constructor(container: HTMLElement) {
         this.tabs = []
@@ -128,7 +125,21 @@ export class TabStrip {
         return newTab
     }
 
-    private onTabClick(event: Event, tabId: number, index: number, tab: Tab) {
+    private onTabClick(event: MouseEvent, tabId: number, index: number, tab: Tab) {
+        // const button = event.currentTarget as HTMLElement
+        // const circle = document.createElement("span")
+        // const diameter = Math.max(button.clientWidth, button.clientHeight)
+        // const radius = diameter / 2
+        // circle.style.width = circle.style.height = `${diameter}px`
+        // circle.style.left = `${event.clientX - (button.offsetLeft + radius)}px`
+        // circle.style.top = `${event.clientY - (button.offsetTop + radius)}px`
+        // circle.classList.add("tab-ripple")
+        // const ripple = button.getElementsByClassName("tab-ripple")[0]
+        // if (ripple) {
+        //     ripple.remove()
+        // }
+        // button.appendChild(circle)
+
         event.preventDefault()
         event.stopPropagation()
         const handler = this.handlers.get("tabclick")
@@ -282,8 +293,6 @@ export class TabStrip {
                 this.onTabCloseClick(event, tab.id, index, tab)
             })
         }
-
-
 
         return closeIcon
     }

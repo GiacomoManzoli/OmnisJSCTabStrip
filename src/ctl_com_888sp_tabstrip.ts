@@ -24,9 +24,9 @@ var PROPERTIES = {
     tabmaxwidth: "$tabmaxwidth",
     tabwidth: "$tabwidth",
     tabpaddinghorz: "$tabpaddinghorz",
-    tabpaddingvert: "$tabpaddingvert"
+    tabpaddingvert: "$tabpaddingvert",
     // <OmnisUpdateMarker_PropertyConstants_End>
-};
+}
 
 var EVENTS = {
     evTabClose: 1,
@@ -48,12 +48,9 @@ export class ctrl_com_888sp_tabstrip extends ctrl_base {
 
         var client_elem = this.getClientElem()
 
-
-
         var datapropsobj = JSON.parse(client_elem.getAttribute("data-props"))
 
-        this.initTabStrip(client_elem);
-
+        this.initTabStrip(client_elem)
 
         console.log(datapropsobj)
 
@@ -248,17 +245,14 @@ export class ctrl_com_888sp_tabstrip extends ctrl_base {
                 return this.autoUpdate
         }
 
-
         return super.getProperty(propNumber)
     }
-
 
     private initTabStrip(client_elem) {
         this.tabStrip = new TabStrip(client_elem)
 
         // this.tabStrip.setJOmnisEffects(jOmnisEffects)
         // this.tabStrip.setOmnisTheme(this.getTheme())
-
 
         this.tabStrip.addEventListener("tabclick", (event, id, index, tab) => {
             if (this.autoUpdate) {
@@ -294,8 +288,6 @@ export class ctrl_com_888sp_tabstrip extends ctrl_base {
             }
         })
     }
-
-
 
     // /**
     //  * Assigns the specified property's value to the control.
