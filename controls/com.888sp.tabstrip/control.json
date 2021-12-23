@@ -128,7 +128,6 @@
             "type": "color",
             "tab": "custom",
             "runtimeonly": false,
-            "findandreplace": false,
             "extconstant": false,
             "intconstant": false,
             "constrangestart": "",
@@ -142,7 +141,6 @@
             "type": "integer",
             "tab": "custom",
             "runtimeonly": false,
-            "findandreplace": false,
             "extconstant": false,
             "intconstant": false,
             "constrangestart": "",
@@ -156,7 +154,6 @@
             "type": "integer",
             "tab": "custom",
             "runtimeonly": false,
-            "findandreplace": false,
             "extconstant": false,
             "intconstant": false,
             "constrangestart": "",
@@ -170,7 +167,6 @@
             "type": "integer",
             "tab": "custom",
             "runtimeonly": false,
-            "findandreplace": false,
             "extconstant": false,
             "intconstant": false,
             "constrangestart": "",
@@ -184,7 +180,6 @@
             "type": "integer",
             "tab": "custom",
             "runtimeonly": false,
-            "findandreplace": false,
             "extconstant": false,
             "intconstant": false,
             "constrangestart": "",
@@ -198,7 +193,6 @@
             "type": "integer",
             "tab": "custom",
             "runtimeonly": false,
-            "findandreplace": false,
             "extconstant": false,
             "intconstant": false,
             "constrangestart": "",
@@ -212,7 +206,6 @@
             "type": "integer",
             "tab": "custom",
             "runtimeonly": false,
-            "findandreplace": false,
             "extconstant": false,
             "intconstant": false,
             "constrangestart": "",
@@ -226,7 +219,6 @@
             "type": "integer",
             "tab": "custom",
             "runtimeonly": false,
-            "findandreplace": false,
             "extconstant": false,
             "intconstant": false,
             "constrangestart": "",
@@ -247,6 +239,34 @@
             "constrangeend": "",
             "initial": 8,
             "editreadonly": false
+        },
+        "addtabsymbolcolor": {
+            "id": 21,
+            "desc": "Color of the \"+\" symbol",
+            "type": "color",
+            "tab": "custom",
+            "runtimeonly": false,
+            "findandreplace": false,
+            "extconstant": false,
+            "intconstant": false,
+            "constrangestart": "",
+            "constrangeend": "",
+            "initial": -2147483461,
+            "editreadonly": false
+        },
+        "addtabbackgroundcolor": {
+            "id": 22,
+            "desc": "Bacground color of the \"+\" symbol",
+            "type": "color",
+            "tab": "custom",
+            "runtimeonly": false,
+            "findandreplace": false,
+            "extconstant": false,
+            "intconstant": false,
+            "constrangestart": "",
+            "constrangeend": "",
+            "initial": -2147483458,
+            "editreadonly": false
         }
     },
     "constants": {
@@ -259,7 +279,7 @@
                 {
                     "name": "TabNum",
                     "type": "character",
-                    "desc": "Tab chiuso"
+                    "desc": "Close tab num"
                 }
             ]
         },
@@ -267,11 +287,6 @@
             "id": 2,
             "desc": "",
             "parameters": [
-                {
-                    "name": "TabNum",
-                    "type": "integer",
-                    "desc": ""
-                }
             ]
         },
         "evTabClick": {
@@ -281,7 +296,7 @@
                 {
                     "name": "TabNum",
                     "type": "integer",
-                    "desc": ""
+                    "desc": "Clicked tab"
                 }
             ]
         }

@@ -97,7 +97,7 @@
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "@keyframes tab-ripple {\r\n    to {\r\n        transform: scale(4);\r\n        opacity: 0;\r\n    }\r\n}\r\n\r\nspan.tab-ripple {\r\n    position: absolute; /* The absolute position we mentioned earlier */\r\n    border-radius: 50%;\r\n    transform: scale(0);\r\n    animation: tab-ripple 400ms linear;\r\n    background-color: rgba(255, 255, 255, 0.5);\r\n}\r\n\r\n.my-tabstrip-ul {\r\n    padding: 0;\r\n    margin: 0;\r\n    list-style-type: none;\r\n    height: 100%;\r\n    display: flex;\r\n    flex-direction: row;\r\n    flex-wrap: nowrap;\r\n    align-items: stretch;\r\n    line-height: initial;\r\n    text-align: initial;\r\n}\r\n\r\n.my-tabstrip-li {\r\n    cursor: pointer;\r\n    display: flex;\r\n    align-items: center;\r\n    min-width: 0; /* Serve per far andare overflow ellipsis */\r\n}\r\n\r\n.my-tabstrip-li:hover {\r\n    filter: brightness(1.05);\r\n}\r\n\r\n.my-tabstrip-li-a {\r\n    flex: 1;\r\n    white-space: nowrap;\r\n    overflow: hidden;\r\n    text-overflow: ellipsis;\r\n}\r\n.my-tabstrip-li-icon {\r\n    padding: 2px 4px;\r\n    margin-left: 8px;\r\n    margin-right: -8px;\r\n}\r\n.my-tabstrip-li-icon:hover {\r\n    filter: brightness(1.05);\r\n}\r\n\r\n.active:hover {\r\n    filter: none !important;\r\n}\r\n\r\n.action-add {\r\n    width: initial !important;\r\n    border: 0;\r\n    align-items: center;\r\n}\r\n\r\n.action-add a {\r\n    font-size: 20px;\r\n    height: 16px;\r\n    line-height: 16px;\r\n    padding: 2px;\r\n    border-radius: 4px;\r\n}\r\n", ""]);
+exports.push([module.i, "@keyframes tab-ripple {\r\n    to {\r\n        transform: scale(4);\r\n        opacity: 0;\r\n    }\r\n}\r\n\r\n@keyframes tab-slide-in {\r\n\tfrom {\r\n\t\ttransform: translateX(-100%);\r\n\t\topacity: 0;\r\n\t}\r\n\tto {\r\n\t\ttransform: translateX(0%);\r\n\t\topacity: 1;\r\n\t}\r\n    \t/* from {\r\n\t\ttransform: scale(0);\r\n\t\topacity: 0;\r\n\t}\r\n\tto {\r\n\t\ttransform: scale(1);\r\n\t\topacity: 1;\t\r\n\t} */\r\n}\r\n\r\nspan.tab-ripple {\r\n    position: absolute; /* The absolute position we mentioned earlier */\r\n    border-radius: 50%;\r\n    transform: scale(0);\r\n    animation: tab-ripple 400ms linear;\r\n    background-color: rgba(255, 255, 255, 0.5);\r\n}\r\n\r\n.my-tabstrip-ul {\r\n    padding: 0;\r\n    margin: 0;\r\n    list-style-type: none;\r\n    height: 100%;\r\n    display: flex;\r\n    flex-direction: row;\r\n    flex-wrap: nowrap;\r\n    align-items: stretch;\r\n    line-height: initial;\r\n    text-align: initial;\r\n    \r\n}\r\n\r\n.my-tabstrip-li {\r\n    cursor: pointer;\r\n    display: flex;\r\n    align-items: center;\r\n    min-width: 0; /* Serve per far andare overflow ellipsis */\r\n    animation: tab-slide-in .3s linear;\r\n    overflow: hidden;\r\n}\r\n\r\n.my-tabstrip-li:hover {\r\n    filter: brightness(1.05);\r\n}\r\n\r\n.my-tabstrip-li-a {\r\n    flex: 1;\r\n    white-space: nowrap;\r\n    overflow: hidden;\r\n    text-overflow: ellipsis;\r\n}\r\n.my-tabstrip-li-icon {\r\n    padding: 2px 4px;\r\n    margin-left: 8px;\r\n    margin-right: -8px;\r\n}\r\n.my-tabstrip-li-icon:hover {\r\n    filter: brightness(1.05);\r\n}\r\n\r\n.active:hover {\r\n    filter: none !important;\r\n}\r\n\r\n.action-add {\r\n    width: initial !important;\r\n    border: 0;\r\n    align-items: center;\r\n}\r\n\r\n.action-add a {\r\n    font-size: 20px;\r\n    height: 16px;\r\n    line-height: 16px;\r\n    padding: 2px;\r\n    border-radius: 4px;\r\n}\r\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -538,8 +538,7 @@ var ADD_TAB = {
 // }
 var TabStrip = /** @class */ (function () {
     function TabStrip(container) {
-        // jOmnisEffects?: any
-        // omnisTheme?: any
+        this.renderedTabs = new Map();
         this.activeColor = "#FF3333";
         this.canAddTab = true;
         this.canCloseTab = true;
@@ -552,18 +551,11 @@ var TabStrip = /** @class */ (function () {
         this.tabPaddingVert = 8;
         this.tabBorderColor = "rgb(0,0,0)";
         this.tabBorderSize = 0;
-        this.renderedTabs = new Map();
         this.tabs = [];
         this.container = container;
         container.classList.add("my-tabstrip");
         this.handlers = new Map();
     }
-    // setJOmnisEffects(jOmnisEffects) {
-    //     this.jOmnisEffects = jOmnisEffects
-    // }
-    // setOmnisTheme(omnisTheme: any) {
-    //     this.omnisTheme = omnisTheme
-    // }
     TabStrip.prototype.setTabs = function (tabs) {
         this.tabs = __spreadArrays(tabs);
         if (this.canAddTab) {
@@ -707,8 +699,8 @@ var TabStrip = /** @class */ (function () {
         var li = document.createElement("li");
         li.classList.add("my-tabstrip-li");
         li.classList.add("action-add");
-        li.style.backgroundColor = this.backgroundColor;
-        li.style.color = this.tabBackgroundColor;
+        li.style.backgroundColor = this.addTabBackgroundColor;
+        li.style.color = this.addTabSymbolColor;
         li.style.marginLeft = this.tabSpacing + "px";
         var a = document.createElement("a");
         a.innerHTML = "+"; //+ "&#10006;" + "&#x2715;"
@@ -859,6 +851,9 @@ var PROPERTIES = {
     tabwidth: "$tabwidth",
     tabpaddinghorz: "$tabpaddinghorz",
     tabpaddingvert: "$tabpaddingvert",
+    addtabsymbolcolor: "$addtabsymbolcolor",
+    addtabbackgroundcolor: "$addtabbackgroundcolor"
+    // <OmnisUpdateMarker_PropertyConstants_End>
 };
 var EVENTS = {
     evTabClose: 1,
@@ -958,6 +953,13 @@ var ctrl_com_888sp_tabstrip = /** @class */ (function (_super) {
                 case PROPERTIES.backgroundcolor:
                     this.tabStrip.backgroundColor = propValue;
                     return true;
+                // ADD TAB
+                case PROPERTIES.addtabbackgroundcolor:
+                    this.tabStrip.addTabBackgroundColor = propValue;
+                    return true;
+                case PROPERTIES.addtabsymbolcolor:
+                    this.tabStrip.addTabSymbolColor = propValue;
+                    return true;
                 // Active TAB
                 case PROPERTIES.activetabbackgroundcolor:
                     this.tabStrip.activeTabBackgroundColor = propValue;
@@ -1018,6 +1020,11 @@ var ctrl_com_888sp_tabstrip = /** @class */ (function (_super) {
             // Main control
             case PROPERTIES.backgroundcolor:
                 return this.tabStrip.backgroundColor;
+            // ADD TAB
+            case PROPERTIES.addtabbackgroundcolor:
+                return this.tabStrip.addTabBackgroundColor;
+            case PROPERTIES.addtabsymbolcolor:
+                return this.tabStrip.addTabSymbolColor;
             // Active TAB
             case PROPERTIES.activetabbackgroundcolor:
                 return this.tabStrip.activeTabBackgroundColor;

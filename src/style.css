@@ -5,6 +5,25 @@
     }
 }
 
+@keyframes tab-slide-in {
+	from {
+		transform: translateX(-100%);
+		opacity: 0;
+	}
+	to {
+		transform: translateX(0%);
+		opacity: 1;
+	}
+    	/* from {
+		transform: scale(0);
+		opacity: 0;
+	}
+	to {
+		transform: scale(1);
+		opacity: 1;	
+	} */
+}
+
 span.tab-ripple {
     position: absolute; /* The absolute position we mentioned earlier */
     border-radius: 50%;
@@ -24,6 +43,7 @@ span.tab-ripple {
     align-items: stretch;
     line-height: initial;
     text-align: initial;
+    
 }
 
 .my-tabstrip-li {
@@ -31,6 +51,8 @@ span.tab-ripple {
     display: flex;
     align-items: center;
     min-width: 0; /* Serve per far andare overflow ellipsis */
+    animation: tab-slide-in .3s linear;
+    overflow: hidden;
 }
 
 .my-tabstrip-li:hover {

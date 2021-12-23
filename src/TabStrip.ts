@@ -39,9 +39,8 @@ export class TabStrip {
     tabs: Tab[]
     container: HTMLElement
     handlers: Map<TabStripEvent, TabStripEventHandler>
+    renderedTabs: Map<number, { tab: Tab, li: HTMLLIElement }> = new Map()
 
-    // jOmnisEffects?: any
-    // omnisTheme?: any
 
     activeColor: string = "#FF3333"
     canAddTab: boolean = true
@@ -61,6 +60,9 @@ export class TabStrip {
     tabBorderColor: string = "rgb(0,0,0)"
     tabBorderSize: number = 0
 
+    addTabSymbolColor: string
+    addTabBackgroundColor: string
+
     activeTabBackgroundColor: string
     activeTabTextColor: string
     textColor: string
@@ -71,14 +73,6 @@ export class TabStrip {
         container.classList.add("my-tabstrip")
         this.handlers = new Map()
     }
-
-    // setJOmnisEffects(jOmnisEffects) {
-    //     this.jOmnisEffects = jOmnisEffects
-    // }
-
-    // setOmnisTheme(omnisTheme: any) {
-    //     this.omnisTheme = omnisTheme
-    // }
 
     setTabs(tabs: Tab[]) {
         this.tabs = [...tabs]
@@ -165,7 +159,7 @@ export class TabStrip {
         }
     }
 
-    renderedTabs: Map<number, { tab: Tab, li: HTMLLIElement }> = new Map()
+
 
     render(): void {
         let ul: HTMLElement
@@ -236,9 +230,10 @@ export class TabStrip {
         li.classList.add("my-tabstrip-li")
         li.classList.add("action-add")
 
-        li.style.backgroundColor = this.backgroundColor
-        li.style.color = this.tabBackgroundColor
+        li.style.backgroundColor = this.addTabBackgroundColor
+        li.style.color = this.addTabSymbolColor
         li.style.marginLeft = `${this.tabSpacing}px`
+
 
         const a = document.createElement("a")
         a.innerHTML = "+" //+ "&#10006;" + "&#x2715;"

@@ -21,6 +21,8 @@ var PROPERTIES = {
     tabwidth: "$tabwidth",
     tabpaddinghorz: "$tabpaddinghorz",
     tabpaddingvert: "$tabpaddingvert",
+    addtabsymbolcolor: "$addtabsymbolcolor",
+    addtabbackgroundcolor: "$addtabbackgroundcolor"
     // <OmnisUpdateMarker_PropertyConstants_End>
 }
 
@@ -140,6 +142,13 @@ export class ctrl_com_888sp_tabstrip extends ctrl_base {
                 case PROPERTIES.backgroundcolor:
                     this.tabStrip.backgroundColor = propValue as string
                     return true
+                // ADD TAB
+                case PROPERTIES.addtabbackgroundcolor:
+                    this.tabStrip.addTabBackgroundColor = propValue as string
+                    return true
+                case PROPERTIES.addtabsymbolcolor:
+                    this.tabStrip.addTabSymbolColor = propValue as string
+                    return true
                 // Active TAB
                 case PROPERTIES.activetabbackgroundcolor:
                     this.tabStrip.activeTabBackgroundColor = propValue as string
@@ -202,6 +211,11 @@ export class ctrl_com_888sp_tabstrip extends ctrl_base {
             // Main control
             case PROPERTIES.backgroundcolor:
                 return this.tabStrip.backgroundColor
+            // ADD TAB
+            case PROPERTIES.addtabbackgroundcolor:
+                return this.tabStrip.addTabBackgroundColor
+            case PROPERTIES.addtabsymbolcolor:
+                return this.tabStrip.addTabSymbolColor
             // Active TAB
             case PROPERTIES.activetabbackgroundcolor:
                 return this.tabStrip.activeTabBackgroundColor
