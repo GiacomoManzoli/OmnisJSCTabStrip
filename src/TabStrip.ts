@@ -39,8 +39,7 @@ export class TabStrip {
     tabs: Tab[]
     container: HTMLElement
     handlers: Map<TabStripEvent, TabStripEventHandler>
-    renderedTabs: Map<number, { tab: Tab, li: HTMLLIElement }> = new Map()
-
+    renderedTabs: Map<number, { tab: Tab; li: HTMLLIElement }> = new Map()
 
     activeColor: string = "#FF3333"
     canAddTab: boolean = true
@@ -159,8 +158,6 @@ export class TabStrip {
         }
     }
 
-
-
     render(): void {
         let ul: HTMLElement
         if (this.container.innerHTML == "") {
@@ -187,9 +184,11 @@ export class TabStrip {
                 let li = this.createItem(currTab, index)
                 this.renderedTabs.set(currTab.id, { tab: currTab, li })
 
-                if (index == 0) { // First item
+                if (index == 0) {
+                    // First item
                     ul.insertBefore(li, ul.firstChild)
-                } else if (index == this.tabs.length - 1) { // Last item
+                } else if (index == this.tabs.length - 1) {
+                    // Last item
                     ul.appendChild(li)
                 } else {
                     let nextTabId = this.tabs[index + 1].id
@@ -200,8 +199,8 @@ export class TabStrip {
         }
 
         // Deletes
-        let realTabsId = new Set(this.tabs.map(t => t.id))
-        this.renderedTabs.forEach(v => {
+        let realTabsId = new Set(this.tabs.map((t) => t.id))
+        this.renderedTabs.forEach((v) => {
             if (!realTabsId.has(v.tab.id)) {
                 ul.removeChild(v.li)
                 this.renderedTabs.delete(v.tab.id)
@@ -209,7 +208,6 @@ export class TabStrip {
         })
 
         // this.tabs.map((tab, index) => this.createItem(tab, index)).forEach((li) => ul.appendChild(li))
-
     }
 
     private createItem(tab: Tab, index: number) {
@@ -222,7 +220,6 @@ export class TabStrip {
             li = this.createTab(tab, index)
         }
 
-
         return li
     }
     private createAddTab(tab: Tab, index: number) {
@@ -233,7 +230,6 @@ export class TabStrip {
         li.style.backgroundColor = this.addTabBackgroundColor
         li.style.color = this.addTabSymbolColor
         li.style.marginLeft = `${this.tabSpacing}px`
-
 
         const a = document.createElement("a")
         a.innerHTML = "+" //+ "&#10006;" + "&#x2715;"
@@ -284,9 +280,7 @@ export class TabStrip {
 
         const a = document.createElement("a")
         a.classList.add("my-tabstrip-li-a")
-        a.innerText = tab.title //+ "&times;" + "&#10006;" + "&#x2715;"
         li.append(a)
-
 
         this.updateItem(li, tab, index)
         return li
@@ -298,6 +292,8 @@ export class TabStrip {
             li.style.marginLeft = `${this.tabSpacing}px`
         }
 
+        const a = li.querySelector("a")
+        a.innerText = tab.title //+ "&times;" + "&#10006;" + "&#x2715;"
 
         if (tab.active) {
             li.classList.add("active")
@@ -317,7 +313,6 @@ export class TabStrip {
             this.onTabClick(event, tab.id, index, tab)
         }
 
-
         const closeIcon = li.getElementsByClassName("my-tabstrip-li-close-icon")[0]
         if (closeIcon) {
             li.removeChild(closeIcon)
@@ -325,7 +320,6 @@ export class TabStrip {
         if (this.canCloseTab && tab.canClose) {
             li.append(this.createCloseIcon(tab, index))
         }
-
     }
 
     private createCloseIcon(tab: Tab, index: number) {

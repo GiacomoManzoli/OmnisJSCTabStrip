@@ -97,7 +97,7 @@
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "@keyframes tab-ripple {\r\n    to {\r\n        transform: scale(4);\r\n        opacity: 0;\r\n    }\r\n}\r\n\r\n@keyframes tab-slide-in {\r\n\tfrom {\r\n\t\ttransform: translateX(-100%);\r\n\t\topacity: 0;\r\n\t}\r\n\tto {\r\n\t\ttransform: translateX(0%);\r\n\t\topacity: 1;\r\n\t}\r\n    \t/* from {\r\n\t\ttransform: scale(0);\r\n\t\topacity: 0;\r\n\t}\r\n\tto {\r\n\t\ttransform: scale(1);\r\n\t\topacity: 1;\t\r\n\t} */\r\n}\r\n\r\nspan.tab-ripple {\r\n    position: absolute; /* The absolute position we mentioned earlier */\r\n    border-radius: 50%;\r\n    transform: scale(0);\r\n    animation: tab-ripple 400ms linear;\r\n    background-color: rgba(255, 255, 255, 0.5);\r\n}\r\n\r\n.my-tabstrip-ul {\r\n    padding: 0;\r\n    margin: 0;\r\n    list-style-type: none;\r\n    height: 100%;\r\n    display: flex;\r\n    flex-direction: row;\r\n    flex-wrap: nowrap;\r\n    align-items: stretch;\r\n    line-height: initial;\r\n    text-align: initial;\r\n    \r\n}\r\n\r\n.my-tabstrip-li {\r\n    cursor: pointer;\r\n    display: flex;\r\n    align-items: center;\r\n    min-width: 0; /* Serve per far andare overflow ellipsis */\r\n    animation: tab-slide-in .3s linear;\r\n    overflow: hidden;\r\n}\r\n\r\n.my-tabstrip-li:hover {\r\n    filter: brightness(1.05);\r\n}\r\n\r\n.my-tabstrip-li-a {\r\n    flex: 1;\r\n    white-space: nowrap;\r\n    overflow: hidden;\r\n    text-overflow: ellipsis;\r\n}\r\n.my-tabstrip-li-icon {\r\n    padding: 2px 4px;\r\n    margin-left: 8px;\r\n    margin-right: -8px;\r\n}\r\n.my-tabstrip-li-icon:hover {\r\n    filter: brightness(1.05);\r\n}\r\n\r\n.active:hover {\r\n    filter: none !important;\r\n}\r\n\r\n.action-add {\r\n    width: initial !important;\r\n    border: 0;\r\n    align-items: center;\r\n}\r\n\r\n.action-add a {\r\n    font-size: 20px;\r\n    height: 16px;\r\n    line-height: 16px;\r\n    padding: 2px;\r\n    border-radius: 4px;\r\n}\r\n", ""]);
+exports.push([module.i, "@keyframes tab-ripple {\n    to {\n        transform: scale(4);\n        opacity: 0;\n    }\n}\n\n@keyframes tab-slide-in {\n\tfrom {\n\t\ttransform: translateX(-100%);\n\t\topacity: 0;\n\t}\n\tto {\n\t\ttransform: translateX(0%);\n\t\topacity: 1;\n\t}\n    \t/* from {\n\t\ttransform: scale(0);\n\t\topacity: 0;\n\t}\n\tto {\n\t\ttransform: scale(1);\n\t\topacity: 1;\t\n\t} */\n}\n\nspan.tab-ripple {\n    position: absolute; /* The absolute position we mentioned earlier */\n    border-radius: 50%;\n    transform: scale(0);\n    animation: tab-ripple 400ms linear;\n    background-color: rgba(255, 255, 255, 0.5);\n}\n\n.my-tabstrip-ul {\n    padding: 0;\n    margin: 0;\n    list-style-type: none;\n    height: 100%;\n    display: flex;\n    flex-direction: row;\n    flex-wrap: nowrap;\n    align-items: stretch;\n    line-height: initial;\n    text-align: initial;\n    \n}\n\n.my-tabstrip-li {\n    cursor: pointer;\n    display: flex;\n    align-items: center;\n    min-width: 0; /* Serve per far andare overflow ellipsis */\n    animation: tab-slide-in .3s linear;\n    overflow: hidden;\n}\n\n.my-tabstrip-li:hover {\n    filter: brightness(1.05);\n}\n\n.my-tabstrip-li-a {\n    flex: 1;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n}\n.my-tabstrip-li-icon {\n    padding: 2px 4px;\n    margin-left: 8px;\n    margin-right: -8px;\n}\n.my-tabstrip-li-icon:hover {\n    filter: brightness(1.05);\n}\n\n.active:hover {\n    filter: none !important;\n}\n\n.action-add {\n    width: initial !important;\n    border: 0;\n    align-items: center;\n}\n\n.action-add a {\n    font-size: 20px;\n    height: 16px;\n    line-height: 16px;\n    padding: 2px;\n    border-radius: 4px;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -659,10 +659,12 @@ var TabStrip = /** @class */ (function () {
             else {
                 var li = this.createItem(currTab, index);
                 this.renderedTabs.set(currTab.id, { tab: currTab, li: li });
-                if (index == 0) { // First item
+                if (index == 0) {
+                    // First item
                     ul.insertBefore(li, ul.firstChild);
                 }
-                else if (index == this.tabs.length - 1) { // Last item
+                else if (index == this.tabs.length - 1) {
+                    // Last item
                     ul.appendChild(li);
                 }
                 else {
@@ -744,7 +746,6 @@ var TabStrip = /** @class */ (function () {
         }
         var a = document.createElement("a");
         a.classList.add("my-tabstrip-li-a");
-        a.innerText = tab.title; //+ "&times;" + "&#10006;" + "&#x2715;"
         li.append(a);
         this.updateItem(li, tab, index);
         return li;
@@ -755,6 +756,8 @@ var TabStrip = /** @class */ (function () {
         if (index > 0) {
             li.style.marginLeft = this.tabSpacing + "px";
         }
+        var a = li.querySelector("a");
+        a.innerText = tab.title; //+ "&times;" + "&#10006;" + "&#x2715;"
         if (tab.active) {
             li.classList.add("active");
             li.style.backgroundColor = this.activeTabBackgroundColor;
