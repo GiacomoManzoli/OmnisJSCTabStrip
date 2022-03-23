@@ -1,8 +1,8 @@
-## Set up
+# Tabstrip
 
-1. Copy the content of `controls/com.888sp.tabstrip` into Omnis `html` folder
-2. Copy `dist/ctl_com_888sp_tabstrip.bundle.js` into Omnis `html/script` folder
-3. Add the `<script>` to `jsctempl.htm` to load  `ctl_com_888sp_tabstrip.bundle.js`
+Tabstrip component for Omnis JSC 10.2
+
+![./images/sample.png](./images/sample.png)
 
 ## Usage
 
@@ -28,3 +28,10 @@ Do iTabList.$add(3,'A3 - Tab 1',,kTrue)
 Do iTabList.$add(4,'A4 - Tab 2',,kTrue)
 Calculate iTabList.$line as 3 ## Sets the active tab
 ```
+
+## Set up
+
+1. Copy the content of `controls/com.888sp.tabstrip` into Omnis `html` folder
+2. Copy `dist/ctl_com_888sp_tabstrip.bundle.js` into Omnis `html/script` folder
+3. Add the `<script>` to `jsctempl.htm` to load  `ctl_com_888sp_tabstrip.bundle.js`
+

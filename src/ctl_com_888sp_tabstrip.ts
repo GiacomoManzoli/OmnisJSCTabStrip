@@ -136,35 +136,37 @@ export class ctrl_com_888sp_tabstrip extends ctrl_base {
             return false
         }
 
+        console.log(propValue, propNumber)
+
         if (propNumber) {
             switch (propNumber) {
                 // Main control
                 case PROPERTIES.backgroundcolor:
-                    this.tabStrip.backgroundColor = propValue as string
+                    this.tabStrip.backgroundColor = this.getTheme().getColorString(propValue)
                     return true
                 // ADD TAB
                 case PROPERTIES.addtabbackgroundcolor:
-                    this.tabStrip.addTabBackgroundColor = propValue as string
+                    this.tabStrip.addTabBackgroundColor = this.getTheme().getColorString(propValue) as string
                     return true
                 case PROPERTIES.addtabsymbolcolor:
-                    this.tabStrip.addTabSymbolColor = propValue as string
+                    this.tabStrip.addTabSymbolColor = this.getTheme().getColorString(propValue) as string
                     return true
                 // Active TAB
                 case PROPERTIES.activetabbackgroundcolor:
-                    this.tabStrip.activeTabBackgroundColor = propValue as string
+                    this.tabStrip.activeTabBackgroundColor = this.getTheme().getColorString(propValue) as string
                     return true
                 case PROPERTIES.activetabtextcolor:
-                    this.tabStrip.activeTabTextColor = propValue as string
+                    this.tabStrip.activeTabTextColor = this.getTheme().getColorString(propValue) as string
                     return true
                 // TAB
                 case PROPERTIES.tabbackgroundcolor:
-                    this.tabStrip.tabBackgroundColor = propValue as string
+                    this.tabStrip.tabBackgroundColor = this.getTheme().getColorString(propValue) as string
                     return true
                 case PROPERTIES.tabtextcolor:
-                    this.tabStrip.textColor = propValue as string
+                    this.tabStrip.textColor = this.getTheme().getColorString(propValue) as string
                     return true
                 case PROPERTIES.tabbordercolor:
-                    this.tabStrip.tabBorderColor = propValue as string
+                    this.tabStrip.tabBorderColor = this.getTheme().getColorString(propValue) as string
                     return true
                 case PROPERTIES.tabbordersize:
                     this.tabStrip.tabBorderSize = propValue as number
