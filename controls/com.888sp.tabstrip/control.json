@@ -9,14 +9,10 @@
         "hasdefaultborder": false,
         "hasdisplayformat": false,
         "hasdragevents": false,
-        "uselegacycolors": true
+        "uselegacycolors": false
     },
-    "customtabname":  "TabStrip",
-    "standardproperties" :  [
-        "dataname",
-        "font",
-        "fontsize"
-    ],
+    "customtabname": "TabStrip",
+    "standardproperties": ["dataname", "font", "fontsize"],
     "properties": {
         "autoupdate": {
             "id": 2,
@@ -269,8 +265,7 @@
             "editreadonly": false
         }
     },
-    "constants": {
-    },
+    "constants": {},
     "events": {
         "evTabClose": {
             "id": 1,
@@ -286,8 +281,7 @@
         "evTabAdd": {
             "id": 2,
             "desc": "",
-            "parameters": [
-            ]
+            "parameters": []
         },
         "evTabClick": {
             "id": 3,
@@ -301,8 +295,7 @@
             ]
         }
     },
-    "methods": {
-    },
+    "methods": {},
     "html": {
         "template": "<div %o %s data-props='%p' data-mvprops='%m'></div>",
         "extrastyles": "display:flex;"
