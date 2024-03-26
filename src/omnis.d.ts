@@ -247,7 +247,7 @@ declare class omnis_list {
 
     /**
     ets the specified column's column number in the list or row.
-    @parampCol (String or Integer): One of:
+    @param pCol (String or Integer): One of:
     The column number.
     The column name.
     The column number, prefixed by "C". E.g. "C4".
@@ -258,7 +258,7 @@ declare class omnis_list {
 
     /**
      * Returns a row's data as an array. Each element of the array being a column of the row.
-     * @param pRowNumber
+     * @param pRowNumber The row number (1-based).
      * @returns The row's data. Each element of the array corresponds to the value of a column in the row.
      */
     getRowArray(pRowNumber: number): any[]
@@ -269,7 +269,63 @@ declare class omnis_list {
     getListData(): omnis_raw_list
 }
 
-declare class omnis_raw_list { }
+declare class omnis_raw_list {}
+
+// 2023.12.28 GM
+/**
+ * An omnis_cols is an object which represents a list's columns group (equivalent to $cols).
+ */
+declare class omnis_cols {
+    /**
+     * Constructor for an omnis_cols object.
+     * @param pList Raw list data. See getListData() for info on how to get an instance of this object.
+     */
+    constructor(pList: omnis_raw_list)
+
+    $add(pName: string, pType: eOmnisDataType, pSubType: eOmnisDataSubType, pLen: number)
+    /**
+     * Returns the number of columns.
+     */
+    $count(): number
+
+    /**
+     *
+     * @param pColumn The column name or number (optionally prefixed with "C")
+     * @param pPropNumber The property number to query (es: eBaseProperties.name)
+     */
+    getCanAssign(pColumn: string | number, pPropNumber: number): boolean
+
+    /**
+     * 
+     * @param pColumn The column name or number (optionally prefixed with "C").
+     * @param pPropNumber The property to query. One of:
+                eListProperties.coltype
+                eListProperties.colsubtype
+                eListProperties.colsublen
+                eBaseProperties.ident
+                eBaseProperties.name
+     */
+    getProperty(pColumn: string | number, pPropNumber: number): any
+    /**
+     * Gets a column by name or column number.
+     * @param pName The column name or column number (optionally prefixed by "C").
+     */
+    getValue(pName: string | number): omnis_list_col
+
+    setPropCli(pColumn, pPropNumber, pPropValue)
+    $addafter(pAfterCol, pName, pType, pSubType, pLen)
+    $addbefore(pBeforeCol, pName, pType, pSubType, pLen)
+    $remove(pCol)
+}
+
+declare class omnis_list_col {
+    $clear(): boolean
+    $count(pSelOnly: boolean): number
+    $removeduplicates(pSortNow, pIgnoreCase)
+}
+
+declare type eOmnisDataType = {}
+declare type eOmnisDataSubType = {}
 
 declare type OmnisEventName = string | number // numero per le proprietà interne di Omnis, stringa per quelle user-defined
 
@@ -315,17 +371,83 @@ declare class JOmnisEffects {
 }
 declare var jOmnisEffects: JOmnisEffects
 
-
 declare class JOmnisTheme {
-    COLORS: { "default": -1, "none": -2, "transparent": -3, "neutral": -2147483464, "neutralText": -2147483463, "primary": -2147483462, "primaryDark": -2147483461, "primaryLight": -2147483460, "primaryText": -2147483459, "primaryDarkText": -2147483458, "primaryLightText": -2147483457, "secondary": -2147483456, "secondaryDark": -2147483455, "secondaryLight": -2147483454, "secondaryText": -2147483453, "secondaryDarkText": -2147483452, "secondaryLightText": -2147483451, "error": -2147483450, "errorText": -2147483449, "background": -2147483448, "backgroundText": -2147483447, "surface": -2147483446, "surfaceText": -2147483445, "focusedRow": -2147483444, "focusedRowText": -2147483443, "border": -2147483442, "dialog": -2147483441, "dialogText": -2147483440, "dialogTitle": -2147483439, "dialogTitleText": -2147483438, "disabled": -2147483437, "disabledText": -2147483436, "focusIndicator": -2147483435 }
-    COLOR_NAMES: { "none": "none", "transparent": "transparent", "neutral": "neutral", "neutralText": "neutralText", "primary": "primary", "primaryDark": "primaryDark", "primaryLight": "primaryLight", "primaryText": "primaryText", "primaryDarkText": "primaryDarkText", "primaryLightText": "primaryLightText", "secondary": "secondary", "secondaryDark": "secondaryDark", "secondaryLight": "secondaryLight", "secondaryText": "secondaryText", "secondaryDarkText": "secondaryDarkText", "secondaryLightText": "secondaryLightText", "error": "error", "errorText": "errorText", "background": "background", "backgroundText": "backgroundText", "surface": "surface", "surfaceText": "surfaceText", "focusedRow": "focusedRow", "focusedRowText": "focusedRowText", "border": "border", "dialog": "dialog", "dialogText": "dialogText", "dialogTitle": "dialogTitle", "dialogTitleText": "dialogTitleText", "disabled": "disabled", "disabledText": "disabledText", "focusIndicator": "focusIndicator" }
+    COLORS: {
+        default: -1
+        none: -2
+        transparent: -3
+        neutral: -2147483464
+        neutralText: -2147483463
+        primary: -2147483462
+        primaryDark: -2147483461
+        primaryLight: -2147483460
+        primaryText: -2147483459
+        primaryDarkText: -2147483458
+        primaryLightText: -2147483457
+        secondary: -2147483456
+        secondaryDark: -2147483455
+        secondaryLight: -2147483454
+        secondaryText: -2147483453
+        secondaryDarkText: -2147483452
+        secondaryLightText: -2147483451
+        error: -2147483450
+        errorText: -2147483449
+        background: -2147483448
+        backgroundText: -2147483447
+        surface: -2147483446
+        surfaceText: -2147483445
+        focusedRow: -2147483444
+        focusedRowText: -2147483443
+        border: -2147483442
+        dialog: -2147483441
+        dialogText: -2147483440
+        dialogTitle: -2147483439
+        dialogTitleText: -2147483438
+        disabled: -2147483437
+        disabledText: -2147483436
+        focusIndicator: -2147483435
+    }
+    COLOR_NAMES: {
+        none: "none"
+        transparent: "transparent"
+        neutral: "neutral"
+        neutralText: "neutralText"
+        primary: "primary"
+        primaryDark: "primaryDark"
+        primaryLight: "primaryLight"
+        primaryText: "primaryText"
+        primaryDarkText: "primaryDarkText"
+        primaryLightText: "primaryLightText"
+        secondary: "secondary"
+        secondaryDark: "secondaryDark"
+        secondaryLight: "secondaryLight"
+        secondaryText: "secondaryText"
+        secondaryDarkText: "secondaryDarkText"
+        secondaryLightText: "secondaryLightText"
+        error: "error"
+        errorText: "errorText"
+        background: "background"
+        backgroundText: "backgroundText"
+        surface: "surface"
+        surfaceText: "surfaceText"
+        focusedRow: "focusedRow"
+        focusedRowText: "focusedRowText"
+        border: "border"
+        dialog: "dialog"
+        dialogText: "dialogText"
+        dialogTitle: "dialogTitle"
+        dialogTitleText: "dialogTitleText"
+        disabled: "disabled"
+        disabledText: "disabledText"
+        focusIndicator: "focusIndicator"
+    }
 
     /**
      * Gets string suitable for assigning to a css style
      * @param n The input color value (either an RGB Int or a Theme.COLORS constant).
      * @param defaultColor A default color to use, in the case that 'color' is kColorDefault or an unknown constant. Can also be a Theme.COLORS constant.
      * @param alpha  An alpha value between 0 and 1. Defaults to 1.
-     * 
+     *
      * @returns An RGB color string
      */
     getColorString(n: number, defaultColor?: number, alpha?: number): string
@@ -349,9 +471,7 @@ declare class JOmnisTheme {
 }
 declare var Theme: JOmnisTheme
 
-
 declare class JOmnisIcons {
-
     /**
      * Gets the checked image URL corresponding to a normal image URL. According to icon set naming rules. (Previously a jOmnis method)
      * @param normalUrl The url to the normal (unchecked) image.
@@ -381,7 +501,6 @@ The icon name must conform to Omnis Icon Set naming syntax.
      */
     getIconSize(iconUrl: string, cssStyle: boolean, isSvg?: boolean): string | object
 
-
     /**
      * Replaces if present, or adds if absent, an icon to an element.
      * @param parentElem The parent element to which the specified icon is to be added; if the parent already contains an icon it is replaced,otherwise this method adds the icon after any existing children in the parent.
@@ -391,7 +510,13 @@ The icon name must conform to Omnis Icon Set naming syntax.
      * @param alwaysCreate  If true, always create and append (so we do not replace an existing element)
      * @returns The element being used for the icon or null if there is no icon or no useful icon URL
      */
-    replaceOrAddToElem(parentElem: HTMLElement, iconUrl: string, loadFunc?: Function, sizeObj?: object, alwaysCreate?: boolean): HTMLElement
+    replaceOrAddToElem(
+        parentElem: HTMLElement,
+        iconUrl: string,
+        loadFunc?: Function,
+        sizeObj?: object,
+        alwaysCreate?: boolean
+    ): HTMLElement
 }
 
 declare var jIcons: JOmnisIcons

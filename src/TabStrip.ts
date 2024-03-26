@@ -5,6 +5,12 @@ export class Tab {
     active: boolean = false
     canClose?: boolean = true
     activeColor?: string
+    backcolorOverride?: string
+    backcolorOverrideActive?: string
+    bordercolorOverride?: string
+    bordercolorOverrideActive?: string
+    textcolorOverride?: string
+    textcolorOverrideActive?: string
 
     constructor(data: { id?: number; title?: string }) {
         if (data.id) {
@@ -14,6 +20,30 @@ export class Tab {
             this.title = data.title
         }
     }
+
+    hasBackcolorOverride(activeState: boolean): boolean {
+        if (activeState) {
+            return this.backcolorOverrideActive && this.backcolorOverrideActive != ""
+        } else {
+            return this.backcolorOverride && this.backcolorOverride != ""
+        }
+    }
+
+    hasBordercolorOverride(activeState: boolean): boolean {
+        if (activeState) {
+            return this.bordercolorOverrideActive && this.bordercolorOverrideActive != ""
+        } else {
+            return this.bordercolorOverride && this.bordercolorOverride != ""
+        }
+    }
+
+    hasTextcolorOverride(activeState: boolean): boolean {
+        if (activeState) {
+            return this.textcolorOverrideActive && this.textcolorOverrideActive != ""
+        } else {
+            return this.textcolorOverride && this.textcolorOverride != ""
+        }
+    }
 }
 
 declare type TabStripEvent = "tabclick" | "tabclose" | "tabadd"
@@ -21,12 +51,12 @@ declare type TabStripEventHandler = (event: Event, tabId: number, index: number,
 
 import "./style.css"
 
-const ADD_TAB: Tab = {
-    id: -1,
-    title: "",
-    action: "add",
-    active: false,
-}
+const ADD_TAB: Tab = (function () {
+    let t = new Tab({ id: -1, title: "" })
+    t.action = "add"
+    t.active = false
+    return t
+})()
 
 // const FILLER_TAB: Tab = {
 //     id: -2,
@@ -107,11 +137,8 @@ export class TabStrip {
     addTab() {
         debugger
         const id = this.tabs.reduce((a, b) => Math.max(a, b.id), 0) + 1
-        const newTab = {
-            id,
-            title: "Nuovo tab",
-            active: false,
-        }
+        const newTab = new Tab({ id, title: "Nuovo tab" })
+        newTab.active = false
         this.tabs = this.tabs.filter((tab) => tab.id > 0).concat([newTab, this.addTab ? ADD_TAB : undefined])
 
         this.setActive(id)
@@ -296,17 +323,9 @@ export class TabStrip {
         a.innerText = tab.title //+ "&times;" + "&#10006;" + "&#x2715;"
 
         if (tab.active) {
-            li.classList.add("active")
-            li.style.backgroundColor = this.activeTabBackgroundColor
-            li.style.color = this.activeTabTextColor
-            if (tab.activeColor && tab.activeColor != "") {
-                li.style.boxShadow = `inset 0px 3px ${tab.activeColor}`
-            }
+            this.updateItemActive(li, tab, index)
         } else {
-            li.classList.remove("active")
-            li.style.backgroundColor = this.tabBackgroundColor
-            li.style.color = this.textColor
-            li.style.boxShadow = ""
+            this.updateItemInactive(li, tab, index)
         }
 
         li.onclick = (event) => {
@@ -322,6 +341,51 @@ export class TabStrip {
         }
     }
 
+    private updateItemActive(li: HTMLLIElement, tab: Tab, index: number) {
+        li.classList.add("active")
+
+        li.style.backgroundColor = this.activeTabBackgroundColor
+        li.style.color = this.activeTabTextColor
+        li.style.borderColor = this.tabBorderColor
+
+        if (tab.hasBackcolorOverride(true)) {
+            li.style.backgroundColor = tab.backcolorOverrideActive
+        }
+
+        if (tab.hasBordercolorOverride(true)) {
+            li.style.borderColor = tab.bordercolorOverrideActive
+        }
+
+        if (tab.hasTextcolorOverride(false)) {
+            li.style.color = tab.textcolorOverrideActive
+        }
+
+        if (tab.activeColor && tab.activeColor != "") {
+            li.style.boxShadow = `inset 0px 3px ${tab.activeColor}`
+        }
+    }
+
+    private updateItemInactive(li: HTMLLIElement, tab: Tab, index: number) {
+        li.classList.remove("active")
+        li.style.color = this.textColor
+        li.style.borderColor = this.tabBorderColor
+        li.style.backgroundColor = this.tabBackgroundColor
+
+        if (tab.hasBackcolorOverride(false)) {
+            li.style.backgroundColor = tab.backcolorOverride
+        }
+
+        if (tab.hasBordercolorOverride(false)) {
+            li.style.borderColor = tab.bordercolorOverride
+        }
+
+        if (tab.hasTextcolorOverride(false)) {
+            li.style.color = tab.textcolorOverride
+        }
+
+        li.style.boxShadow = ""
+    }
+
     private createCloseIcon(tab: Tab, index: number) {
         const closeIcon = document.createElement("span")
         closeIcon.classList.add("my-tabstrip-li-icon")
@@ -335,6 +399,15 @@ export class TabStrip {
         if (tab.active) {
             closeIcon.style.color = this.activeTabTextColor
             closeIcon.style.backgroundColor = this.activeTabBackgroundColor
+
+            if (tab.hasBackcolorOverride(true)) {
+                closeIcon.style.backgroundColor = tab.backcolorOverrideActive
+            }
+
+            if (tab.hasTextcolorOverride(true)) {
+                closeIcon.style.color = tab.textcolorOverrideActive
+            }
+
             closeIcon.addEventListener("click", (event) => {
                 this.onTabCloseClick(event, tab.id, index, tab)
             })

@@ -22,7 +22,7 @@ var PROPERTIES = {
     tabpaddinghorz: "$tabpaddinghorz",
     tabpaddingvert: "$tabpaddingvert",
     addtabsymbolcolor: "$addtabsymbolcolor",
-    addtabbackgroundcolor: "$addtabbackgroundcolor"
+    addtabbackgroundcolor: "$addtabbackgroundcolor",
     // <OmnisUpdateMarker_PropertyConstants_End>
 }
 
@@ -49,7 +49,6 @@ export class ctrl_com_888sp_tabstrip extends ctrl_base {
         var datapropsobj = JSON.parse(client_elem.getAttribute("data-props"))
 
         this.initTabStrip(client_elem)
-
 
         for (let propName in PROPERTIES) {
             const propValue = datapropsobj[propName] // L'oggetto è indicizzato per il nome senza $
@@ -79,13 +78,19 @@ export class ctrl_com_888sp_tabstrip extends ctrl_base {
             const activeLine = currentLine > 0 ? currentLine : 1
 
             for (let index = 1; index <= datanameList.getRowCount(); index++) {
-                tabs.push({
-                    id: datanameList.getData("id", index),
-                    title: datanameList.getData("title", index),
-                    active: index == activeLine,
-                    activeColor: datanameList.getData("activeColor", index),
-                    canClose: datanameList.getData("canClose", index),
-                })
+                let t = new Tab({ id: datanameList.getData("id", index), title: datanameList.getData("title", index) })
+
+                t.active = index == activeLine
+                t.activeColor = datanameList.getData("activeColor", index)
+                t.canClose = datanameList.getData("canClose", index)
+                t.backcolorOverride = datanameList.getData("backcolorOverride", index)
+                t.backcolorOverrideActive = datanameList.getData("backcolorOverrideActive", index)
+                t.bordercolorOverride = datanameList.getData("bordercolorOverride", index)
+                t.bordercolorOverrideActive = datanameList.getData("bordercolorOverrideActive", index)
+                t.textcolorOverride = datanameList.getData("textcolorOverride", index)
+                t.textcolorOverrideActive = datanameList.getData("textcolorOverrideActive", index)
+
+                tabs.push(t)
             }
             this.tabStrip.setTabs(tabs)
             this.tabStrip.render()
@@ -135,8 +140,6 @@ export class ctrl_com_888sp_tabstrip extends ctrl_base {
         if (!this.getCanAssign(propNumber)) {
             return false
         }
-
-        console.log(propValue, propNumber)
 
         if (propNumber) {
             switch (propNumber) {
