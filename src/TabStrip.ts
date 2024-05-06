@@ -356,7 +356,7 @@ export class TabStrip {
             li.style.borderColor = tab.bordercolorOverrideActive
         }
 
-        if (tab.hasTextcolorOverride(false)) {
+        if (tab.hasTextcolorOverride(true)) {
             li.style.color = tab.textcolorOverrideActive
         }
 
