@@ -197,7 +197,8 @@ export class ctrl_com_888sp_tabstrip extends ctrl_base {
                     return true
                 // BEHAVIOR
                 case PROPERTIES.canaddtab:
-                    this.tabStrip.canAddTab = propValue as boolean
+                    // Forzo il rerendering del componente al cambio della proprietà
+                    this.tabStrip.setCanAddTab(propValue as boolean)
                     return true
                 case PROPERTIES.canclosetab:
                     this.tabStrip.canCloseTab = propValue as boolean

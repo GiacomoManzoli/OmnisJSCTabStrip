@@ -125,6 +125,13 @@ export class TabStrip {
         this.render()
     }
 
+    setCanAddTab(val: boolean) {
+        const tabs = this.tabs.filter((t) => t.id != ADD_TAB.id)
+        this.canAddTab = val
+        this.setTabs(tabs)
+        this.render()
+    }
+
     closeTab(id: number) {
         this.tabs = this.tabs.filter((tab) => tab.id !== id)
         const activeTab = this.tabs.find((tab) => tab.active)
