@@ -1,6 +1,7 @@
 export class Tab {
     id: number = 0
     title: string = ""
+    subtitle?: string
     action?: "add" | "none"
     active: boolean = false
     canClose?: boolean = true
@@ -12,12 +13,15 @@ export class Tab {
     textcolorOverride?: string
     textcolorOverrideActive?: string
 
-    constructor(data: { id?: number; title?: string }) {
+    constructor(data: { id?: number; title?: string; subtitle?: string }) {
         if (data.id) {
             this.id = data.id
         }
         if (data.title) {
             this.title = data.title
+        }
+        if (data.subtitle) {
+            this.subtitle = data.subtitle
         }
     }
 
@@ -312,33 +316,50 @@ export class TabStrip {
             li.style.borderColor = this.tabBorderColor
         }
 
+        const contentDiv = document.createElement("div")
+        contentDiv.classList.add("my-tabstrip-li-content")
+
         const a = document.createElement("a")
         a.classList.add("my-tabstrip-li-a")
-        li.append(a)
+        contentDiv.append(a)
 
+        li.append(contentDiv)
         this.updateItem(li, tab, index)
+
         return li
     }
 
     private updateItem(li: HTMLLIElement, tab: Tab, index: number) {
-        // Spacing between tabs
         if (index > 0) {
             li.style.marginLeft = `${this.tabSpacing}px`
         }
-
-        const a = li.querySelector("a")
-        a.innerText = tab.title //+ "&times;" + "&#10006;" + "&#x2715;"
-
+        const contentDiv = li.querySelector(".my-tabstrip-li-content")
+        const a = contentDiv.querySelector("a")
+        // Add subtitle above title
+        if (tab.subtitle) {
+            let subtitleSpan = li.getElementsByClassName("my-tabstrip-li-subtitle")[0] as HTMLSpanElement
+            if (!subtitleSpan) {
+                subtitleSpan = document.createElement("span")
+                subtitleSpan.classList.add("my-tabstrip-li-subtitle")
+                contentDiv.insertBefore(subtitleSpan, a)
+            }
+            subtitleSpan.innerText = tab.subtitle
+        } else {
+            // Remove subtitle if it exists
+            const subtitleSpan = li.getElementsByClassName("my-tabstrip-li-subtitle")[0]
+            if (subtitleSpan) {
+                contentDiv.removeChild(subtitleSpan)
+            }
+        }
+        a.innerText = tab.title
         if (tab.active) {
             this.updateItemActive(li, tab, index)
         } else {
             this.updateItemInactive(li, tab, index)
         }
-
         li.onclick = (event) => {
             this.onTabClick(event, tab.id, index, tab)
         }
-
         const closeIcon = li.getElementsByClassName("my-tabstrip-li-close-icon")[0]
         if (closeIcon) {
             li.removeChild(closeIcon)
@@ -370,6 +391,12 @@ export class TabStrip {
         if (tab.activeColor && tab.activeColor != "") {
             li.style.boxShadow = `inset 0px 3px ${tab.activeColor}`
         }
+
+        // Update subtitle color for active state
+        const subtitleSpan = li.getElementsByClassName("my-tabstrip-li-subtitle")[0]
+        if (subtitleSpan) {
+            subtitleSpan.classList.add("active")
+        }
     }
 
     private updateItemInactive(li: HTMLLIElement, tab: Tab, index: number) {
@@ -377,20 +404,21 @@ export class TabStrip {
         li.style.color = this.textColor
         li.style.borderColor = this.tabBorderColor
         li.style.backgroundColor = this.tabBackgroundColor
-
         if (tab.hasBackcolorOverride(false)) {
             li.style.backgroundColor = tab.backcolorOverride
         }
-
         if (tab.hasBordercolorOverride(false)) {
             li.style.borderColor = tab.bordercolorOverride
         }
-
         if (tab.hasTextcolorOverride(false)) {
             li.style.color = tab.textcolorOverride
         }
-
         li.style.boxShadow = ""
+        // Remove active class from subtitle
+        const subtitleSpan = li.getElementsByClassName("my-tabstrip-li-subtitle")[0]
+        if (subtitleSpan) {
+            subtitleSpan.classList.remove("active")
+        }
     }
 
     private createCloseIcon(tab: Tab, index: number) {

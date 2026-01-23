@@ -78,7 +78,11 @@ export class ctrl_com_888sp_tabstrip extends ctrl_base {
             const activeLine = currentLine > 0 ? currentLine : 1
 
             for (let index = 1; index <= datanameList.getRowCount(); index++) {
-                let t = new Tab({ id: datanameList.getData("id", index), title: datanameList.getData("title", index) })
+                let t = new Tab({
+                    id: datanameList.getData("id", index),
+                    title: datanameList.getData("title", index),
+                    subtitle: datanameList.getData("subtitle", index)
+                })
 
                 t.active = index == activeLine
                 t.activeColor = datanameList.getData("activeColor", index)
