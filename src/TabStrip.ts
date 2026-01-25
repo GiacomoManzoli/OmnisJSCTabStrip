@@ -85,9 +85,9 @@ export class TabStrip {
 
     tabBorderRadius = 8
     tabSpacing = 8
-    tabWidth: number = 160
-    tabMinWidth: number = 0
-    tabMaxWidth: number = 0
+    tabSize: number = 160
+    tabMinSize: number = 0
+    tabMaxSize: number = 0
     tabPaddingHorz: number = 8
     tabPaddingVert: number = 8
 
@@ -312,13 +312,11 @@ export class TabStrip {
         // Tab size
         li.style.padding = `${this.tabPaddingVert}px ${this.tabPaddingHorz}px`
         
-        if (!this.isVertical) {
-            if (this.tabWidth > 0) {
-                li.style.width = `${this.tabWidth}px`
-            } else {
-                li.style.minWidth = `${this.tabMinWidth}px`
-                li.style.maxWidth = `${this.tabMaxWidth}px`
-            }
+        if (this.tabSize > 0) {
+            li.style[this.isVertical ? 'height' : 'width'] = `${this.tabSize}px`
+        } else {
+            li.style[this.isVertical ? 'minHeight' : 'minWidth'] = `${this.tabMinSize}px`
+            li.style[this.isVertical ? 'maxHeight' : 'maxWidth'] = `${this.tabMaxSize}px`
         }
 
         li.style.backgroundColor = this.tabBackgroundColor

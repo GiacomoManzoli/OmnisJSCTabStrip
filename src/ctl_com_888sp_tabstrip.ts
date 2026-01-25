@@ -16,9 +16,9 @@ var PROPERTIES = {
     tabborderradius: "$tabborderradius",
     tabspacing: "$tabspacing",
     tabbordersize: "$tabbordersize",
-    tabminwidth: "$tabminwidth",
-    tabmaxwidth: "$tabmaxwidth",
-    tabwidth: "$tabwidth",
+    tabminsize: "$tabminsize",
+    tabmaxsize: "$tabmaxsize",
+    tabsize: "$tabsize",
     tabpaddinghorz: "$tabpaddinghorz",
     tabpaddingvert: "$tabpaddingvert",
     addtabsymbolcolor: "$addtabsymbolcolor",
@@ -189,14 +189,14 @@ export class ctrl_com_888sp_tabstrip extends ctrl_base {
                 case PROPERTIES.tabspacing:
                     this.tabStrip.tabSpacing = propValue as number
                     return true
-                case PROPERTIES.tabwidth:
-                    this.tabStrip.tabWidth = propValue as number
+                case PROPERTIES.tabsize:
+                    this.tabStrip.tabSize = propValue as number
                     return true
-                case PROPERTIES.tabmaxwidth:
-                    this.tabStrip.tabMaxWidth = propValue as number
+                case PROPERTIES.tabmaxsize:
+                    this.tabStrip.tabMaxSize = propValue as number
                     return true
-                case PROPERTIES.tabminwidth:
-                    this.tabStrip.tabMinWidth = propValue as number
+                case PROPERTIES.tabminsize:
+                    this.tabStrip.tabMinSize = propValue as number
                     return true
                 case PROPERTIES.tabpaddinghorz:
                     this.tabStrip.tabPaddingHorz = propValue as number
@@ -251,12 +251,12 @@ export class ctrl_com_888sp_tabstrip extends ctrl_base {
                 return this.tabStrip.tabBorderRadius
             case PROPERTIES.tabspacing:
                 return this.tabStrip.tabSpacing
-            case PROPERTIES.tabwidth:
-                return this.tabStrip.tabWidth
-            case PROPERTIES.tabmaxwidth:
-                return this.tabStrip.tabMaxWidth
-            case PROPERTIES.tabminwidth:
-                return this.tabStrip.tabMinWidth
+            case PROPERTIES.tabsize:
+                return this.tabStrip.tabSize
+            case PROPERTIES.tabmaxsize:
+                return this.tabStrip.tabMaxSize
+            case PROPERTIES.tabminsize:
+                return this.tabStrip.tabMinSize
             case PROPERTIES.tabpaddinghorz:
                 return this.tabStrip.tabPaddingHorz
             case PROPERTIES.tabpaddingvert:
