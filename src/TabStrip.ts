@@ -81,6 +81,8 @@ export class TabStrip {
 
     backgroundColor: string
 
+    isVertical: boolean = true
+
     tabBorderRadius = 8
     tabSpacing = 8
     tabWidth: number = 160
@@ -201,11 +203,21 @@ export class TabStrip {
         if (this.container.innerHTML == "") {
             ul = document.createElement("ul")
             ul.classList.add("my-tabstrip-ul")
+           
             ul.style.backgroundColor = this.backgroundColor
             ul.style.color = this.textColor
             this.container.appendChild(ul)
         } else {
             ul = this.container.querySelector("ul")
+        }
+
+        console.log(`Hello! ${this.isVertical}`)
+        if (this.isVertical) {
+            ul.classList.add("my-tabstrip-ul-vertical")
+            ul.classList.remove("my-tabstrip-ul-horizontal")
+        } else {
+            ul.classList.add("my-tabstrip-ul-horizontal")
+            ul.classList.remove("my-tabstrip-ul-vertical")
         }
 
         // Inserts/updates
@@ -299,11 +311,14 @@ export class TabStrip {
 
         // Tab size
         li.style.padding = `${this.tabPaddingVert}px ${this.tabPaddingHorz}px`
-        if (this.tabWidth > 0) {
-            li.style.width = `${this.tabWidth}px`
-        } else {
-            li.style.minWidth = `${this.tabMinWidth}px`
-            li.style.maxWidth = `${this.tabMaxWidth}px`
+        
+        if (!this.isVertical) {
+            if (this.tabWidth > 0) {
+                li.style.width = `${this.tabWidth}px`
+            } else {
+                li.style.minWidth = `${this.tabMinWidth}px`
+                li.style.maxWidth = `${this.tabMaxWidth}px`
+            }
         }
 
         li.style.backgroundColor = this.tabBackgroundColor
@@ -331,7 +346,11 @@ export class TabStrip {
 
     private updateItem(li: HTMLLIElement, tab: Tab, index: number) {
         if (index > 0) {
-            li.style.marginLeft = `${this.tabSpacing}px`
+            if (this.isVertical) {
+                li.style.marginTop = `${this.tabSpacing}px`
+            } else {
+                li.style.marginLeft = `${this.tabSpacing}px`
+            }
         }
         const contentDiv = li.querySelector(".my-tabstrip-li-content")
         const a = contentDiv.querySelector("a")
