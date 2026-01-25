@@ -266,7 +266,7 @@
             "initial": -2147483458,
             "editreadonly": false
         },
-        "verticaltab": {
+        "isvertical": {
             "id": 23,
             "desc": "Vertical tabbar",
             "type": "boolean",
