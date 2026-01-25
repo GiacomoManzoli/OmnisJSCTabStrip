@@ -199,19 +199,15 @@ export class TabStrip {
     }
 
     render(): void {
-        let ul: HTMLElement
-        if (this.container.innerHTML == "") {
+        let ul: HTMLElement = this.container.querySelector("ul")
+        if (!ul) {
             ul = document.createElement("ul")
-            ul.classList.add("my-tabstrip-ul")
-           
-            ul.style.backgroundColor = this.backgroundColor
-            ul.style.color = this.textColor
+            ul.classList.add("my-tabstrip-ul")         
             this.container.appendChild(ul)
-        } else {
-            ul = this.container.querySelector("ul")
         }
 
-        console.log(`Hello! ${this.isVertical}`)
+        ul.style.backgroundColor = this.backgroundColor
+        ul.style.color = this.textColor
         if (this.isVertical) {
             ul.classList.add("my-tabstrip-ul-vertical")
             ul.classList.remove("my-tabstrip-ul-horizontal")
@@ -219,7 +215,7 @@ export class TabStrip {
             ul.classList.add("my-tabstrip-ul-horizontal")
             ul.classList.remove("my-tabstrip-ul-vertical")
         }
-
+        console.log("render", this.tabs)
         // Inserts/updates
         for (let index = this.tabs.length - 1; index >= 0; index--) {
             let currTab = this.tabs[index]
@@ -228,8 +224,10 @@ export class TabStrip {
 
                 if (tab.id != ADD_TAB.id) {
                     this.updateItem(li, currTab, index)
-                    this.renderedTabs.set(currTab.id, { tab: currTab, li })
+                } else {
+                    this.updateAddTab(li, currTab, index)
                 }
+                this.renderedTabs.set(currTab.id, { tab: currTab, li })
             } else {
                 let li = this.createItem(currTab, index)
                 this.renderedTabs.set(currTab.id, { tab: currTab, li })
@@ -272,15 +270,29 @@ export class TabStrip {
 
         return li
     }
+
     private createAddTab(tab: Tab, index: number) {
+        console.log("createAddtab")
         const li = document.createElement("li")
         li.classList.add("my-tabstrip-li")
         li.classList.add("action-add")
+        this.updateAddTab(li, tab, index)
+        return li
+    }
 
+    private updateAddTab(li: HTMLLIElement, tab: Tab, index: number)  {
         li.style.backgroundColor = this.addTabBackgroundColor
         li.style.color = this.addTabSymbolColor
-        li.style.marginLeft = `${this.tabSpacing}px`
-
+        
+        // Apply spacing based on orientation
+        if (this.isVertical) {
+            li.style.marginTop = `${this.tabSpacing}px`
+            li.style.marginLeft = `0px`
+        } else {
+            li.style.marginTop = `0px`
+            li.style.marginLeft = `${this.tabSpacing}px`
+        }
+        li.innerHTML =""
         const a = document.createElement("a")
         a.innerHTML = "+" //+ "&#10006;" + "&#x2715;"
         a.addEventListener("click", (event) => {
@@ -288,7 +300,18 @@ export class TabStrip {
         })
         li.append(a)
 
-        return li
+        if (this.isVertical) {
+            // Label visible only in the vertical layout
+            const labelSpan = document.createElement("span")
+            labelSpan.classList.add("my-tabstrip-add-label")
+            labelSpan.innerText = "Add Tab"
+            li.append(labelSpan)
+        } else {
+            const labelSpan = li.getElementsByClassName("my-tabstrip-add-label")[0]
+            if (labelSpan) {
+                li.removeChild(labelSpan)    
+            }
+        }
     }
 
     // private createFillerTab() {
