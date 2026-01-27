@@ -47,6 +47,10 @@ span.tab-ripple {
     text-align: initial;
 }
 
+.my-tabstrip-ul * {
+    box-sizing: border-box;
+}
+
 .my-tabstrip-ul-horizontal {
     width: 100%;
     flex-direction: row;
