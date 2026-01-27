@@ -113,6 +113,7 @@ span.tab-ripple {
     width: initial !important;
     border: 0;
     align-items: center;
+    cursor: pointer;
 }
 
 .action-add a {
@@ -129,8 +130,7 @@ span.tab-ripple {
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-    padding-top: 8px;
-    padding-left: 16px;
+    padding: 8px 16px;
 }
 
 .my-tabstrip-add-label {

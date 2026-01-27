@@ -277,6 +277,12 @@ export class TabStrip {
         li.classList.add("my-tabstrip-li")
         li.classList.add("action-add")
         this.updateAddTab(li, tab, index)
+        
+        // Add event listener to the entire li element
+        li.addEventListener("click", (event) => {
+            this.onTabAddClick(event, tab.id, index, tab)
+        })
+        
         return li
     }
 
@@ -295,9 +301,6 @@ export class TabStrip {
         li.innerHTML =""
         const a = document.createElement("a")
         a.innerHTML = "+" //+ "&#10006;" + "&#x2715;"
-        a.addEventListener("click", (event) => {
-            this.onTabAddClick(event, tab.id, index, tab)
-        })
         li.append(a)
 
         if (this.isVertical) {
