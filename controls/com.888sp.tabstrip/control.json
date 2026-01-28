@@ -278,6 +278,19 @@
             "constrangeend": "",
             "initial": 0,
             "editreadonly": false
+        },
+        "addtabtext": {
+            "id": 24,
+            "desc": "Text for the add tab button",
+            "type": "character",
+            "tab": "custom",
+            "runtimeonly": false,
+            "extconstant": false,
+            "intconstant": false,
+            "constrangestart": "",
+            "constrangeend": "",
+            "initial": "Add Tab",
+            "editreadonly": false
         }
     },
     "constants": {

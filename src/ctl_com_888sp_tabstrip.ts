@@ -23,6 +23,7 @@ var PROPERTIES = {
     tabpaddingvert: "$tabpaddingvert",
     addtabsymbolcolor: "$addtabsymbolcolor",
     addtabbackgroundcolor: "$addtabbackgroundcolor",
+    addtabtext: "$addtabtext",
     isvertical: "$isvertical",
     // <OmnisUpdateMarker_PropertyConstants_End>
 }
@@ -166,6 +167,9 @@ export class ctrl_com_888sp_tabstrip extends ctrl_base {
                 case PROPERTIES.addtabsymbolcolor:
                     this.tabStrip.addTabSymbolColor = this.getTheme().getColorString(propValue) as string
                     return true
+                case PROPERTIES.addtabtext:
+                    this.tabStrip.addTabText = propValue as string
+                    return true
                 // Active TAB
                 case PROPERTIES.activetabbackgroundcolor:
                     this.tabStrip.activeTabBackgroundColor = this.getTheme().getColorString(propValue) as string
@@ -238,6 +242,8 @@ export class ctrl_com_888sp_tabstrip extends ctrl_base {
                 return this.tabStrip.addTabBackgroundColor
             case PROPERTIES.addtabsymbolcolor:
                 return this.tabStrip.addTabSymbolColor
+            case PROPERTIES.addtabtext:
+                return this.tabStrip.addTabText
             // Active TAB
             case PROPERTIES.activetabbackgroundcolor:
                 return this.tabStrip.activeTabBackgroundColor

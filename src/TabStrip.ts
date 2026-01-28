@@ -97,6 +97,7 @@ export class TabStrip {
 
     addTabSymbolColor: string
     addTabBackgroundColor: string
+    addTabText: string = "Add Tab"
 
     activeTabBackgroundColor: string
     activeTabTextColor: string
@@ -307,7 +308,7 @@ export class TabStrip {
             // Label visible only in the vertical layout
             const labelSpan = document.createElement("span")
             labelSpan.classList.add("my-tabstrip-add-label")
-            labelSpan.innerText = "Add Tab"
+            labelSpan.innerText = this.addTabText
             li.append(labelSpan)
         } else {
             const labelSpan = li.getElementsByClassName("my-tabstrip-add-label")[0]
