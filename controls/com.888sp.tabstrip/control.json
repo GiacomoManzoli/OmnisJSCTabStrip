@@ -291,6 +291,19 @@
             "constrangeend": "",
             "initial": "Add Tab",
             "editreadonly": false
+        },
+        "iscompact": {
+            "id": 25,
+            "desc": "Compact vertical tab bar",
+            "type": "boolean",
+            "tab": "custom",
+            "runtimeonly": false,
+            "extconstant": false,
+            "intconstant": false,
+            "constrangestart": "",
+            "constrangeend": "",
+            "initial": 0,
+            "editreadonly": false
         }
     },
     "constants": {

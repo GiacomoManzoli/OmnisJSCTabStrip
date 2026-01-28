@@ -35,6 +35,17 @@ span.tab-ripple {
     background-color: rgba(255, 255, 255, 0.5);
 }
 
+span.tab-ripple-vertical {
+    animation: tab-ripple 400ms linear;
+    /* For vertical tabs, we might want a different expansion behavior */
+    transform-origin: center center;
+}
+
+span.tab-ripple-horizontal {
+    animation: tab-ripple 400ms linear;
+    transform-origin: center center;
+}
+
 .my-tabstrip-ul {
     padding: 0;
     margin: 0;
@@ -70,6 +81,7 @@ span.tab-ripple {
     /* Serve per far andare overflow ellipsis */
     animation: tab-slide-in 0.3s linear;
     overflow: hidden;
+    position: relative;
 }
 
 .my-tabstrip-li:hover {
@@ -144,4 +156,28 @@ span.tab-ripple {
     margin-left: 8px;
     white-space: nowrap;
 }
+
+/* Compact vertical tab styles */
+.my-tabstrip-li-compact {
+    justify-content: center;
+}
+
+.my-tabstrip-li-content-compact {
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.my-tabstrip-li-a-compact {
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
 

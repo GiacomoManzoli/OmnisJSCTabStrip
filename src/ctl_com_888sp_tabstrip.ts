@@ -25,6 +25,7 @@ var PROPERTIES = {
     addtabbackgroundcolor: "$addtabbackgroundcolor",
     addtabtext: "$addtabtext",
     isvertical: "$isvertical",
+    iscompact: "$iscompact",
     // <OmnisUpdateMarker_PropertyConstants_End>
 }
 
@@ -182,6 +183,10 @@ export class ctrl_com_888sp_tabstrip extends ctrl_base {
                     console.log(`Imposto isvetical ${propValue}`)
                     this.tabStrip.isVertical = propValue as boolean
                     return true
+                case PROPERTIES.iscompact:
+                    console.log(`Imposto iscompact ${propValue}`)
+                    this.tabStrip.isCompact = propValue as boolean
+                    return true
                 case PROPERTIES.tabbackgroundcolor:
                     this.tabStrip.tabBackgroundColor = this.getTheme().getColorString(propValue) as string
                     return true
@@ -252,6 +257,8 @@ export class ctrl_com_888sp_tabstrip extends ctrl_base {
             // TAB
             case PROPERTIES.isvertical:
                 return this.tabStrip.isVertical
+            case PROPERTIES.iscompact:
+                return this.tabStrip.isCompact
             case PROPERTIES.tabbackgroundcolor:
                 return this.tabStrip.tabBackgroundColor
             case PROPERTIES.tabtextcolor:
