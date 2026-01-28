@@ -80,6 +80,7 @@ span.tab-ripple {
     display: flex;
     flex-direction: column;
     flex: 1;
+    min-width: 0;
 }
 
 
@@ -90,6 +91,7 @@ span.tab-ripple {
     overflow: hidden;
     text-overflow: ellipsis;
     margin-bottom: 2px;
+    min-width: 0;
 }
 
 .my-tabstrip-li-a {
@@ -97,6 +99,7 @@ span.tab-ripple {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    min-width: 0;
 }
 
 .my-tabstrip-li-icon {
