@@ -80,8 +80,14 @@ span.tab-ripple-horizontal {
     min-width: 0;
     /* Serve per far andare overflow ellipsis */
     animation: tab-slide-in 0.3s linear;
-    overflow: hidden;
     position: relative;
+}
+
+.my-tabstrip-li-wrapper {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
 }
 
 .my-tabstrip-li:hover {
@@ -122,6 +128,21 @@ span.tab-ripple-horizontal {
 
 .my-tabstrip-li-icon:hover {
     filter: brightness(1.05);
+}
+
+/* Compact close icon badge styling */
+.my-tabstrip-li-close-icon-compact {
+    position: absolute;
+    border-radius: 50% !important;
+    width: 20px !important;
+    height: 20px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 12px !important;
+    padding: 2px 4px !important;
+    box-sizing: border-box !important;
+    cursor: pointer !important;
 }
 
 .active:hover {

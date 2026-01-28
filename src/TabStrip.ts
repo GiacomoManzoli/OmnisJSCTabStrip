@@ -366,10 +366,9 @@ export class TabStrip {
             li.classList.add("my-tabstrip-li-compact")
         }
 
-        // CSS ripple
+        // Position the li relative for absolute positioning of close icon
         li.style.position = "relative"
-        li.style.overflow = "hidden"
-
+        
         // Tab size
         if (this.isCompact) {
             // Compact vertical: square tabs with fixed size
@@ -400,6 +399,15 @@ export class TabStrip {
             li.style.borderColor = this.tabBorderColor
         }
 
+        // Create a wrapper div for content that will handle overflow for ripple effect
+        const wrapperDiv = document.createElement("div")
+        wrapperDiv.classList.add("my-tabstrip-li-wrapper")
+        wrapperDiv.style.position = "relative"
+        wrapperDiv.style.overflow = "hidden"
+        wrapperDiv.style.width = "100%"
+        wrapperDiv.style.height = "100%"
+        wrapperDiv.style.borderRadius = `${this.tabBorderRadius}px`
+
         const contentDiv = document.createElement("div")
         contentDiv.classList.add("my-tabstrip-li-content")
         if (this.isCompact) {
@@ -413,7 +421,8 @@ export class TabStrip {
         }
         contentDiv.append(a)
 
-        li.append(contentDiv)
+        wrapperDiv.append(contentDiv)
+        li.append(wrapperDiv)
         this.updateItem(li, tab, index)
 
         return li
@@ -435,7 +444,8 @@ export class TabStrip {
             }
         }
         
-        const contentDiv = li.querySelector(".my-tabstrip-li-content")
+        const wrapperDiv = li.querySelector(".my-tabstrip-li-wrapper")
+        const contentDiv = wrapperDiv.querySelector(".my-tabstrip-li-content")
         const a = contentDiv.querySelector("a")
         
         // Handle compact mode - no subtitles, use short title
@@ -445,7 +455,7 @@ export class TabStrip {
         } else {
             // Normal mode - handle subtitles
             if (tab.subtitle) {
-                let subtitleSpan = li.getElementsByClassName("my-tabstrip-li-subtitle")[0] as HTMLSpanElement
+                let subtitleSpan = wrapperDiv.getElementsByClassName("my-tabstrip-li-subtitle")[0] as HTMLSpanElement
                 if (!subtitleSpan) {
                     subtitleSpan = document.createElement("span")
                     subtitleSpan.classList.add("my-tabstrip-li-subtitle")
@@ -465,7 +475,8 @@ export class TabStrip {
             this.updateItemInactive(li, tab, index)
         }
         
-        li.onclick = (event) => {
+        // Update the wrapper click handler for ripple effect
+        (wrapperDiv as HTMLElement).onclick = (event) => {
             this.onTabClick(event, tab.id, index, tab)
         }
         
@@ -512,7 +523,8 @@ export class TabStrip {
         }
 
         // Update subtitle color for active state
-        const subtitleSpan = li.getElementsByClassName("my-tabstrip-li-subtitle")[0]
+        const wrapperDiv = li.querySelector(".my-tabstrip-li-wrapper")
+        const subtitleSpan = wrapperDiv.getElementsByClassName("my-tabstrip-li-subtitle")[0]
         if (subtitleSpan) {
             subtitleSpan.classList.add("active")
         }
@@ -534,7 +546,8 @@ export class TabStrip {
         }
         li.style.boxShadow = ""
         // Remove active class from subtitle
-        const subtitleSpan = li.getElementsByClassName("my-tabstrip-li-subtitle")[0]
+        const wrapperDiv = li.querySelector(".my-tabstrip-li-wrapper")
+        const subtitleSpan = wrapperDiv.getElementsByClassName("my-tabstrip-li-subtitle")[0]
         if (subtitleSpan) {
             subtitleSpan.classList.remove("active")
         }
@@ -565,15 +578,22 @@ export class TabStrip {
                 closeIcon.style.color = tab.textcolorOverrideActive
             }
 
-            // In compact vertical mode, position close icon in top-left corner
+            // In compact vertical mode, position close icon as notification badge
             if (this.isCompact) {
                 closeIcon.style.position = "absolute"
-                closeIcon.style.top = "0"
-                closeIcon.style.left = "0"
+                closeIcon.style.top = "-6px" // Position slightly above the tab
+                closeIcon.style.left = "-6px" // Position slightly to the left of the tab
                 closeIcon.style.fontSize = "12px"
-                closeIcon.style.padding = "0"
+                closeIcon.style.padding = "2px 4px" // Add some padding to make it look like a badge
                 closeIcon.style.margin = "0"
                 closeIcon.style.zIndex = "10"
+                closeIcon.style.borderRadius = "50%" // Make it circular like a notification badge
+                closeIcon.style.width = "20px" // Fixed width for badge
+                closeIcon.style.height = "20px" // Fixed height for badge
+                closeIcon.style.display = "flex"
+                closeIcon.style.alignItems = "center"
+                closeIcon.style.justifyContent = "center"
+                closeIcon.style.boxSizing = "border-box"
             }
 
             closeIcon.addEventListener("click", (event) => {
