@@ -1,4 +1,5 @@
-import { TabStrip, Tab } from "./TabStrip"
+import { TabStrip } from "./TabStrip"
+import { Tab } from "./Tab"
 
 // import "./style.css"
 /****** CONSTANTS ******/
@@ -180,12 +181,10 @@ export class ctrl_com_888sp_tabstrip extends ctrl_base {
                     return true
                 // TAB
                 case PROPERTIES.isvertical:
-                    console.log(`Imposto isvetical ${propValue}`)
                     this.tabStrip.isVertical = propValue as boolean
                     return true
                 case PROPERTIES.iscompact:
-                    console.log(`Imposto iscompact ${propValue}`)
-                    this.tabStrip.isCompact = propValue as boolean
+                    this.tabStrip.setIsCompact(propValue as boolean)
                     return true
                 case PROPERTIES.tabbackgroundcolor:
                     this.tabStrip.tabBackgroundColor = this.getTheme().getColorString(propValue) as string

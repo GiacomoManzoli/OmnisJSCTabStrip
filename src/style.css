@@ -88,6 +88,9 @@ span.tab-ripple-horizontal {
     overflow: hidden;
     width: 100%;
     height: 100%;
+    display: flex;
+    align-items: center;
+    min-width: 0;
 }
 
 .my-tabstrip-li:hover {
@@ -121,28 +124,42 @@ span.tab-ripple-horizontal {
 }
 
 .my-tabstrip-li-icon {
-    padding: 2px 4px;
-    margin-left: 8px;
-    margin-right: -8px;
+    padding: 8px;
 }
 
 .my-tabstrip-li-icon:hover {
     filter: brightness(1.05);
 }
 
+/* Base close icon styling */
+.my-tabstrip-li-close-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 /* Compact close icon badge styling */
 .my-tabstrip-li-close-icon-compact {
+    width: 20px;
+    height: 20px;
     position: absolute;
-    border-radius: 50% !important;
-    width: 20px !important;
-    height: 20px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    font-size: 12px !important;
-    padding: 2px 4px !important;
-    box-sizing: border-box !important;
-    cursor: pointer !important;
+    top: -8px;
+    left: -8px;
+    z-index: 10;
+    border: 1px solid;
+}
+
+/* SVG styling for close icon */
+.my-tabstrip-li-close-icon svg {
+    width: 16px;
+    height: 16px;
+    display: block;
 }
 
 .active:hover {
@@ -150,10 +167,14 @@ span.tab-ripple-horizontal {
 }
 
 .action-add {
-    width: initial !important;
+    width: initial;
     border: 0;
     align-items: center;
     cursor: pointer;
+}
+
+.action-add-compact {
+    justify-content: center !important;
 }
 
 .action-add a {
@@ -170,7 +191,7 @@ span.tab-ripple-horizontal {
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-    padding: 8px 16px;
+    padding: 8px;
 }
 
 .my-tabstrip-add-label {
@@ -197,6 +218,7 @@ span.tab-ripple-horizontal {
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 18px;
 }
 
 

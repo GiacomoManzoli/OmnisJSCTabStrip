@@ -1,63 +1,8 @@
-export class Tab {
-    id: number = 0
-    title: string = ""
-    subtitle?: string
-    action?: "add" | "none"
-    active: boolean = false
-    canClose?: boolean = true
-    activeColor?: string
-    backcolorOverride?: string
-    backcolorOverrideActive?: string
-    bordercolorOverride?: string
-    bordercolorOverrideActive?: string
-    textcolorOverride?: string
-    textcolorOverrideActive?: string
-
-    constructor(data: { id?: number; title?: string; subtitle?: string }) {
-        if (data.id) {
-            this.id = data.id
-        }
-        if (data.title) {
-            this.title = data.title
-        }
-        if (data.subtitle) {
-            this.subtitle = data.subtitle
-        }
-    }
-
-    hasBackcolorOverride(activeState: boolean): boolean {
-        if (activeState) {
-            return this.backcolorOverrideActive && this.backcolorOverrideActive != ""
-        } else {
-            return this.backcolorOverride && this.backcolorOverride != ""
-        }
-    }
-
-    hasBordercolorOverride(activeState: boolean): boolean {
-        if (activeState) {
-            return this.bordercolorOverrideActive && this.bordercolorOverrideActive != ""
-        } else {
-            return this.bordercolorOverride && this.bordercolorOverride != ""
-        }
-    }
-
-    hasTextcolorOverride(activeState: boolean): boolean {
-        if (activeState) {
-            return this.textcolorOverrideActive && this.textcolorOverrideActive != ""
-        } else {
-            return this.textcolorOverride && this.textcolorOverride != ""
-        }
-    }
-
-    getShortTitle(): string {
-        return (this.id).toString()
-    }
-}
+import "./style.css"
+import { Tab } from "./Tab"
 
 declare type TabStripEvent = "tabclick" | "tabclose" | "tabadd"
 declare type TabStripEventHandler = (event: Event, tabId: number, index: number, tab: Tab) => void
-
-import "./style.css"
 
 const ADD_TAB: Tab = (function () {
     let t = new Tab({ id: -1, title: "" })
@@ -65,13 +10,6 @@ const ADD_TAB: Tab = (function () {
     t.active = false
     return t
 })()
-
-// const FILLER_TAB: Tab = {
-//     id: -2,
-//     title: "",
-//     action: "none",
-//     active: false,
-// }
 
 export class TabStrip {
     tabs: Tab[]
@@ -120,9 +58,6 @@ export class TabStrip {
         if (this.canAddTab) {
             this.tabs.push(ADD_TAB)
         }
-        // else {
-        //     this.tabs.push(FILLER_TAB)
-        // }
     }
 
     addEventListener(evName: TabStripEvent, callback: TabStripEventHandler) {
@@ -134,6 +69,11 @@ export class TabStrip {
         activeTab.active = false
         const newActiveTab = this.tabs.find((tab) => tab.id == id)
         newActiveTab.active = true
+        this.render()
+    }
+
+    setIsCompact(val: boolean) {
+        this.isCompact = val
         this.render()
     }
 
@@ -164,12 +104,14 @@ export class TabStrip {
         return newTab
     }
 
+    //#region Event handlers
+
     private onTabClick(event: MouseEvent, tabId: number, index: number, tab: Tab) {
         const button = event.currentTarget as HTMLElement
         const circle = document.createElement("span")
         const diameter = Math.max(button.clientWidth, button.clientHeight)
         const radius = diameter / 2
-        
+
         let leftPos: string, topPos: string
         if (this.isVertical) {
             // For vertical layout, use getBoundingClientRect for more accurate positioning
@@ -183,25 +125,25 @@ export class TabStrip {
             leftPos = `${event.clientX - (button.offsetLeft + radius)}px`
             topPos = `${event.clientY - (button.offsetTop + radius)}px`
         }
-        
+
         circle.style.width = circle.style.height = `${diameter}px`
         circle.style.left = leftPos
         circle.style.top = topPos
         circle.classList.add("tab-ripple")
-        
+
         // Add orientation-specific class for CSS
         if (this.isVertical) {
             circle.classList.add("tab-ripple-vertical")
         } else {
             circle.classList.add("tab-ripple-horizontal")
         }
-        
+
         const ripple = button.getElementsByClassName("tab-ripple")[0]
         if (ripple) {
             ripple.remove()
         }
         button.appendChild(circle)
-        
+
         event.preventDefault()
         event.stopPropagation()
         const handler = this.handlers.get("tabclick")
@@ -226,11 +168,13 @@ export class TabStrip {
         }
     }
 
+    //#endregion
+
     render(): void {
         let ul: HTMLElement = this.container.querySelector("ul")
         if (!ul) {
             ul = document.createElement("ul")
-            ul.classList.add("my-tabstrip-ul")         
+            ul.classList.add("my-tabstrip-ul")
             this.container.appendChild(ul)
         }
 
@@ -243,7 +187,7 @@ export class TabStrip {
             ul.classList.add("my-tabstrip-ul-horizontal")
             ul.classList.remove("my-tabstrip-ul-vertical")
         }
-        console.log("render", this.tabs)
+        // console.log("render", this.tabs)
         // Inserts/updates
         for (let index = this.tabs.length - 1; index >= 0; index--) {
             let currTab = this.tabs[index]
@@ -251,7 +195,7 @@ export class TabStrip {
                 let { tab, li } = this.renderedTabs.get(currTab.id)
 
                 if (tab.id != ADD_TAB.id) {
-                    this.updateItem(li, currTab, index)
+                    this.updateTab(li, currTab, index)
                 } else {
                     this.updateAddTab(li, currTab, index)
                 }
@@ -286,38 +230,35 @@ export class TabStrip {
         // this.tabs.map((tab, index) => this.createItem(tab, index)).forEach((li) => ul.appendChild(li))
     }
 
-    private createItem(tab: Tab, index: number) {
-        let li: HTMLLIElement
-        if (tab.action === "add") {
-            li = this.createAddTab(tab, index)
-            // } else if (tab.action == "none") {
-            //     li = this.createFillerTab()
-        } else {
-            li = this.createTab(tab, index)
-        }
-
-        return li
+    private createItem(tab: Tab, index: number): HTMLLIElement {
+        return tab.action === "add" ? this.createAddTab(tab, index) : this.createTab(tab, index)
     }
 
+    //#region add tab rendering
     private createAddTab(tab: Tab, index: number) {
-        console.log("createAddtab")
         const li = document.createElement("li")
         li.classList.add("my-tabstrip-li")
         li.classList.add("action-add")
+
+        const a = document.createElement("a")
+        a.innerHTML = "+" //+ "&#10006;" + "&#x2715;"
+
+        li.append(a)
+
         this.updateAddTab(li, tab, index)
-        
+
         // Add event listener to the entire li element
         li.addEventListener("click", (event) => {
             this.onTabAddClick(event, tab.id, index, tab)
         })
-        
+
         return li
     }
 
-    private updateAddTab(li: HTMLLIElement, tab: Tab, index: number)  {
+    private updateAddTab(li: HTMLLIElement, tab: Tab, index: number) {
         li.style.backgroundColor = this.addTabBackgroundColor
         li.style.color = this.addTabSymbolColor
-        
+
         // Apply spacing based on orientation
         if (this.isVertical) {
             li.style.marginTop = `${this.tabSpacing}px`
@@ -326,116 +267,76 @@ export class TabStrip {
             li.style.marginTop = `0px`
             li.style.marginLeft = `${this.tabSpacing}px`
         }
-        
-        li.innerHTML =""
-        const a = document.createElement("a")
-        a.innerHTML = "+" //+ "&#10006;" + "&#x2715;"
-        
-        li.append(a)
 
-        if (this.isVertical && !this.isCompact) {
-            // Label visible only in the vertical layout (non-compact)
-            const labelSpan = document.createElement("span")
-            labelSpan.classList.add("my-tabstrip-add-label")
-            labelSpan.innerText = this.addTabText
-            li.append(labelSpan)
+        if (this.isCompact) {
+            li.classList.add("action-add-compact")
         } else {
-            // Remove label in compact mode or horizontal mode
-            const labelSpan = li.getElementsByClassName("my-tabstrip-add-label")[0]
-            if (labelSpan) {
-                li.removeChild(labelSpan)    
+            li.classList.remove("action-add-compact")
+        }
+
+        if (this.isCompact) {
+            const tabSize = this.tabSize
+            li.style.width = `${tabSize}px`
+        } else {
+            li.style.width = "initial"
+        }
+
+        if (this.isCompact) {
+            this.removeAddLabel(li)
+        } else {
+            if (this.isVertical) {
+                let labelSpan: HTMLElement = li.querySelector(".my-tabstrip-add-label")
+                if (!labelSpan) {
+                    labelSpan = this.createAddLabel(li)
+                }
+                labelSpan.innerText = this.addTabText
             }
         }
     }
 
-    // private createFillerTab() {
-    //     const li = document.createElement("li")
-    //     li.classList.add("my-tabstrip-li")
-    //     li.classList.add("my-border-filler")
-    //     const a = document.createElement("a")
-    //     a.innerHTML = "&nbsp;" //+ "&#10006;" + "&#x2715;"
-    //     li.append(a)
-    //     return li
-    // }
+    private createAddLabel(li: HTMLLIElement): HTMLElement {
+        const labelSpan = document.createElement("span")
+        labelSpan.classList.add("my-tabstrip-add-label")
+        li.append(labelSpan)
+        return labelSpan
+    }
 
+    private removeAddLabel(li: HTMLLIElement) {
+    
+        const labelSpan = li.querySelector(".my-tabstrip-add-label")
+        if (labelSpan) {
+            li.removeChild(labelSpan)
+        }
+    }
+
+    //#endregion
+
+    //#region normal tab rendering
     private createTab(tab: Tab, index: number) {
         const li = document.createElement("li")
-        
         li.classList.add("my-tabstrip-li")
-        if (this.isCompact) {
-            li.classList.add("my-tabstrip-li-compact")
-        }
 
-        // Position the li relative for absolute positioning of close icon
-        li.style.position = "relative"
-        
-        // Tab size
-        if (this.isCompact) {
-            // Compact vertical: square tabs with fixed size
-            const tabSize = this.tabSize
-            li.style.width = `${tabSize}px`
-            li.style.height = `${tabSize}px`
-            li.style.minWidth = `${tabSize}px`
-            li.style.minHeight = `${tabSize}px`
-            li.style.padding = "0"
-        } else {
-            li.style.padding = `${this.tabPaddingVert}px ${this.tabPaddingHorz}px`
-            
-            if (this.tabSize > 0) {
-                li.style[this.isVertical ? 'height' : 'width'] = `${this.tabSize}px`
-            } else {
-                li.style[this.isVertical ? 'minHeight' : 'minWidth'] = `${this.tabMinSize}px`
-                li.style[this.isVertical ? 'maxHeight' : 'maxWidth'] = `${this.tabMaxSize}px`
-            }
-        }
-
-        li.style.backgroundColor = this.tabBackgroundColor
-
-        // Tab border
-        li.style.borderRadius = `${this.tabBorderRadius}px`
-        li.style.borderWidth = `${this.tabBorderSize}px`
-        if (this.tabBorderSize > 0) {
-            li.style.borderStyle = "solid"
-            li.style.borderColor = this.tabBorderColor
-        }
-
-        // Create a wrapper div for content that will handle overflow for ripple effect
         const wrapperDiv = document.createElement("div")
         wrapperDiv.classList.add("my-tabstrip-li-wrapper")
-        wrapperDiv.style.position = "relative"
-        wrapperDiv.style.overflow = "hidden"
-        wrapperDiv.style.width = "100%"
-        wrapperDiv.style.height = "100%"
-        wrapperDiv.style.borderRadius = `${this.tabBorderRadius}px`
+        wrapperDiv.onclick = (event) => {
+            this.onTabClick(event, tab.id, index, tab)
+        }
 
         const contentDiv = document.createElement("div")
         contentDiv.classList.add("my-tabstrip-li-content")
-        if (this.isCompact) {
-            contentDiv.classList.add("my-tabstrip-li-content-compact")
-        }
 
         const a = document.createElement("a")
         a.classList.add("my-tabstrip-li-a")
-        if (this.isCompact) {
-            a.classList.add("my-tabstrip-li-a-compact")
-        }
         contentDiv.append(a)
 
         wrapperDiv.append(contentDiv)
         li.append(wrapperDiv)
-        this.updateItem(li, tab, index)
 
+        this.updateTab(li, tab, index)
         return li
     }
 
-    private removeSubtitle(contentDiv: Element) {
-        const subtitleSpan = contentDiv.getElementsByClassName("my-tabstrip-li-subtitle")[0]
-        if (subtitleSpan) {
-            contentDiv.removeChild(subtitleSpan)
-        }
-    }
-
-    private updateItem(li: HTMLLIElement, tab: Tab, index: number) {        
+    private updateTab(li: HTMLLIElement, tab: Tab, index: number) {
         if (index > 0) {
             if (this.isVertical) {
                 li.style.marginTop = `${this.tabSpacing}px`
@@ -443,63 +344,92 @@ export class TabStrip {
                 li.style.marginLeft = `${this.tabSpacing}px`
             }
         }
-        
-        const wrapperDiv = li.querySelector(".my-tabstrip-li-wrapper")
-        const contentDiv = wrapperDiv.querySelector(".my-tabstrip-li-content")
-        const a = contentDiv.querySelector("a")
-        
-        // Handle compact mode - no subtitles, use short title
-        if ( this.isCompact) {
+        const wrapperDiv: HTMLElement = li.querySelector(".my-tabstrip-li-wrapper")
+        const contentDiv: HTMLElement = wrapperDiv.querySelector(".my-tabstrip-li-content")
+        const a: HTMLElement = contentDiv.querySelector("a")
+
+        if (this.isCompact) {
+            li.classList.add("my-tabstrip-li-compact")
+            contentDiv.classList.add("my-tabstrip-li-content-compact")
+            a.classList.add("my-tabstrip-li-a-compact")
+        } else {
+            li.classList.remove("my-tabstrip-li-compact")
+            contentDiv.classList.remove("my-tabstrip-li-content-compact")
+            a.classList.remove("my-tabstrip-li-a-compact")
+        }
+
+        // li
+        li.style.backgroundColor = this.tabBackgroundColor
+        li.style.borderRadius = `${this.tabBorderRadius}px`
+        li.style.borderWidth = `${this.tabBorderSize}px`
+        if (this.tabBorderSize > 0) {
+            li.style.borderStyle = "solid"
+            li.style.borderColor = this.tabBorderColor
+        }
+        if (this.isCompact) {
+            const tabSize = this.tabSize
+            li.style.width = `${tabSize}px`
+            li.style.height = `${tabSize}px`
+            li.style.minWidth = `${tabSize}px`
+            li.style.minHeight = `${tabSize}px`
+        } else {
+            if (this.tabSize > 0) {
+                li.style[this.isVertical ? "height" : "width"] = `${this.tabSize}px`
+                li.style[this.isVertical ? "width" : "height"] = "initial"
+            } else {
+                li.style[this.isVertical ? "minHeight" : "minWidth"] = `${this.tabMinSize}px`
+                li.style[this.isVertical ? "maxHeight" : "maxWidth"] = `${this.tabMaxSize}px`
+            }
+        }
+
+        // wrapper
+        wrapperDiv.style.borderRadius = `${this.tabBorderRadius}px`
+        if (this.isCompact) {
+            wrapperDiv.style.padding = "0"
+        } else {
+            wrapperDiv.style.padding = `${this.tabPaddingVert}px ${this.tabPaddingHorz}px`
+            wrapperDiv.style.paddingRight = `${this.tabBorderRadius}px`
+        }
+
+        if (this.isCompact) {
             this.removeSubtitle(contentDiv)
             a.innerText = tab.getShortTitle()
         } else {
-            // Normal mode - handle subtitles
             if (tab.subtitle) {
-                let subtitleSpan = wrapperDiv.getElementsByClassName("my-tabstrip-li-subtitle")[0] as HTMLSpanElement
-                if (!subtitleSpan) {
-                    subtitleSpan = document.createElement("span")
-                    subtitleSpan.classList.add("my-tabstrip-li-subtitle")
-                    contentDiv.insertBefore(subtitleSpan, a)
-                }
-                subtitleSpan.innerText = tab.subtitle
+                this.createSubtitle(contentDiv, tab)
             } else {
-                // Remove subtitle if it exists
                 this.removeSubtitle(contentDiv)
             }
             a.innerText = tab.title
         }
-        
+
         if (tab.active) {
-            this.updateItemActive(li, tab, index)
+            this.updateTabActive(li, tab, index)
         } else {
-            this.updateItemInactive(li, tab, index)
+            this.updateTabInactive(li, tab, index)
         }
-        
-        // Update the wrapper click handler for ripple effect
-        (wrapperDiv as HTMLElement).onclick = (event) => {
-            this.onTabClick(event, tab.id, index, tab)
-        }
-        
-        // Handle close icon - in compact mode, only show on active tab
+
+        this.updateTabCloseIcon(li, tab, index)
+    }
+
+    private updateTabCloseIcon(li: HTMLLIElement, tab: Tab, index: number) {
+        const wrapperDiv = li.querySelector(".my-tabstrip-li-wrapper")
+
         const closeIcon = li.getElementsByClassName("my-tabstrip-li-close-icon")[0]
         if (closeIcon) {
-            li.removeChild(closeIcon)
+            closeIcon.parentElement.removeChild(closeIcon)
         }
-        
-        if (this.canCloseTab && tab.canClose) {
+
+        if (this.canCloseTab && tab.canClose && tab.active) {
             if (this.isCompact) {
-                // In compact vertical mode, only show close icon on active tab
-                if (tab.active) {
-                    li.append(this.createCloseIcon(tab, index))
-                }
-            } else {
-                // Normal mode - show close icon on all closable tabs
                 li.append(this.createCloseIcon(tab, index))
+            } else {
+                wrapperDiv.append(this.createCloseIcon(tab, index))
             }
         }
     }
 
-    private updateItemActive(li: HTMLLIElement, tab: Tab, index: number) {
+    private updateTabActive(li: HTMLLIElement, tab: Tab, index: number) {
         li.classList.add("active")
 
         li.style.backgroundColor = this.activeTabBackgroundColor
@@ -530,7 +460,7 @@ export class TabStrip {
         }
     }
 
-    private updateItemInactive(li: HTMLLIElement, tab: Tab, index: number) {
+    private updateTabInactive(li: HTMLLIElement, tab: Tab, index: number) {
         li.classList.remove("active")
         li.style.color = this.textColor
         li.style.borderColor = this.tabBorderColor
@@ -545,7 +475,7 @@ export class TabStrip {
             li.style.color = tab.textcolorOverride
         }
         li.style.boxShadow = ""
-        // Remove active class from subtitle
+
         const wrapperDiv = li.querySelector(".my-tabstrip-li-wrapper")
         const subtitleSpan = wrapperDiv.getElementsByClassName("my-tabstrip-li-subtitle")[0]
         if (subtitleSpan) {
@@ -553,21 +483,40 @@ export class TabStrip {
         }
     }
 
+    private createSubtitle(contentDiv: Element, tab: Tab) {
+        let subtitleSpan = contentDiv.getElementsByClassName("my-tabstrip-li-subtitle")[0] as HTMLSpanElement
+        if (!subtitleSpan) {
+            subtitleSpan = document.createElement("span")
+            subtitleSpan.classList.add("my-tabstrip-li-subtitle")
+            const a: HTMLElement = contentDiv.querySelector("a")
+            contentDiv.insertBefore(subtitleSpan, a)
+        }
+        subtitleSpan.innerText = tab.subtitle
+    }
+
+    private removeSubtitle(contentDiv: Element) {
+        const subtitleSpan = contentDiv.getElementsByClassName("my-tabstrip-li-subtitle")[0]
+        if (subtitleSpan) {
+            contentDiv.removeChild(subtitleSpan)
+        }
+    }
+
     private createCloseIcon(tab: Tab, index: number) {
         const closeIcon = document.createElement("span")
         closeIcon.classList.add("my-tabstrip-li-icon")
         closeIcon.classList.add("my-tabstrip-li-close-icon")
-        
         if (this.isCompact) {
             closeIcon.classList.add("my-tabstrip-li-close-icon-compact")
         }
 
-        closeIcon.style.backgroundColor = this.tabBackgroundColor
-        closeIcon.style.color = this.tabBackgroundColor // somehow hidden
-
-        closeIcon.innerHTML = "&#x2715;"
+        closeIcon.innerHTML = `
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+            </svg>
+        `
         if (tab.active) {
             closeIcon.style.color = this.activeTabTextColor
+            closeIcon.style.borderColor = this.activeTabTextColor
             closeIcon.style.backgroundColor = this.activeTabBackgroundColor
 
             if (tab.hasBackcolorOverride(true)) {
@@ -578,24 +527,6 @@ export class TabStrip {
                 closeIcon.style.color = tab.textcolorOverrideActive
             }
 
-            // In compact vertical mode, position close icon as notification badge
-            if (this.isCompact) {
-                closeIcon.style.position = "absolute"
-                closeIcon.style.top = "-6px" // Position slightly above the tab
-                closeIcon.style.left = "-6px" // Position slightly to the left of the tab
-                closeIcon.style.fontSize = "12px"
-                closeIcon.style.padding = "2px 4px" // Add some padding to make it look like a badge
-                closeIcon.style.margin = "0"
-                closeIcon.style.zIndex = "10"
-                closeIcon.style.borderRadius = "50%" // Make it circular like a notification badge
-                closeIcon.style.width = "20px" // Fixed width for badge
-                closeIcon.style.height = "20px" // Fixed height for badge
-                closeIcon.style.display = "flex"
-                closeIcon.style.alignItems = "center"
-                closeIcon.style.justifyContent = "center"
-                closeIcon.style.boxSizing = "border-box"
-            }
-
             closeIcon.addEventListener("click", (event) => {
                 this.onTabCloseClick(event, tab.id, index, tab)
             })
@@ -603,4 +534,5 @@ export class TabStrip {
 
         return closeIcon
     }
+    //#endregion
 }
