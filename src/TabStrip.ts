@@ -179,7 +179,7 @@ export class TabStrip {
             ul.classList.add("my-tabstrip-ul-horizontal")
             ul.classList.remove("my-tabstrip-ul-vertical")
         }
-        // console.log("render", this.tabs)
+        // console.debug("render", this.tabs)
         // Inserts/updates
         for (let index = this.tabs.length - 1; index >= 0; index--) {
             let currTab = this.tabs[index]
