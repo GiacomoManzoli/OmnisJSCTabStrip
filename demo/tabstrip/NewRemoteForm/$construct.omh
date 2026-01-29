@@ -2,25 +2,35 @@
 Do iTabList.$define()
 Do iTabList.$cols.$add('id',kInteger,k32bitint)
 Do iTabList.$cols.$add('title',kCharacter,kSimplechar)
-Do iTabList.$cols.$add('activeColor',kCharacter,kSimplechar)
+Do iTabList.$cols.$add('subtitle',kCharacter,kSimplechar)
+Do iTabList.$cols.$add('activeColor',kCharacter,kSimplechar) ## Highlight color
 Do iTabList.$cols.$add('canClose',kBoolean)
 
-Do iTabList.$add(1,'A1 - Navigator','#99CCCC',kFalse)
-Do iTabList.$add(2,'A2 - Dashboard','#33CC33',kFalse)
-Do iTabList.$add(3,'A3 - Tab 1',,kTrue)
-Do iTabList.$add(4,'A4 - Tab 2',,kTrue)
+Do iTabList.$cols.$add('backcolorOverride',kCharacter,kSimplechar)
+Do iTabList.$cols.$add('backcolorOverrideActive',kCharacter,kSimplechar)
+
+Do iTabList.$cols.$add('bordercolorOverride',kCharacter,kSimplechar)
+Do iTabList.$cols.$add('bordercolorOverrideActive',kCharacter,kSimplechar)
+
+Do iTabList.$cols.$add('textcolorOverride',kCharacter,kSimplechar)
+Do iTabList.$cols.$add('textcolorOverrideActive',kCharacter,kSimplechar)
+
+Do iTabList.$add(1,'A1 - Navigator','Subtitle','#FF00CC',kFalse)
+Do iTabList.$add(2,'A2 - Dashboard','Subtitle','#33CC33',kFalse)
+Do iTabList.$add(3,'A3 - Tab 1','Subtitle',,kTrue)
+Do iTabList.$add(4,'A4 - Tab 2','Subtitle',,kTrue)
 Calculate iTabList.$line as 3
 
 
 Do iTabList2.$copydefinition(iTabList)
-Do iTabList2.$add(1,'A1 - Navigator','#99CCCC',kFalse)
-Do iTabList2.$add(2,'A2 - Dashboard','#33CC33',kFalse)
-Do iTabList2.$add(3,'A3 - Tab 1',,kTrue)
-Do iTabList2.$add(4,'A4 - Tab 2',,kTrue)
+Do iTabList2.$add(1,'Centri','Budget','#FF00CC',kFalse)
+Do iTabList2.$add(2,'Centri','Controllo','#33CC33',kFalse)
+Do iTabList2.$add(3,'Long long long long long long long long long long text','Subtitle',,kTrue)
+Do iTabList2.$add(4,'Tab 2','Subtitle',,kTrue)
 
 
 Do iTabList3.$copydefinition(iTabList)
-Do iTabList3.$add(1,'A1 - Navigator','#99CCCC',kFalse)
-Do iTabList3.$add(2,'A2 - Dashboard','#33CC33',kFalse)
-Do iTabList3.$add(3,'A3 - Tab 1',,kTrue)
-Do iTabList3.$add(4,'A4 - Tab 2',,kTrue)
+Do iTabList3.$add(1,'A1 - Navigator',,'',kFalse,'','#AA0000','#AA0000','#AA0000','#CCC','#00F')
+Do iTabList3.$add(2,'A2 - Dashboard',,'',kTrue,'','#00AA00','#00AA00','#00AA00','')
+Do iTabList3.$add(3,'A3 - Tab 1',,,kTrue)
+# Do iTabList3.$add(4,'A4 - Tab 2',,kTrue)

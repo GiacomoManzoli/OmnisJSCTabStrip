@@ -1,0 +1,9 @@
+On evClick
+	Calculate XCompact as not(XCompact)
+	Calculate $cinst.$objs.tabx.$iscompact as XCompact
+	
+	If XCompact
+		Calculate $cinst.$objs.tabx.$width as 64
+	Else
+		Calculate $cinst.$objs.tabx.$width as 240
+	End If

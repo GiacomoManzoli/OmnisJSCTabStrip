@@ -1,9 +1,10 @@
 {
 	"classtype": "kRemoteForm",
-	"omnisversion": "10.2",
-	"internalversion": 57,
+	"omnisversion": "11.1",
+	"omnisbuild": 111037255,
+	"internalversion": 333,
 	"designtaskname": "NewRemoteTask",
-	"nextident": 1004,
+	"nextident": 1010,
 	"lastgroupident": 0,
 	"cvardefs": [
 
@@ -29,6 +30,14 @@
 			"type": "kList",
 			"subtype": "",
 			"sublen": 0
+		},
+		{
+			"name": "XCompact",
+			"order": 4,
+			"type": "kBoolean",
+			"subtype": 0,
+			"sublen": 0,
+			"initval": "kFalse"
 		}
 	],
 	"properties": {
@@ -43,12 +52,16 @@
 		"canremotedebugwhenlocked": false,
 		"collectperformancedata": false,
 		"componenticon": 0,
+		"componentinfo": {
+
+		},
 		"componenttype": "kCompStoreHidden",
 		"contextmenu": "",
 		"createdate": "2021-12-18 09:01:03",
 		"currentlayoutbreakpoint": 768,
 		"defaultappearance": "kAppearanceiOS",
 		"desc": "",
+		"designguides": "",
 		"designshowmobiletitle": true,
 		"disabledefaultcontextmenu": false,
 		"editor": "",
@@ -60,11 +73,11 @@
 		"horzscroll": false,
 		"inheritedorder": 0,
 		"issupercomponent": false,
-		"layoutbreakpoints": "320,768",
+		"layoutbreakpoints": "768",
 		"layouttype": "kLayoutTypeResponsive",
-		"left": 606,
+		"left": 540,
 		"menulineheight": 44,
-		"moddate": "2021-12-24 00:23:31",
+		"moddate": "2026-01-29 09:02:46",
 		"okkeyobject": "",
 		"serverlessclient": false,
 		"showascheckedout": false,
@@ -75,7 +88,7 @@
 			"type": 0,
 			"calc": "New remote form"
 		},
-		"top": 151,
+		"top": 192,
 		"userinfo": "",
 		"vcsrevision": 0,
 		"version": "",
@@ -83,12 +96,8 @@
 		"vertscroll": false
 	},
 	"layout": {
-		"width": 904,
-		"height": 354,
-		"320": {
-			"height": 0,
-			"padding": 2
-		},
+		"width": 1012,
+		"height": 964,
 		"768": {
 			"height": 0,
 			"padding": 2

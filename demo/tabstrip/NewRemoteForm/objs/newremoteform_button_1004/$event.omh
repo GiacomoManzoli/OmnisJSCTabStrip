@@ -1,0 +1,3 @@
+On evClick
+	Calculate $cinst.$objs.tab3.$canaddtab as kFalse
+	# Do iTabList3.$add(4,'A4 - Tab 1',,kTrue)

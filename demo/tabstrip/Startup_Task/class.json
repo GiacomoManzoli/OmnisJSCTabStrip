@@ -1,6 +1,7 @@
 {
 	"classtype": "kTask",
-	"omnisversion": "10.2",
+	"omnisversion": "11.1",
+	"omnisbuild": 111037255,
 	"internalversion": 3,
 	"tvardefs": [
 
@@ -15,6 +16,9 @@
 		"canremotedebugwhenlocked": false,
 		"collectperformancedata": false,
 		"componenticon": 0,
+		"componentinfo": {
+
+		},
 		"componenttype": "kCompStoreHidden",
 		"createdate": "2021-12-18 09:00:51",
 		"desc": "",
