@@ -50,6 +50,28 @@ export class Tab {
     }
 
     getShortTitle(): string {
-        return this.title.match(/[A-Z]/g)?.join('') || '';
+        let words = this.title
+            .trim()
+            .split(/\s+/)
+            .map((w) => w.replace(/[^a-zA-ZàèéìòùÀÈÉÌÒÙ]/g, ""))
+            .filter(Boolean)
+
+        const stopWords = ["di", "da", "del", "della", "e", "il", "lo", "la", "i", "gli", "le"]
+
+        if (words.length > 1) {
+            words = words.filter((w) => !stopWords.includes(w.toLowerCase()))
+        }
+
+        if (words.length === 0) return ""
+
+        if (words.length === 1) {
+            return words[0].slice(0, 2)
+        }
+
+        return words
+            .slice(0, 3)
+            .map((w) => w[0])
+            .join("")
+        // return this.title.match(/[A-Z]/g)?.join("") || ""
     }
 }
