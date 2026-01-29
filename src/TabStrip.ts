@@ -113,18 +113,10 @@ export class TabStrip {
         const radius = diameter / 2
 
         let leftPos: string, topPos: string
-        if (this.isVertical) {
-            // For vertical layout, use getBoundingClientRect for more accurate positioning
-            const rect = button.getBoundingClientRect()
-            leftPos = `${event.clientX - rect.left - radius}px`
-            topPos = `${event.clientY - rect.top - radius}px`
-            // console.log(`Vertical ripple: clientX=${event.clientX}, clientY=${event.clientY}, rect.left=${rect.left}, rect.top=${rect.top}, radius=${radius}`)
-            // console.log(`Vertical ripple: leftPos=${leftPos}, topPos=${topPos}`)
-        } else {
-            // For horizontal layout, use the original positioning
-            leftPos = `${event.clientX - (button.offsetLeft + radius)}px`
-            topPos = `${event.clientY - (button.offsetTop + radius)}px`
-        }
+
+        const rect = button.getBoundingClientRect()
+        leftPos = `${event.clientX - rect.left - radius}px`
+        topPos = `${event.clientY - rect.top - radius}px`
 
         circle.style.width = circle.style.height = `${diameter}px`
         circle.style.left = leftPos
@@ -302,7 +294,6 @@ export class TabStrip {
     }
 
     private removeAddLabel(li: HTMLLIElement) {
-    
         const labelSpan = li.querySelector(".my-tabstrip-add-label")
         if (labelSpan) {
             li.removeChild(labelSpan)
