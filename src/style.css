@@ -153,6 +153,12 @@ span.tab-ripple-horizontal {
     left: -8px;
     z-index: 10;
     border: 1px solid;
+    display: none; /* Nascondi di default */
+}
+
+/* Mostra la close-icon solo quando il tab è attivo e in hover */
+.my-tabstrip-li.active:hover .my-tabstrip-li-close-icon-compact {
+    display: flex;
 }
 
 /* SVG styling for close icon */
