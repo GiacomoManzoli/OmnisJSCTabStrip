@@ -54,15 +54,15 @@ export class ctrl_com_888sp_tabstrip extends ctrl_base {
 
         this.initTabStrip(client_elem)
 
-        console.debug("init_ctrl_inst")
+        // console.debug("init_ctrl_inst")
 
         for (let propName in PROPERTIES) {
-            console.debug("set prop: ",propName)
+            // console.debug("set prop: ",propName)
             const propValue = datapropsobj[propName] // L'oggetto è indicizzato per il nome senza $
             this.setProperty(PROPERTIES[propName], propValue)
         }
 
-         console.debug("this.update()")
+        //  console.debug("this.update()")
 
         this.update()
 
@@ -79,7 +79,7 @@ export class ctrl_com_888sp_tabstrip extends ctrl_base {
         const dataname = this.getData()
         const datanameList = new omnis_list(dataname)
 
-        console.debug("updateCtrl")
+        // console.debug("updateCtrl")
 
         this.mData = dataname
 
